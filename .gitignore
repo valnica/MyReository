@@ -1,0 +1,33 @@
+Code S.sdf
+Debug/Code S.tlog/link.write.1.tlog
+Debug/_Program Files (x86)_Microsoft Visual Studio 14.0_Common7_IDE_Extensions_Microsoft_VsGraphics_Assets_Effects_Phong.dgsl.cso
+Debug/vc140.idb
+DebugBase.props
+Direct3D.cpp
+Direct3D.h
+DirectXTK.cpp
+DirectXTK.h
+ImaseLib/FPSTimer.cpp
+ImaseLib/FPSTimer.h
+Line.cpp
+Line.h
+Main.cpp
+ReleaseBase.props
+Resources/Fonts/msgothic.spritefont
+Resources/MDL/Box.MDL
+Resources/MDL/Floor.MDL
+Resources/Models/Box.FBX
+Resources/Models/Floor.FBX
+Resources/Models/Marker.FBX
+Resources/Models/PlayerBody.FBX
+Resources/Models/PlayerHead.FBX
+Resources/cModels/Box.cmo
+Resources/cModels/Floor.cmo
+Resources/cModels/Marker.cmo
+Resources/cModels/PlayerBody.cmo
+Resources/cModels/PlayerHead.cmo
+Resources/cModels/_Program Files (x86)_Microsoft Visual Studio 14.0_Common7_IDE_Extensions_Microsoft_VsGraphics_Assets_Effects_Phong.dgsl.cso
+Texture.cpp
+Texture.h
+Debug/Code S.tlog/MeshContentTask-VsGraphics.6660.read.1.tlog
+myfile.spritefont

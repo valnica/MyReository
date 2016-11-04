@@ -1,0 +1,57 @@
+#pragma once
+
+#include "Object3D.h"
+#include "CollisionManager.h"
+
+class CollisionNode
+{
+protected:
+	static bool debugVisible_;
+public:
+	static void SwitchDebugVisible() {
+		debugVisible_ = !debugVisible_; 
+	}
+	static bool GetDebugVisible() { return debugVisible_; }
+};
+
+class SphereNode :public Sphere
+{
+protected:
+	Object3D object_;
+	float localRadius_;
+	DirectX::SimpleMath::Vector3 trans_;
+
+public:
+	SphereNode();
+	
+	void Initialize();
+	void Update();
+	void Draw();
+
+	void SetParentMatrix(const DirectX::SimpleMath::Matrix* parent);
+	void SetLocalRadius(float radius) { localRadius_ = radius; }
+	void SetTrans(DirectX::SimpleMath::Vector3& trans) { trans_ = trans; }
+};
+
+class CapsuleNode :public Capsule
+{
+protected:
+	Object3D object_;
+	float localLenght_;
+	float localRadius_;
+	DirectX::SimpleMath::Vector3 trans_;
+
+public:
+	CapsuleNode();
+
+	void Initialize();
+	void Update();
+	void Draw();
+
+	void SetParentMatrix(const DirectX::SimpleMath::Matrix* parent);
+	void SetRotate(DirectX::SimpleMath::Vector3& rotate);
+	void SetLocalRadius(float radius) { localRadius_ = radius; }
+	void SetLocalLenght(float lenght) { localLenght_ = lenght; }
+	void SetTrans(DirectX::SimpleMath::Vector3& trans) { trans_ = trans; }
+};
+
