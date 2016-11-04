@@ -9,6 +9,7 @@ using namespace DirectX::SimpleMath;
 //ƒ‚ƒfƒ‹‚Ìs—ñŒvZ
 void Player::Calc()
 {
+	int a = 0;
 	for (int i = 0; i < NUM_PARTS; i++)
 	{
 		parts_[i].Calc();
