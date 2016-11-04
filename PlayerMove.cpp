@@ -32,10 +32,6 @@ void PlayerMove::Update(Player & player)
 	Vector2 amountOfMorment = Vector2(g_mouse.x, g_mouse.y);
 	amountOfMorment.Normalize();
 	amountOfMorment *= 3.0f;
-	//Vector3 headRot = player.GetHeadRotate();
-	//headRot += Vector3(-amountOfMorment.y, -amountOfMorment.x, 0.0f);
-	//player.SetHeadRotate(headRot);
-
 	
 	Vector3 vel = Vector3::Zero;
 	float angle = 0;

@@ -103,6 +103,7 @@
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="Direct3D.cpp" />
     <ClCompile Include="DirectXTK.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FPSCamera.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="DirectXTK.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="FPSCamera.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameManager.h" />
@@ -151,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Resources\Models\Box.FBX" />
+    <MeshContentTask Include="Resources\Models\Enemy.FBX" />
     <MeshContentTask Include="Resources\Models\Floor.FBX" />
     <MeshContentTask Include="Resources\Models\Marker.FBX" />
     <MeshContentTask Include="Resources\Models\PlayerBody.FBX" />
