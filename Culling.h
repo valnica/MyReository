@@ -11,6 +11,6 @@ public:
 	Culling();
 	~Culling();
 
-	static bool InCamera(Box& box, Camera* camera, int required, float sx = 1.0f, float sy = 1.0f);
+	static bool InView(Box& box, Camera* camera, int required, float sx = 1.0f, float sy = 1.0f);
 };
 

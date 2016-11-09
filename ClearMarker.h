@@ -18,5 +18,6 @@ public:
 	void Render();
 
 	Box& GetBox() { return box_; }
+	void SetPosition(DirectX::SimpleMath::Vector3 pos);
 };
 

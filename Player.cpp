@@ -3,6 +3,7 @@
 #include "PlayerMove.h"
 #include "Utility.h"
 #include "Stage.h"
+#include "CollisionManager.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -69,6 +70,10 @@ void Player::Update()
 
 	//ƒ‚ƒfƒ‹‚Ìs—ñŒvZ
 	Calc();
+
+	CollisionManager::GetInstance()->Entry(this);
+
+	flag_ = false;
 }
 
 //•`‰æ
@@ -78,6 +83,13 @@ void Player::Render()
 	{
 		parts_[i].Draw();
 	}
+
+	wchar_t flag[20];
+	if (flag_)
+		swprintf_s(flag, 20, L"PlayerFront = true");
+	else
+		swprintf_s(flag, 20, L"PlayerFront = false");
+	g_spriteFont->DrawString(g_spriteBatch.get(), flag, Vector2(0, 100));
 }
 
 void Player::SetStage(Stage * stage)
@@ -114,7 +126,7 @@ void Player::SetHeadRotate(Vector3 rot)
 {
 	//ñ‚Ì‰Â“®ˆæ‚É•â³
 	Clamp(-90.0f, 90.0f, rot.y);
-	Clamp(-70.0f, 80.0f, rot.x);
+	Clamp(-20.0f, 80.0f, rot.x);
 
 	parts_[HEAD].SetRotate(rot);
 }
@@ -135,4 +147,9 @@ Vector3 Player::GetEye()
 Matrix Player::GetEyeMatrix()
 {
 	return parts_[EYE].GetWorld();
+}
+
+void Player::Found()
+{
+	flag_ = true;
 }

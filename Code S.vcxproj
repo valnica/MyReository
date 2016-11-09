@@ -100,6 +100,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="CollisionNode.cpp" />
     <ClCompile Include="Culling.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="Direct3D.cpp" />
     <ClCompile Include="DirectXTK.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CollisionNode.h" />
     <ClInclude Include="Culling.h" />
+    <ClInclude Include="Debug.h" />
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="DirectXTK.h" />
@@ -136,6 +138,7 @@
     <ClInclude Include="LandShape.h" />
     <ClInclude Include="LandShapeData.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMove.h" />

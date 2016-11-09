@@ -43,12 +43,14 @@ protected:
 	Object3D object_;
 	const LandShapeData* data_;
 	DirectX::SimpleMath::Matrix world_;
+	Box box_;
 
 public:
 	static void InitializeCommon(LandShapeCommonDef* def);
 
 	LandShape();
 	void Initialize(const wchar_t* fileNameMDL, const wchar_t* fileNameCMO = nullptr);
+	void Update();
 	void Calc();
 	void Draw();
 
@@ -56,6 +58,14 @@ public:
 	void SetRotate(const DirectX::SimpleMath::Vector3& rotate) { object_.SetRotate(rotate); }
 	void SetScale(DirectX::SimpleMath::Vector3 scale) { object_.SetScale(DirectX::SimpleMath::Vector3(scale)); }
 	void SetWorld(const DirectX::SimpleMath::Matrix& world) { object_.SetLocalWorld(world); }
+
+	void SetBox(Box box) 
+	{
+		box_ = box; 
+		box_.SetScale(object_.GetScale());
+		box_.Translation(object_.GetTrans());
+	}
+	Box GetBox() { return box_; }
 
 	const DirectX::SimpleMath::Vector3& GetTrans() { return object_.GetTrans(); }
 	const DirectX::SimpleMath::Vector3& GetRotate() { return object_.GetRotate(); }

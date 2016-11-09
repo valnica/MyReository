@@ -1,4 +1,5 @@
 #include "CollisionNode.h"
+#include "Debug.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -42,7 +43,7 @@ void SphereNode::Update()
 
 void SphereNode::Draw()
 {
-	if (CollisionNode::GetDebugVisible())
+	if (Debug::GetFlag())
 		object_.Draw();
 }
 
@@ -88,7 +89,7 @@ void CapsuleNode::Update()
 
 void CapsuleNode::Draw()
 {
-	if (CollisionNode::GetDebugVisible())
+	if (Debug::GetFlag())
 		object_.Draw();
 }
 

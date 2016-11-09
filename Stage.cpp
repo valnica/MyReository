@@ -3,6 +3,9 @@
 #include "LandShape.h"
 #include "ClearMarker.h"
 #include "CollisionNode.h"
+#include "Debug.h"
+#include "Culling.h"
+#include "GameManager.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -27,19 +30,28 @@ void Stage::Initialize()
 		Vector3 scale_;
 		wchar_t* mldName_;
 		wchar_t* cmoName_;
+		Box box_;
 	};
 
 	std::vector<LandShapeTable> landShapeTable;
-
 	LandShapeTable landShape;
+
 	landShape.trans_ = Vector3(0.0f, 0.0f, 0.0f);
 	landShape.rotate_ = Vector3(0.0f, 0.0f, 0.0f);
 	landShape.scale_ = Vector3(80.0f, 1.0f, 80.0f);
+	landShape.box_.point[0] = Vector3(-0.5f, -0.1f, -0.5f);
+	landShape.box_.point[1] = Vector3(0.5f, -0.1f, -0.5f);
+	landShape.box_.point[2] = Vector3(0.5f, -0.1f, 0.5f);
+	landShape.box_.point[3] = Vector3(-0.5f, -0.1f, 0.5f);
+	landShape.box_.point[4] = Vector3(-0.5f, 0.1f, -0.5f);
+	landShape.box_.point[5] = Vector3(0.5f, 0.1f, -0.5f);
+	landShape.box_.point[6] = Vector3(0.5f, 0.1f, 0.5f);
+	landShape.box_.point[7] = Vector3(-0.5f, 0.1f, 0.5f);
 	landShape.mldName_ = L"Resources\\MDL\\Floor.MDL";
 	landShape.cmoName_ = L"Resources\\cModels\\Floor.cmo";
 	landShapeTable.push_back(landShape);
 
-	int landArray[8][8]=
+	int landArray[8][8] =
 	{
 		{ 0,0,0,0,0,0,0,0 },
 		{ 0,1,1,1,1,1,1,0 },
@@ -55,16 +67,24 @@ void Stage::Initialize()
 	{
 		for (int j = 0; j < 8; j++)
 		{
-			if(landArray[i][j] == 0)
+			if (landArray[i][j] == 1) continue;
 			landShape.trans_ = Vector3(j * 10 - 40 + 5, 0.0f, i * 10 - 40 + 5);
 			landShape.rotate_ = Vector3(0.0f, 0.0f, 0.0f);
 			landShape.scale_ = Vector3(10.0f, 10.0f, 10.0f);
+			landShape.box_.point[0] = Vector3(-0.5f, 0.0f, -0.5f);
+			landShape.box_.point[1] = Vector3(0.5f, 0.0f, -0.5f);
+			landShape.box_.point[2] = Vector3(0.5f, 0.0f, 0.5f);
+			landShape.box_.point[3] = Vector3(-0.5f, 0.0f, 0.5f);
+			landShape.box_.point[4] = Vector3(-0.5f, 1.0f, -0.5f);
+			landShape.box_.point[5] = Vector3(0.5f, 1.0f, -0.5f);
+			landShape.box_.point[6] = Vector3(0.5f, 1.0f, 0.5f);
+			landShape.box_.point[7] = Vector3(-0.5f, 1.0f, 0.5f);
 			landShape.mldName_ = L"Resources\\MDL\\Box.MDL";
 			landShape.cmoName_ = L"Resources\\cModels\\Box.cmo";
 			landShapeTable.push_back(landShape);
 		}
 	}
-	
+
 
 	int numLandShapeTable = landShapeTable.size();
 	landshapeList_.resize(numLandShapeTable);
@@ -86,11 +106,15 @@ void Stage::Initialize()
 		landShape->SetRotate(rotate);
 		landShape->SetScale(table->scale_);
 
+		landShape->SetBox(table->box_);
+
 		landshapeList_[i] = std::move(landShape);
 	}
 
 	clearFlag_ = false;
 	marker_->Initialize();
+	Vector3 pos(-5.0f, 0.5f, 25.0f);
+	marker_->SetPosition(pos);
 	startPos_ = Vector3(-25.0f, 0.0f, 35.0f);
 }
 
@@ -98,7 +122,12 @@ void Stage::Update()
 {
 	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::Q))
 	{
-		CollisionNode::SwitchDebugVisible();
+		Debug::SwitchFlag();
+	}
+
+	for (auto it = landshapeList_.begin(); it != landshapeList_.end(); it++)
+	{
+		(*it)->Update();
 	}
 	marker_->Update();
 }
@@ -110,7 +139,9 @@ void Stage::Render()
 		if (!*it) continue;
 
 		(*it)->Calc();
-		(*it)->Draw();
+
+		if (Culling::InView((*it)->GetBox(), GameManager::GetInstance()->GetCamera(), 1))
+			(*it)->Draw();
 	}
 
 	marker_->Render();

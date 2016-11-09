@@ -2,6 +2,7 @@
 #include <fstream>
 #include <algorithm>
 #include "CollisionNode.h"
+#include "Debug.h"
 
 using namespace std;
 using namespace DirectX;
@@ -77,6 +78,11 @@ void LandShape::Initialize(const wchar_t * fileNameMDL, const wchar_t * fileName
 	}
 }
 
+void LandShape::Update()
+{
+	CollisionManager::GetInstance()->Entry(this);
+}
+
 void LandShape::Calc()
 {
 	object_.Calc();
@@ -86,7 +92,7 @@ void LandShape::Calc()
 
 void LandShape::Draw()
 {
-	if (!CollisionNode::GetDebugVisible())
+	if (!Debug::GetFlag())
 	{
 		object_.Draw();
 	}
@@ -124,6 +130,8 @@ void LandShape::Draw()
 
 		common_->primitiveBatch_->End();
 	}
+
+	box_.Draw();
 }
 
 bool LandShape::IntersectSphere(const Sphere & sphere, DirectX::SimpleMath::Vector3* reject)

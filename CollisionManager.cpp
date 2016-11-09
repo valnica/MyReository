@@ -1,6 +1,11 @@
 #include "CollisionManager.h"
-//#include "Player.h"
-//#include "Enemy.h"
+#include "DirectXTK.h"
+#include "Debug.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Camera.h"
+#include "Culling.h"
+#include "LandShape.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -8,6 +13,7 @@ void CollisionManager::Reset()
 {
 	player_.clear();
 	enemy_.clear();
+	landShape_.clear();
 }
 
 CollisionManager::CollisionManager()
@@ -29,25 +35,54 @@ void CollisionManager::Update()
 {
 	//Collision collision;
 
-	////Še“–‚½‚è”»’è‚ðs‚¤
+	for (auto player = player_.begin(); player != player_.end(); player++)
+	{
+		for (auto enemy = enemy_.begin(); enemy != enemy_.end(); enemy++)
+		{
 
-	////ƒvƒŒƒCƒ„[‚ÌUŒ‚”»’è
-	//for (auto playerIt = player_.begin(); playerIt != player_.end(); playerIt++)
-	//{
-	//	//UŒ‚—Í‚ª‚È‚©‚Á‚½‚çˆ—‚ð‚â‚ß‚é
-	//	if ((*playerIt)->GetPower() <= 0) continue;
+			Vector3 vec = (*player)->GetPosition() - (*enemy)->GetPositon();
 
-	//	for (auto enemyIt = enemy_.begin(); enemyIt != enemy_.end(); enemyIt++)
-	//	{
-	//		auto playerWeaponCollisionBody = (*playerIt)->GetWeaponCollisionBody();
-	//		auto enmeyCollisionBody = (*enemyIt)->GetCollisionBody();
+			float angle = atan2f(-vec.x, -vec.z) * 180.0f / 3.14f;
+			angle = (*enemy)->GetRotate().y - angle;
 
-	//		if (collision.CheckCapsule2Capsule(playerWeaponCollisionBody, enmeyCollisionBody))
-	//		{
-	//			(*enemyIt)->TakeDamage((*playerIt)->GetPower(),(*playerIt)->GetDelay());
-	//		}
-	//	}
-	//}
+			//Ž‹–ìŠp“à‚É‚¢‚é‚©‚Ç‚¤‚©
+			if (-(*enemy)->GetViewAngle() < angle && angle < (*enemy)->GetViewAngle())
+			{
+				//Ž‹–ì‹——£“à‚©ŠO‚©”»’è
+				if (vec.Length() < (*enemy)->GetViewDistance())
+				{
+					//ŽÕ•Á•¨‚ª‚ ‚é‚©‚È‚¢‚©”»’è
+					Camera camera(640, 480);
+					camera.SetEye((*enemy)->GetPositon());
+					Vector3 ref(0.0f, 0.0f, -(*enemy)->GetViewDistance());
+					Matrix rot = Matrix::CreateRotationY((*enemy)->GetRotate().y * 3.14f / 180.0f);
+					ref = Vector3::TransformNormal(ref, rot);
+					camera.SetTarget((*enemy)->GetPositon() + ref);
+					camera.Update();
+
+					bool occulusion = false;
+					for (auto landShape = landShape_.begin(); landShape != landShape_.end(); landShape++)
+					{
+						//if (Culling::InView((*landShape)->GetBox(), &camera, 1))
+						{
+							Segment segment;
+							segment.start_ = (*enemy)->GetPositon();
+							segment.end_ = (*player)->GetPosition();
+
+							Vector3 inter;
+							if ((*landShape)->IntersectSegment(segment, &inter))
+							{
+								occulusion = true;
+							}
+						}
+					}
+
+					if(!occulusion)
+						(*player)->Found();
+				}
+			}
+		}
+	}
 
 	Reset();
 }
@@ -60,6 +95,11 @@ void CollisionManager::Entry(Player * player)
 void CollisionManager::Entry(Enemy * enemy)
 {
 	enemy_.push_back(enemy);
+}
+
+void CollisionManager::Entry(LandShape * landShape)
+{
+	landShape_.push_back(landShape);
 }
 
 CollisionManager * CollisionManager::GetInstance()
@@ -673,4 +713,36 @@ bool Collision::CheckSegment2Triangle(const Segment& _segment, const Triangle& _
 	}
 
 	return true;
+}
+
+void Box::Translation(DirectX::SimpleMath::Vector3 pos)
+{
+	for (int i = 0; i < 8; i++)
+	{
+		point[i] += pos;
+	}
+}
+
+void Box::SetScale(DirectX::SimpleMath::Vector3 scale)
+{
+	for (int i = 0; i < 8; i++)
+	{
+		point[i] *= scale;
+	}
+}
+
+void Box::Draw()
+{
+	Debug::GetInstance()->DrawLine(point[0], point[1]);
+	Debug::GetInstance()->DrawLine(point[1], point[2]);
+	Debug::GetInstance()->DrawLine(point[2], point[3]);
+	Debug::GetInstance()->DrawLine(point[3], point[0]);
+	Debug::GetInstance()->DrawLine(point[4], point[5]);
+	Debug::GetInstance()->DrawLine(point[5], point[6]);
+	Debug::GetInstance()->DrawLine(point[6], point[7]);
+	Debug::GetInstance()->DrawLine(point[7], point[4]);
+	Debug::GetInstance()->DrawLine(point[0], point[4]);
+	Debug::GetInstance()->DrawLine(point[1], point[5]);
+	Debug::GetInstance()->DrawLine(point[2], point[6]);
+	Debug::GetInstance()->DrawLine(point[3], point[7]);
 }

@@ -20,6 +20,8 @@ private:
 		NUM_PARTS
 	};
 
+	bool flag_;
+
 	Object3D parts_[NUM_PARTS];
 	void Calc();
 public:
@@ -46,5 +48,7 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetEye();
 	DirectX::SimpleMath::Matrix GetEyeMatrix();
+
+	void Found();
 };
 

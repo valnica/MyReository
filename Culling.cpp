@@ -14,7 +14,7 @@ Culling::~Culling()
 {
 }
 
-bool Culling::InCamera(Box& box,Camera* camera,int required,float sx, float sy)
+bool Culling::InView(Box& box,Camera* camera,int required,float sx, float sy)
 {
 	int num = 0;
 	for (int i = 0; i < 8; i++)

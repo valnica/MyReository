@@ -2,9 +2,12 @@
 
 #include <SimpleMath.h>
 #include <vector>
+#include <PrimitiveBatch.h>
+#include <VertexTypes.h>
 
 class Player;
 class Enemy;
+class LandShape;
 
 ///////////////////////////////////
 // Name      : CollisionManager
@@ -16,6 +19,7 @@ class CollisionManager
 private:
 	std::vector<Player*> player_;
 	std::vector<Enemy*> enemy_;
+	std::vector<LandShape*> landShape_;
 
 	void Reset();
 public:
@@ -27,6 +31,7 @@ public:
 
 	void Entry(Player* player);
 	void Entry(Enemy* enemy);
+	void Entry(LandShape* landShape);
 
 	//シングルトンでアクセス
 	static CollisionManager* GetInstance();
@@ -34,8 +39,14 @@ public:
 
 class Box
 {
+private:
+
 public:
 	DirectX::SimpleMath::Vector3 point[8];
+
+	void Translation(DirectX::SimpleMath::Vector3 pos);
+	void SetScale(DirectX::SimpleMath::Vector3 scale);
+	void Draw();
 
 	Box& operator=(Box& rhs)
 	{
@@ -43,6 +54,8 @@ public:
 		{
 			point[i] = rhs.point[i];
 		}
+
+		return *this;
 	}
 };
 
