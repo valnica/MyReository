@@ -3,13 +3,16 @@
 class GameManager;
 class Scene;
 class Debug;
+class SceneManager;
+class CollisionManager;
 
 class GameMain
 {
 private:
 	GameManager* gameManager_;
-	Scene* scene_;
+	SceneManager* sceneManager_;
 	Debug* debug_;
+	CollisionManager* collisionManager_;
 
 public:
 	GameMain();

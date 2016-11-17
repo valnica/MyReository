@@ -13,6 +13,8 @@ private:
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> primitiveBatch_;
 	ID3D11InputLayout* inputLayOut_;
 	static bool debugFlag_;
+	DirectX::SimpleMath::Vector3 start_;
+	DirectX::SimpleMath::Vector3 end_;
 
 	Debug();
 public:
@@ -33,5 +35,12 @@ public:
 
 		return instance_;	
 	}
-};
 
+	void SetRay(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 end)
+	{
+		start_ = start;
+		end_ = end;
+	}
+
+	void Draw();
+};

@@ -55,3 +55,73 @@ Debug/Code S.tlog/MeshContentTask-VsGraphics.write.1.tlog
 Debug/Code S.tlog/link.command.1.tlog
 Debug/Code S.tlog/link.read.1.tlog
 Debug/Floor.cmo
+Debug/Code S.tlog/MeshContentTask-VsGraphics.13008.read.1.tlog
+Debug/Code S.tlog/MeshContentTask-VsGraphics.13008.write.1.tlog
+Debug/Code S.tlog/MeshContentTask-VsGraphics.2272.read.1.tlog
+Debug/Code S.tlog/MeshContentTask-VsGraphics.2272.write.1.tlog
+Resources/cModels/Enemy.cmo
+Debug/Code S.tlog/MeshContentTask-VsGraphics.11576.read.1.tlog
+Debug/Code S.tlog/MeshContentTask-VsGraphics.11576.write.1.tlog
+Debug/Code S.tlog/MeshContentTask-VsGraphics.7372.read.1.tlog
+Debug/Code S.tlog/MeshContentTask-VsGraphics.7372.write.1.tlog
+Release/Code S.iobj
+Release/Code S.ipdb
+Release/Code S.tlog/CL.command.1.tlog
+Release/Code S.tlog/CL.read.1.tlog
+Release/Code S.tlog/CL.write.1.tlog
+Release/Code S.tlog/Code S.lastbuildstate
+Release/Code S.tlog/MeshContentTask-VsGraphics.5060.read.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.5060.write.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.5464.read.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.5464.write.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.9432.read.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.9432.write.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.9492.read.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.9492.write.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.9892.read.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.9892.write.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.9996.read.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.9996.write.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.read.1.tlog
+Release/Code S.tlog/MeshContentTask-VsGraphics.write.1.tlog
+Release/Code S.tlog/link.9416-cvtres.read.1.tlog
+Release/Code S.tlog/link.9416-cvtres.write.1.tlog
+Release/Code S.tlog/link.command.1.tlog
+Release/Collision.obj
+Release/CollisionManager.obj
+Release/CollisionNode.obj
+Release/Culling.obj
+Release/Debug.obj
+Release/DebugCamera.obj
+Release/Direct3D.obj
+Release/DirectXTK.obj
+Release/Enemy.obj
+Debug/TitleScene.obj
+Release/Camera.obj
+Release/Code S.exe
+Release/Code S.log
+Release/Code S.pdb
+Release/Code S.tlog/link.read.1.tlog
+Release/Code S.tlog/link.write.1.tlog
+Release/Event.obj
+Release/FPSCamera.obj
+Release/GameMain.obj
+Release/GameManager.obj
+Release/FPSTimer.obj
+Debug/Object3D.obj
+Debug/PlayScene.obj
+Debug/Player.obj
+Debug/PlayerMove.obj
+Debug/SceneManager.obj
+Debug/Stage.obj
+Debug/Texture.obj
+Debug/vc140.pdb
+Release/LandShape.obj
+Release/LandShapeData.obj
+Release/Main.obj
+Release/Stage.obj
+Debug/LandShape.obj
+Debug/LandShapeData.obj
+Debug/Line.obj
+Debug/Main.obj
+Debug/Marker.obj

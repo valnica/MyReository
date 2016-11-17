@@ -5,6 +5,8 @@
 #include "Stage.h"
 #include "CollisionManager.h"
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 using namespace DirectX::SimpleMath;
 
 //モデルの行列計算
@@ -26,6 +28,8 @@ Player::Player()
 //デストラクタ
 Player::~Player()
 {
+	if (state_)
+		delete state_;
 }
 
 //初期化
@@ -54,6 +58,11 @@ void Player::Initialize()
 	parts_[EYE].SetRotate(Vector3(0.0f, 0.0f, 0.0f));
 	parts_[EYE].SetScale(Vector3(0.3f, 0.3f, 0.3f));
 	parts_[EYE].SetParentWorld(&parts_[HEAD].GetWorld());
+
+	collisionBody_.Initialize();
+	collisionBody_.SetTrans(Vector3(0.0f, 0.85f, 0.3f));
+	collisionBody_.SetLocalRadius(1.0f);
+	collisionBody_.SetParentMatrix(&parts_[EMPTY].GetLocalWorld());
 }
 
 //更新処理
@@ -71,6 +80,8 @@ void Player::Update()
 	//モデルの行列計算
 	Calc();
 
+	collisionBody_.Update();
+
 	CollisionManager::GetInstance()->Entry(this);
 
 	flag_ = false;
@@ -83,6 +94,8 @@ void Player::Render()
 	{
 		parts_[i].Draw();
 	}
+
+	collisionBody_.Draw();
 
 	wchar_t flag[20];
 	if (flag_)
@@ -138,9 +151,13 @@ Vector3 Player::GetHeadRotate()
 }
 
 //視線の座標を取得
-Vector3 Player::GetEye()
+Vector3 Player::GetEyePosition()
 {
-	return parts_[EYE].GetTrans();
+	Vector3 pos;
+	Quaternion qua;
+	Vector3 scale;
+	parts_[EYE].GetWorld().Decompose(scale, qua, pos);
+	return pos;
 }
 
 //視線の行列を取得

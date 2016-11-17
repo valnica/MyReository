@@ -26,5 +26,7 @@ public:
 	void Update() override;
 	void Render() override;
 	void Finalize() override;
+
+	void End();
 };
 

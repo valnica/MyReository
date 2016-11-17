@@ -1,17 +1,20 @@
 #pragma once
 #include <vector>
 #include <SimpleMath.h>
+#include "CollisionManager.h"
 
 class LandShape;
-class ClearMarker;
+class Marker;
+class ClearEvent;
 
 class Stage
 {
 private:
 	std::vector<LandShape*> landshapeList_;
 	bool clearFlag_;
-	ClearMarker* marker_;
+	Marker* marker_;
 	DirectX::SimpleMath::Vector3 startPos_;
+	ClearEvent* clearEvent;
 
 public:
 	Stage();
@@ -22,8 +25,9 @@ public:
 	void Render();
 	void Finalize();
 
-	ClearMarker* GetClearMarker() { return marker_; }
+	Marker* GetClearMarker() { return marker_; }
 	void SetClearFlag(bool flag) { clearFlag_ = flag; }
 	DirectX::SimpleMath::Vector3 GetStartPos() { return startPos_; }
+	bool GetClearFlag() { return clearFlag_; }
 };
 

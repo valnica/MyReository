@@ -46,8 +46,8 @@ public:
 	List<T>() 
 	{
 		node_ = nullptr;
-	};
-	~List<T>() {};
+	}
+	~List<T>(){};
 
 	void PushBack(T data)
 	{
@@ -82,6 +82,19 @@ public:
 	void Clear()
 	{
 		node_ = nullptr;
+	}
+
+	void DataAllDelete()
+	{
+		auto node = node_->next_;
+		while (node != node_)
+		{
+			auto delNode = node;
+			node = node->next_;
+			delete delNode;
+		}
+
+		delete node;
 	}
 };
 

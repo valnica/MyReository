@@ -63,7 +63,7 @@ public:
 	{
 		box_ = box; 
 		box_.SetScale(object_.GetScale());
-		box_.Translation(object_.GetTrans());
+		box_.Translation(object_.GetTrans() + DirectX::SimpleMath::Vector3(0.0f, object_.GetScale().y / 2.0f, 0.0f));
 	}
 	Box GetBox() { return box_; }
 
@@ -73,5 +73,5 @@ public:
 	const DirectX::SimpleMath::Matrix& GetLocalWorld() { return object_.GetWorld(); }
 
 	bool IntersectSphere(const Sphere& sphere, DirectX::SimpleMath::Vector3* reject);
-	bool LandShape::IntersectSegment(const Segment& segment, DirectX::SimpleMath::Vector3* inter);
+	bool LandShape::IntersectSegment(const Segment& segment, DirectX::SimpleMath::Vector3* inter, float angleofFloor = 30);
 };

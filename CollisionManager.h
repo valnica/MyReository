@@ -5,9 +5,13 @@
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
 
+class Marker;
 class Player;
 class Enemy;
 class LandShape;
+class Collision;
+class Culling;
+class Event;
 
 ///////////////////////////////////
 // Name      : CollisionManager
@@ -20,6 +24,10 @@ private:
 	std::vector<Player*> player_;
 	std::vector<Enemy*> enemy_;
 	std::vector<LandShape*> landShape_;
+	std::vector<Marker*> marker_;
+	std::vector<Event*> event_;
+
+	friend Collision;
 
 	void Reset();
 public:
@@ -32,20 +40,38 @@ public:
 	void Entry(Player* player);
 	void Entry(Enemy* enemy);
 	void Entry(LandShape* landShape);
+	void Entry(Marker* marker);
+	void Entry(Event* events);
 
 	//シングルトンでアクセス
 	static CollisionManager* GetInstance();
 };
 
+class BoundingBox
+{
+private:
+public:
+	float maxX_;
+	float minX_;
+	float maxY_;
+	float minY_;
+	float maxZ_;
+	float minZ_;
+};
+
+
 class Box
 {
 private:
-
-public:
 	DirectX::SimpleMath::Vector3 point[8];
+
+	friend Culling;
+public:
+	Box();
 
 	void Translation(DirectX::SimpleMath::Vector3 pos);
 	void SetScale(DirectX::SimpleMath::Vector3 scale);
+	void Initialize();
 	void Draw();
 
 	Box& operator=(Box& rhs)
@@ -56,6 +82,19 @@ public:
 		}
 
 		return *this;
+	}
+
+	BoundingBox GetBoundingBox()
+	{
+		BoundingBox box;
+		box.maxX_ = point[2].x;
+		box.minX_ = point[0].x;
+		box.maxY_ = point[0].y;
+		box.minY_ = point[4].y;
+		box.maxZ_ = point[0].z;
+		box.minZ_ = point[2].z;
+
+		return box;
 	}
 };
 
@@ -100,21 +139,19 @@ public:
 	DirectX::SimpleMath::Vector3	Normal;	// 法線ベクトル
 };
 
-class Collision
+//視野内にいるかどうかの判定用のクラス
+class ViewInfo
 {
 private:
-
 public:
-	bool CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::SimpleMath::Vector3* inter = nullptr);
-	bool CheckCapsule2Capsule(const Capsule& capsule1, const Capsule& capsule2, DirectX::SimpleMath::Vector3* inter = nullptr);
-	bool CheckSphere2Capsule(const Sphere& sphere, const Capsule& capsule, DirectX::SimpleMath::Vector3* inter = nullptr);
-	float VectorLengthSquare(DirectX::SimpleMath::Vector3& v);
-	float Distance3DSquared(const DirectX::SimpleMath::Vector3& p1, const DirectX::SimpleMath::Vector3& p2);
-	float GetSqDistancePoint2Segment(const DirectX::SimpleMath::Vector3& _point, const Segment& _segment);
-	float GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _segment1);
-	void ComputeTriangle(const DirectX::SimpleMath::Vector3& _p0, const DirectX::SimpleMath::Vector3& _p1, const DirectX::SimpleMath::Vector3& _p2, Triangle* _triangle);
-	void ClosestPtPoint2Triangle(const DirectX::SimpleMath::Vector3& _point, const Triangle& _triangle, DirectX::SimpleMath::Vector3* _closest);
-	bool CheckPoint2Triangle(const DirectX::SimpleMath::Vector3& _point, const Triangle& _triangle);
-	bool CheckSphere2Triangle(const Sphere& _sphere, const Triangle& _triangle, DirectX::SimpleMath::Vector3 *_inter);
-	bool CheckSegment2Triangle(const Segment& _segment, const Triangle& _triangle, DirectX::SimpleMath::Vector3 *_inter);
+	DirectX::SimpleMath::Vector3 eye_;
+	DirectX::SimpleMath::Vector3 ref_;
+	float viewAngle_;
+	float eyeAngle_;
+	float viewDistance_;
+
+	ViewInfo(DirectX::SimpleMath::Vector3 eye, DirectX::SimpleMath::Vector3 ref, float viewAngle,float eyeAngle,float viewDistance)
+		:eye_(eye),ref_(ref),viewAngle_(viewAngle),eyeAngle_(eyeAngle),viewDistance_(viewDistance)
+	{
+	}
 };

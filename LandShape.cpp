@@ -3,6 +3,9 @@
 #include <algorithm>
 #include "CollisionNode.h"
 #include "Debug.h"
+#include "Collision.h"
+
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 using namespace std;
 using namespace DirectX;
@@ -101,7 +104,7 @@ void LandShape::Draw()
 		const Matrix& view = common_->camera_->GetView();
 		const Matrix& proj = common_->camera_->GetProj();
 
-		common_->effect_->SetWorld(object_.GetWorld());
+		common_->effect_->SetWorld(object_.GetLocalWorld());
 		common_->effect_->SetView(view);
 		common_->effect_->SetProjection(proj);
 
@@ -191,7 +194,7 @@ bool LandShape::IntersectSphere(const Sphere & sphere, DirectX::SimpleMath::Vect
 	{
 		distance *= scale;
 
-		const Matrix& localWorld = object_.GetWorld();
+		const Matrix& localWorld = object_.GetLocalWorld();
 
 		if (reject)
 		{
@@ -209,7 +212,7 @@ bool LandShape::IntersectSphere(const Sphere & sphere, DirectX::SimpleMath::Vect
 // segment : 線分
 // （出力）inter : 交点（ポリゴンの平面上で、点との再接近点の座標を返す）
 //--------------------------------------------------------------------------------------
-bool LandShape::IntersectSegment(const Segment& segment, Vector3* inter)
+bool LandShape::IntersectSegment(const Segment& segment, Vector3* inter,float angleofFloor)
 {
 	if (data_ == nullptr) return false;
 
@@ -222,7 +225,7 @@ bool LandShape::IntersectSegment(const Segment& segment, Vector3* inter)
 	// 大きい数字で初期化
 	float distance = 1.0e5;
 	// 角度判定用に地面とみなす角度の限界値<度>
-	const float limit_angle = XMConvertToRadians(30.0f);
+	const float limit_angle = XMConvertToRadians(angleofFloor);
 	Vector3 l_inter;
 
 	// コピー
@@ -278,7 +281,7 @@ bool LandShape::IntersectSegment(const Segment& segment, Vector3* inter)
 	if (hit && inter != nullptr)
 	{
 		// 交点をモデル座標系からワールド座標系に変換
-		const Matrix& localworld = object_.GetWorld();
+		const Matrix& localworld = object_.GetLocalWorld();
 		*inter = Vector3::Transform(l_inter, localworld);
 	}
 

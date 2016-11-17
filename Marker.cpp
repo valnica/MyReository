@@ -1,42 +1,36 @@
-#include "ClearMarker.h"
+#include "Marker.h"
 #include <SimpleMath.h>
 #include "GameManager.h"
 #include "Culling.h"
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 using namespace DirectX::SimpleMath;
 
-ClearMarker::ClearMarker()
+Marker::Marker()
 {
 }
 
 
-ClearMarker::~ClearMarker()
+Marker::~Marker()
 {
 }
 
-void ClearMarker::Initialize()
+void Marker::Initialize()
 {
 	marker_.LoadModelFromFile(L"Resources\\cModels\\Marker.cmo");
 	marker_.SetTrans(Vector3(0.0f, 1.0f, 0.0f));
 	marker_.SetRotate(Vector3(0.0f, 0.0f, 0.0f));
 	marker_.SetScale(Vector3(1.0f, 1.0f, 1.0f));
-
-	box_.point[0] = Vector3(-0.5f, 0.5f, -0.5f);
-	box_.point[1] = Vector3(0.5f, 0.5f, -0.5f);
-	box_.point[2] = Vector3(0.5f, 0.5f, 0.5f);
-	box_.point[3] = Vector3(-0.5f, 0.5f, 0.5f);
-	box_.point[4] = Vector3(-0.5f, -0.5f, -0.5f);
-	box_.point[5] = Vector3(0.5f, -0.5f, -0.5f);
-	box_.point[6] = Vector3(0.5f, -0.5f, 0.5f);
-	box_.point[7] = Vector3(-0.5f, -0.5f, 0.5f);
 }
 
-void ClearMarker::Update()
+void Marker::Update()
 {
 	marker_.Calc();
+	CollisionManager::GetInstance()->Entry(this);
 }
 
-void ClearMarker::Render()
+void Marker::Render()
 {
 	marker_.Draw();
 
@@ -52,7 +46,7 @@ void ClearMarker::Render()
 	g_spriteFont->DrawString(g_spriteBatch.get(), flag, Vector2(0, 80));
 }
 
-void ClearMarker::SetPosition(DirectX::SimpleMath::Vector3 pos)
+void Marker::SetPosition(DirectX::SimpleMath::Vector3 pos)
 {
 	marker_.SetTrans(pos);
 	box_.Translation(pos);

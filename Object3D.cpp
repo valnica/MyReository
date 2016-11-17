@@ -1,6 +1,8 @@
 #include "Object3D.h"
 #include <VertexTypes.h>
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 

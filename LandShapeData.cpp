@@ -1,6 +1,8 @@
 #include "LandShapeData.h"
 #include <fstream>
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 using namespace std;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -144,7 +146,7 @@ void LandShapeData::UpdateNodeMatrices(int index, const NodeInfo * nodeInfo_arra
 
 			char str[256];
 
-			sprintf_s(str, "(%.3f,%.3f, %.3f)\n", it->pos_.x, it->pos_.y, it->pos_.z);
+			//sprintf_s(str, "(%.3f,%.3f, %.3f)\n", it->pos_.x, it->pos_.y, it->pos_.z);
 
 			OutputDebugStringA(str);
 		}

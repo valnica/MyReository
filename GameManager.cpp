@@ -4,6 +4,8 @@
 #include "Camera.h"
 #include "LandShape.h"
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 using namespace DirectX;
 
 GameManager::GameManager()
@@ -24,6 +26,9 @@ GameManager::~GameManager()
 
 	if (landshapeCommondef_)
 		delete landshapeCommondef_;
+
+	if (player_)
+		delete player_;
 }
 
 void GameManager::Initialize()

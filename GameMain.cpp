@@ -3,29 +3,37 @@
 #include "Scene.h"
 #include "PlayScene.h"
 #include "Debug.h"
+#include "SceneManager.h"
+#include "CollisionManager.h"
+
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 GameMain::GameMain()
 {
 	gameManager_ = GameManager::GetInstance();
-	scene_ = new PlayScene;
 	debug_ = Debug::GetInstance();
+	sceneManager_ = SceneManager::GetInstance();
+	collisionManager_ = CollisionManager::GetInstance();
+	//cameraController_ = CameraController::GetInstance();
 }
 
 GameMain::~GameMain()
 {
 	if (gameManager_)
 		delete gameManager_;
-	if (scene_)
-		delete scene_;
 	if (debug_)
 		delete debug_;
+	if (sceneManager_)
+		delete sceneManager_;
+	if (collisionManager_)
+		delete collisionManager_;
 }
 
 void GameMain::Initialize()
 {
 	gameManager_->Initialize();
-	scene_->Initialize();
 	debug_->Initialize();
+	sceneManager_->Initialize();
 }
 
 void GameMain::Update()
@@ -35,16 +43,17 @@ void GameMain::Update()
 	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::P))
 		flag = !flag;
 
-	if(!flag)
-	scene_->Update();
+	if (!flag)
+		sceneManager_->Update();
 }
 
 void GameMain::Render()
 {
-	scene_->Render();
+	sceneManager_->Render();
+	debug_->Draw();
 }
 
 void GameMain::Finalize()
 {
-	scene_->Finalize();
+	sceneManager_->Finalize();
 }

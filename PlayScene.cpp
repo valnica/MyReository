@@ -3,10 +3,12 @@
 #include "Camera.h"
 #include "GameManager.h"
 #include "Player.h"
-#include "ClearMarker.h"
+#include "Marker.h"
 #include "Enemy.h"
 #include <SimpleMath.h>
 #include "CollisionManager.h"
+
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 using namespace DirectX::SimpleMath;
 
@@ -14,8 +16,7 @@ PlayScene::PlayScene()
 {
 	stage_ = new Stage;
 	player_ = GameManager::GetInstance()->GetPlayer();
-	cameraController_ = CameraController::GetInstance();
-	collisionManager_ = CollisionManager::GetInstance();
+	cameraController_ = new CameraController;// CameraController::GetInstance();
 }
 
 
@@ -24,12 +25,24 @@ PlayScene::~PlayScene()
 	if (stage_)
 		delete stage_;
 
-	if (player_)
-		delete player_;
+	auto enemy = enemy_.begin();
+	while (enemy != enemy_.end())
+	{
+		if ((*enemy))
+			delete *enemy;
+
+		enemy = enemy_.erase(enemy);
+	}
+
+	if (cameraController_)
+		delete cameraController_;
 }
 
 void PlayScene::Initialize()
 {
+	collisionManager_ = CollisionManager::GetInstance();
+	collisionManager_->Initialize();
+
 	stage_->Initialize();
 
 	player_->SetStage(stage_);
@@ -65,20 +78,19 @@ void PlayScene::Initialize()
 	enemy->SetMovePoint(movePoint);
 	enemy->Initialize();
 	enemy_.push_back(enemy);
-
-	collisionManager_->Initialize();
 }
 
 void PlayScene::Update()
 {
 	stage_->Update();
 	player_->Update();
-	cameraController_->Update();
 	for (auto it = enemy_.begin(); it != enemy_.end(); it++)
 	{
 		(*it)->Update();
 	}
 
+	cameraController_->Update();
+	
 	collisionManager_->Update();
 }
 
@@ -90,6 +102,10 @@ void PlayScene::Render()
 	{
 		(*it)->Render();
 	}
+
+	wchar_t flag[9];
+	swprintf_s(flag, 9, L"Play");
+	g_spriteFont->DrawString(g_spriteBatch.get(), flag, Vector2(300, 0));
 }
 
 void PlayScene::Finalize()

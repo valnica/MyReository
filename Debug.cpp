@@ -4,6 +4,8 @@
 #include "GameManager.h"
 #include "Camera.h"
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
@@ -63,4 +65,9 @@ void Debug::DrawLine(Vector3 v1,Vector3 v2)
 	primitiveBatch_->DrawLine(pos1, pos2);
 
 	primitiveBatch_->End();
+}
+
+void Debug::Draw()
+{
+	DrawLine(start_, end_);
 }

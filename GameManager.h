@@ -4,6 +4,7 @@
 
 class Player;
 class Camera;
+class Marker;
 class LandShapeCommonDef;
 
 class GameManager
@@ -13,6 +14,7 @@ private:
 	Camera* camera_;
 	DirectX::EffectFactory* factory_;
 	LandShapeCommonDef* landshapeCommondef_;
+
 
 	GameManager();
 public:

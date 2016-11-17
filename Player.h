@@ -1,6 +1,7 @@
 #pragma once
 #include "Object3D.h"
 #include "State.h"
+#include "CollisionNode.h"
 
 class Stage;
 
@@ -21,9 +22,9 @@ private:
 	};
 
 	bool flag_;
+	SphereNode collisionBody_;
 
 	Object3D parts_[NUM_PARTS];
-	void Calc();
 public:
 	Player();
 	~Player();
@@ -46,9 +47,11 @@ public:
 	void SetHeadRotate(DirectX::SimpleMath::Vector3 rot);
 	DirectX::SimpleMath::Vector3 GetHeadRotate();
 
-	DirectX::SimpleMath::Vector3 GetEye();
+	DirectX::SimpleMath::Vector3 GetEyePosition();
 	DirectX::SimpleMath::Matrix GetEyeMatrix();
 
+	SphereNode& GetCollisionBody() { return collisionBody_; }
 	void Found();
+	void Calc();
 };
 

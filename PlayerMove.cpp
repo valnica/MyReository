@@ -1,9 +1,12 @@
 #include "PlayerMove.h"
 #include "Player.h"
 #include "Stage.h"
-#include "ClearMarker.h"
+#include "Marker.h"
 #include "Culling.h"
 #include "GameManager.h"
+#include "Collision.h"
+
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 using namespace DirectX::SimpleMath;
 
@@ -23,13 +26,17 @@ State<Player> * PlayerMove::Input(Player& player)
 
 void PlayerMove::Update(Player & player)
 {
-	if (g_mouseTracker->leftButton && g_mouseTracker->PRESSED)
+	if (g_mouseTracker->leftButton == g_mouseTracker->PRESSED)
 	{
-		if (Culling::InView(player.GetStage()->GetClearMarker()->GetBox(), GameManager::GetInstance()->GetCamera(), 6, 0.5f, 0.5f))
+		Collision collision;
+
+		if (collision.MarkerInView())
+		{
 			player.GetStage()->SetClearFlag(true);
+		}
 	}
 
-	Vector2 amountOfMoment = Vector2(g_mouse.x, g_mouse.y);
+	Vector2 amountOfMoment = Vector2((float)g_mouse.x, (float)g_mouse.y);
 	
 	Vector3 vel = Vector3::Zero;
 	float angle = 0;

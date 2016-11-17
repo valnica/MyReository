@@ -31,6 +31,7 @@ public:
 	void SetParentMatrix(const DirectX::SimpleMath::Matrix* parent);
 	void SetLocalRadius(float radius) { localRadius_ = radius; }
 	void SetTrans(DirectX::SimpleMath::Vector3& trans) { trans_ = trans; }
+	DirectX::SimpleMath::Vector3 GetTrans() { return object_.GetTrans(); }
 };
 
 class CapsuleNode :public Capsule

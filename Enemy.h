@@ -8,7 +8,17 @@
 class Enemy
 {
 private:
-	Object3D parts_;
+	enum PARTS
+	{
+		EMPTY,
+		BODY,
+		HEAD,
+		EYE,
+
+		NUM_PARTS
+	};
+
+	Object3D parts_[NUM_PARTS];
 
 	//patten movementópÇÃïœêî
 	List<DirectX::SimpleMath::Vector3> movePoint_;
@@ -34,8 +44,8 @@ public:
 	void Render();
 
 	void SetMovePoint(List<DirectX::SimpleMath::Vector3> movePoint);
-	DirectX::SimpleMath::Vector3 GetPositon() { return parts_.GetTrans(); }
-	DirectX::SimpleMath::Vector3 GetRotate() { return parts_.GetRotate(); }
+	DirectX::SimpleMath::Vector3 GetPosition() { return parts_[EMPTY].GetTrans(); }
+	DirectX::SimpleMath::Vector3 GetRotate() { return parts_[EMPTY].GetRotate(); }
 	float GetViewAngle() { return viewAngle_; }
 	float GetViewDistance() { return viewDistance_; }
 };
