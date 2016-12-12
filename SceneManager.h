@@ -1,16 +1,19 @@
 #pragma once
+#include "Singleton.h"
 
 class Scene;
 class PlayScene;
 
-class SceneManager
+class SceneManager:public Singleton<SceneManager>
 {
 private:
 	Scene* now_;
 	Scene* next_;
 
 	int flag;
-	
+
+	friend class Singleton<SceneManager>;
+
 	SceneManager();
 public:
 	~SceneManager();
@@ -30,16 +33,16 @@ public:
 
 	void ChageScene(SCENEID id);
 
-	static SceneManager* GetInstance()
-	{
-		static SceneManager* instance = nullptr;
+	//static SceneManager* GetInstance()
+	//{
+	//	static SceneManager* instance = nullptr;
 
-		if (!instance)
-		{
-			instance = new SceneManager;
-		}
+	//	if (!instance)
+	//	{
+	//		instance = new SceneManager;
+	//	}
 
-		return instance;
-	}
+	//	return instance;
+	//}
 };
 
