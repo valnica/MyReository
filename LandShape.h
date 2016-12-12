@@ -73,5 +73,5 @@ public:
 	const DirectX::SimpleMath::Matrix& GetLocalWorld() { return object_.GetWorld(); }
 
 	bool IntersectSphere(const Sphere& sphere, DirectX::SimpleMath::Vector3* reject);
-	bool LandShape::IntersectSegment(const Segment& segment, DirectX::SimpleMath::Vector3* inter, float angleofFloor = 30);
+	bool IntersectSegment(const Segment& segment, DirectX::SimpleMath::Vector3* inter, float angleofFloor = 30);
 };

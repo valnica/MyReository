@@ -5,6 +5,9 @@
 #include "Culling.h"
 #include "GameManager.h"
 #include "Collision.h"
+#include "TPSMode.h"
+#include "TaskManager.h"
+#include "Flash.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -14,20 +17,25 @@ PlayerMove::PlayerMove()
 {
 }
 
-
 PlayerMove::~PlayerMove()
 {
 }
 
 State<Player> * PlayerMove::Input(Player& player)
 {
+	if (g_mouseTracker->rightButton == g_mouseTracker->RELEASED)
+	{
+		return new TPSMode;
+	}
 	return nullptr;
 }
 
 void PlayerMove::Update(Player & player)
 {
+	//左クリックで写真を撮る
 	if (g_mouseTracker->leftButton == g_mouseTracker->PRESSED)
 	{
+		TaskManager::GetInstance()->Add<Flash>()->Initialize();
 		Collision collision;
 
 		if (collision.MarkerInView())
@@ -36,6 +44,7 @@ void PlayerMove::Update(Player & player)
 		}
 	}
 
+	//カメラの移動量取得
 	Vector2 amountOfMoment = Vector2((float)g_mouse.x, (float)g_mouse.y);
 	
 	Vector3 vel = Vector3::Zero;

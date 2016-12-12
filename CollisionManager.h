@@ -12,6 +12,7 @@ class LandShape;
 class Collision;
 class Culling;
 class Event;
+class Camera;
 
 ///////////////////////////////////
 // Name      : CollisionManager
@@ -26,6 +27,7 @@ private:
 	std::vector<LandShape*> landShape_;
 	std::vector<Marker*> marker_;
 	std::vector<Event*> event_;
+	Camera* camera;
 
 	friend Collision;
 
@@ -42,6 +44,7 @@ public:
 	void Entry(LandShape* landShape);
 	void Entry(Marker* marker);
 	void Entry(Event* events);
+	void Entry(Camera* mainCamera);
 
 	//シングルトンでアクセス
 	static CollisionManager* GetInstance();

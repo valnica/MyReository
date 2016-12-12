@@ -5,6 +5,8 @@
 #include "Debug.h"
 #include "SceneManager.h"
 #include "CollisionManager.h"
+#include "TaskManager.h"
+#include "SpriteManager.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -14,7 +16,8 @@ GameMain::GameMain()
 	debug_ = Debug::GetInstance();
 	sceneManager_ = SceneManager::GetInstance();
 	collisionManager_ = CollisionManager::GetInstance();
-	//cameraController_ = CameraController::GetInstance();
+	taskManager_ = TaskManager::GetInstance();
+	spriteManager_ = SpriteManager::GetInstance();
 }
 
 GameMain::~GameMain()
@@ -27,6 +30,10 @@ GameMain::~GameMain()
 		delete sceneManager_;
 	if (collisionManager_)
 		delete collisionManager_;
+	if (taskManager_)
+		delete taskManager_;
+	if (spriteManager_)
+		delete spriteManager_;
 }
 
 void GameMain::Initialize()
@@ -45,12 +52,16 @@ void GameMain::Update()
 
 	if (!flag)
 		sceneManager_->Update();
+
+	taskManager_->Run();
 }
 
 void GameMain::Render()
 {
 	sceneManager_->Render();
 	debug_->Draw();
+
+	taskManager_->Render();
 }
 
 void GameMain::Finalize()

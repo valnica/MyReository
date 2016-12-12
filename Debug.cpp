@@ -15,7 +15,6 @@ Debug::Debug()
 {
 }
 
-
 Debug::~Debug()
 {
 	if (inputLayOut_)

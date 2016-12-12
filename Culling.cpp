@@ -21,6 +21,7 @@ bool Culling::InView(Box& box,Camera* camera,int required,float sx, float sy)
 	int num = 0;
 	for (int i = 0; i < 8; i++)
 	{
+		//ビューポート行列を計算
 		Matrix trans = Matrix::CreateTranslation(box.point[i]);
 		Matrix world = Matrix::Identity;
 		Matrix view = camera->GetView();
@@ -32,6 +33,7 @@ bool Culling::InView(Box& box,Camera* camera,int required,float sx, float sy)
 		result._42 /= result._44;
 		result._43 /= result._44;
 
+		//指定されたビューポートないにあるかどうか
 		if (result._41 > -sx && result._41 < sx
 			&& result._42 > -sy && result._42 < sy
 			&& result._43 >0 && result._43 < 1)

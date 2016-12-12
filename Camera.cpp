@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "FPSCamera.h"
+#include "TPSCamera.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -52,7 +53,7 @@ void Camera::SetFar(float farPos)
 CameraController::CameraController()
 	:camera_(nullptr)
 {
-	state_ = new FPSCamera;
+	state_ = new TPSCamera;
 }
 
 CameraController::~CameraController()

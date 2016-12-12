@@ -18,7 +18,6 @@ Stage::Stage()
 	clearEvent = new ClearEvent;
 }
 
-
 Stage::~Stage()
 {
 	if (marker_)

@@ -646,6 +646,7 @@ bool Collision::InFrontView(const ViewInfo& viewInfo)
 	//eye‚Ì³–Ê‚©‚ç‰½“xˆá‚¤‚©ŒvŽZ‚·‚é
 	angle = viewInfo.eyeAngle_ - angle;
 
+	//-180~180‚ÉC³‚·‚é
 	if (angle > 180)
 		angle -= 360;
 	else if (angle < -180)

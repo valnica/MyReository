@@ -53,5 +53,13 @@ public:
 	SphereNode& GetCollisionBody() { return collisionBody_; }
 	void Found();
 	void Calc();
+
+	void SetState(State<Player>* state)
+	{
+		if (state_)
+			delete state_;
+
+		state_ = state;
+	}
 };
 

@@ -10,6 +10,7 @@
 #include "Event.h"
 #include "Stage.h"
 #include "SceneManager.h"
+#include "TPSCamera.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -17,10 +18,12 @@ using namespace DirectX::SimpleMath;
 
 void CollisionManager::Reset()
 {
+	//登録されてるオブジェクトのリセット
 	player_.clear();
 	enemy_.clear();
 	landShape_.clear();
 	marker_.clear();
+	camera = nullptr;
 }
 
 CollisionManager::CollisionManager()
@@ -38,6 +41,7 @@ void CollisionManager::Initialize()
 	enemy_.clear();
 	landShape_.clear();
 	marker_.clear();
+	event_.clear();
 }
 
 void CollisionManager::Update()
@@ -50,16 +54,19 @@ void CollisionManager::Update()
 	{
 		for (auto landShape = landShape_.begin(); landShape != landShape_.end(); landShape++)
 		{
+			//空間分割用の変数
 			Grid grid;
 			SphereNode sphere = (*player)->GetCollisionBody();
 			Point3D point1 = grid.Calc3DPoint((*player)->GetPosition());
 			Point3D point2 = grid.Calc3DPoint((*landShape)->GetTrans());
-			
-			/*if (!collision.NearPoint(point1, point2))
+
+			//分割した空間が隣接空間であるかどうか
+			if (!collision.NearPoint(point1, point2))
 			{
 				continue;
-			}*/
+			}
 
+			//プレイヤーと地形の当たり判定
 			Vector3 inter;
 			Vector3 vec = (*player)->GetPosition() - sphere.center_;
 			if ((*landShape)->IntersectSphere(sphere, &inter))
@@ -91,6 +98,7 @@ void CollisionManager::Update()
 				Vector3 origine = (*enemy)->GetPosition() + Vector3(0.0f, 1.0f, 0.0f);
 				Vector3 ref = (*player)->GetEyePosition();
 
+				//Rayが交差したオブジェクトを検索
 				LandShape* land = collision.RayCast(origine, ref);
 
 				//raycastでオブジェクトに当たっていなかったら見つかっている
@@ -127,20 +135,39 @@ void CollisionManager::Update()
 			{
 				if ((*events)->Run())
 				{
-					if((*events))
-						delete *events;
 					events = event_.erase(events);
-				}
-				else
-				{
-					events++;
 					continue;
 				}
 			}
-			else
-				events++;
+			events++;
 		}
 	}
+
+	////////////////////////////カメラとオブジェクト//////////////////////////
+	if (camera)
+	{
+		Vector3 inter{};
+		float distance = 10e10;
+		for (auto it = landShape_.begin(); it != landShape_.end(); it++)
+		{
+			Segment segment;
+			segment.start_ = camera->GetTarget();
+			segment.end_ = camera->GetEye();
+
+			if ((*it)->IntersectSegment(segment, &inter, 90))
+			{
+				if (distance > inter.Length())
+				{
+					distance = inter.Length();
+					Vector3 offset = segment.start_ - inter;
+					offset.Normalize();
+					camera->SetEye(inter + offset);
+					camera->Update();
+				}
+			}
+		}
+	}
+
 
 	Reset();
 }
@@ -168,6 +195,11 @@ void CollisionManager::Entry(Marker * marker)
 void CollisionManager::Entry(Event * events)
 {
 	event_.push_back(events);
+}
+
+void CollisionManager::Entry(Camera * mainCamera)
+{
+	camera = mainCamera;
 }
 
 CollisionManager* CollisionManager::GetInstance()

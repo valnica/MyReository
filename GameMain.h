@@ -1,10 +1,14 @@
 #pragma once
 
+#include <memory>
+
 class GameManager;
 class Scene;
 class Debug;
 class SceneManager;
 class CollisionManager;
+class TaskManager;
+class SpriteManager;
 
 class GameMain
 {
@@ -13,6 +17,8 @@ private:
 	SceneManager* sceneManager_;
 	Debug* debug_;
 	CollisionManager* collisionManager_;
+	TaskManager* taskManager_;
+	SpriteManager* spriteManager_;
 
 public:
 	GameMain();

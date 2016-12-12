@@ -125,3 +125,38 @@ Debug/LandShapeData.obj
 Debug/Line.obj
 Debug/Main.obj
 Debug/Marker.obj
+Debug/ClearScene.obj
+Debug/Code S.exe
+Debug/Code S.ilk
+Debug/Code S.log
+Debug/Code S.pdb
+Debug/Collision.obj
+Debug/CollisionManager.obj
+Debug/CollisionNode.obj
+Debug/Culling.obj
+Debug/Debug.obj
+Debug/DebugCamera.obj
+Debug/Direct3D.obj
+Debug/DirectXTK.obj
+Debug/Enemy.obj
+Debug/Event.obj
+Debug/FPSTimer.obj
+.vs/Code S/v14/.suo
+Code S.exe
+Debug/Camera.obj
+Debug/ClearMarker.obj
+Debug/FPSCamera.obj
+Debug/GameMain.obj
+Debug/GameManager.obj
+Debug/GameOverScene.obj
+Debug/Grid.obj
+Release/Line.obj
+Release/Marker.obj
+Release/Object3D.obj
+Release/PlayScene.obj
+Release/Player.obj
+Release/PlayerMove.obj
+Release/SceneManager.obj
+Release/Texture.obj
+Release/TitleScene.obj
+Release/vc140.pdb

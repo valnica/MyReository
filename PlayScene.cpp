@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include <SimpleMath.h>
 #include "CollisionManager.h"
+#include "TPSMode.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -45,8 +46,10 @@ void PlayScene::Initialize()
 
 	stage_->Initialize();
 
-	player_->SetStage(stage_);
 	player_->Initialize();
+	player_->SetStage(stage_);
+	player_->SetPosition(stage_->GetStartPos());
+	player_->SetState(new TPSMode);
 
 	cameraController_->Initialize(GameManager::GetInstance()->GetCamera());
 	
@@ -90,7 +93,6 @@ void PlayScene::Update()
 	}
 
 	cameraController_->Update();
-	
 	collisionManager_->Update();
 }
 

@@ -4,6 +4,7 @@
 #include "Utility.h"
 #include "Stage.h"
 #include "CollisionManager.h"
+#include "TPSMode.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -22,7 +23,7 @@ void Player::Calc()
 //コンストラクタ
 Player::Player()
 {
-	state_ = new PlayerMove;
+	state_ = new TPSMode;
 }
 
 //デストラクタ
@@ -36,7 +37,7 @@ Player::~Player()
 void Player::Initialize()
 {
 	//空のオブジェクト
-	parts_[EMPTY].SetTrans(stage_->GetStartPos());
+	parts_[EMPTY].SetTrans(Vector3(0.0f, 0.0f, 0.0f));
 	parts_[EMPTY].SetRotate(Vector3(0.0f, 0.0f, 0.0f));
 	parts_[EMPTY].SetScale(Vector3(1.0f, 1.0f, 1.0f));
 

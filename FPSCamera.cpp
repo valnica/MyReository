@@ -5,6 +5,7 @@
 #include "GameManager.h"
 #include "DirectXTK.h"
 #include "DebugCamera.h"
+#include "TPSCamera.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -22,6 +23,11 @@ FPSCamera::~FPSCamera()
 
 State<Camera>* FPSCamera::Input(Camera & camera)
 {
+	if (g_mouseTracker->rightButton == g_mouseTracker->RELEASED)
+	{
+		return new TPSCamera;
+	}
+
 	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::O))
 	{
 		return new DebugCamera;

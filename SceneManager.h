@@ -6,8 +6,6 @@ class PlayScene;
 class SceneManager
 {
 private:
-	//PlayScene* playScene;
-
 	Scene* now_;
 	Scene* next_;
 
