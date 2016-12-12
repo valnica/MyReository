@@ -613,7 +613,7 @@ bool Collision::CheckSegment2Triangle(const Segment& _segment, const Triangle& _
 
 LandShape * Collision::RayCast(DirectX::SimpleMath::Vector3 origine, DirectX::SimpleMath::Vector3 ref)
 {
-	CollisionManager* collisionManager = CollisionManager::GetInstance();
+	auto collisionManager = CollisionManager::GetInstance().get();
 	LandShape* landShape = nullptr;
 	float lenght = 1.0e10;
 
@@ -663,7 +663,7 @@ bool Collision::InFrontView(const ViewInfo& viewInfo)
 
 bool Collision::MarkerInView()
 {
-	auto collisioManager = CollisionManager::GetInstance();
+	auto collisioManager = CollisionManager::GetInstance().get();
 	Camera* camera = GameManager::GetInstance()->GetCamera();
 
 	bool flag = false;

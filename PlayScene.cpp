@@ -41,7 +41,7 @@ PlayScene::~PlayScene()
 
 void PlayScene::Initialize()
 {
-	collisionManager_ = CollisionManager::GetInstance();
+	collisionManager_ = CollisionManager::GetInstance().get();
 	collisionManager_->Initialize();
 
 	stage_->Initialize();

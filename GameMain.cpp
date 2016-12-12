@@ -15,7 +15,7 @@ GameMain::GameMain()
 	gameManager_ = GameManager::GetInstance();
 	debug_ = Debug::GetInstance();
 	sceneManager_ = SceneManager::GetInstance();
-	collisionManager_ = CollisionManager::GetInstance();
+	/*collisionManager_ = CollisionManager::GetInstance();*/
 	taskManager_ = TaskManager::GetInstance();
 	spriteManager_ = SpriteManager::GetInstance();
 }
@@ -28,8 +28,8 @@ GameMain::~GameMain()
 		delete debug_;
 	if (sceneManager_)
 		delete sceneManager_;
-	if (collisionManager_)
-		delete collisionManager_;
+	//if (collisionManager_)
+	//	delete collisionManager_;
 	if (taskManager_)
 		delete taskManager_;
 	if (spriteManager_)

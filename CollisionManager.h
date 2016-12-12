@@ -4,6 +4,7 @@
 #include <vector>
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
+#include "Singleton.h"
 
 class Marker;
 class Player;
@@ -19,7 +20,7 @@ class Camera;
 //
 // Over view : 当たり判定の管理クラス
 ///////////////////////////////////
-class CollisionManager
+class CollisionManager:public Singleton<CollisionManager>
 {
 private:
 	std::vector<Player*> player_;
@@ -30,6 +31,7 @@ private:
 	Camera* camera;
 
 	friend Collision;
+	friend class Singleton<CollisionManager>;
 
 	void Reset();
 public:
@@ -47,7 +49,7 @@ public:
 	void Entry(Camera* mainCamera);
 
 	//シングルトンでアクセス
-	static CollisionManager* GetInstance();
+	//static CollisionManager* GetInstance();
 };
 
 class BoundingBox

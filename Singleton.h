@@ -8,7 +8,7 @@ private:
 	static std::unique_ptr<T> instance_;
 public:
 
-	static std::unique_ptr<T>& Get()
+	static std::unique_ptr<T>& GetInstance()
 	{
 		if (!instance_)
 			instance_.reset(new T);
@@ -21,3 +21,6 @@ public:
 		instance_.reset();
 	}
 };
+
+template <typename T>
+std::unique_ptr<T> Singleton<T>::instance_ = nullptr;

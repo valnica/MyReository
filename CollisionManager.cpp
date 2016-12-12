@@ -202,15 +202,15 @@ void CollisionManager::Entry(Camera * mainCamera)
 	camera = mainCamera;
 }
 
-CollisionManager* CollisionManager::GetInstance()
-{
-	static CollisionManager* instance_ = nullptr;
-
-	if (!instance_)
-		instance_ = new CollisionManager;
-
-	return instance_;
-}
+//CollisionManager* CollisionManager::GetInstance()
+//{
+//	static CollisionManager* instance_ = nullptr;
+//
+//	if (!instance_)
+//		instance_ = new CollisionManager;
+//
+//	return instance_;
+//}
 
 Box::Box()
 {
