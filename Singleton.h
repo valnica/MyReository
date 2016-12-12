@@ -22,5 +22,5 @@ public:
 	}
 };
 
-template <typename T>
+template <typename T>	
 std::unique_ptr<T> Singleton<T>::instance_ = nullptr;

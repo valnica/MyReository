@@ -13,7 +13,7 @@ class SpriteManager;
 class GameMain
 {
 private:
-	GameManager* gameManager_;
+	//GameManager* gameManager_;
 	SceneManager* sceneManager_;
 	Debug* debug_;
 	//CollisionManager* collisionManager_;

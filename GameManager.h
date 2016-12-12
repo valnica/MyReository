@@ -1,4 +1,6 @@
 #pragma once
+
+#include "Singleton.h"
 #include "Direct3D.h"
 #include "DirectXTK.h"
 
@@ -7,7 +9,7 @@ class Camera;
 class Marker;
 class LandShapeCommonDef;
 
-class GameManager
+class GameManager:public Singleton<GameManager>
 {
 private:
 	Player* player_;
@@ -15,6 +17,7 @@ private:
 	DirectX::EffectFactory* factory_;
 	LandShapeCommonDef* landshapeCommondef_;
 
+	friend class Singleton<GameManager>;
 
 	GameManager();
 public:
@@ -25,16 +28,16 @@ public:
 	Player* GetPlayer();
 	Camera* GetCamera();
 	
-	static GameManager* GetInstance()
-	{
-		static GameManager* instance_ = nullptr;
+	//static GameManager* GetInstance()
+	//{
+	//	static GameManager* instance_ = nullptr;
 
-		if (!instance_)
-		{
-			instance_ = new GameManager;
-		}
+	//	if (!instance_)
+	//	{
+	//		instance_ = new GameManager;
+	//	}
 
-		return instance_;
-	}
+	//	return instance_;
+	//}
 };
 

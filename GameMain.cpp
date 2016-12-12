@@ -12,7 +12,7 @@
 
 GameMain::GameMain()
 {
-	gameManager_ = GameManager::GetInstance();
+	//gameManager_ = GameManager::GetInstance();
 	debug_ = Debug::GetInstance();
 	sceneManager_ = SceneManager::GetInstance();
 	/*collisionManager_ = CollisionManager::GetInstance();*/
@@ -22,8 +22,8 @@ GameMain::GameMain()
 
 GameMain::~GameMain()
 {
-	if (gameManager_)
-		delete gameManager_;
+	/*if (gameManager_)
+		delete gameManager_;*/
 	if (debug_)
 		delete debug_;
 	if (sceneManager_)
@@ -38,7 +38,7 @@ GameMain::~GameMain()
 
 void GameMain::Initialize()
 {
-	gameManager_->Initialize();
+	GameManager::GetInstance()->Initialize();
 	debug_->Initialize();
 	sceneManager_->Initialize();
 }
