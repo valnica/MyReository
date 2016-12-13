@@ -19,6 +19,5 @@ public:
 	~SpriteManager();
 
 	Texture* LoadSprite(wchar_t* fileName = nullptr);
-	//static SpriteManager* GetInstance();
 };
 

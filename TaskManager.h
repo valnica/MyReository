@@ -5,15 +5,15 @@ class BaseTask
 private:
 public:
 	//次のタスクへのポインタ
-	BaseTask* m_next;
+	BaseTask* next_;
 	//前のタスクへのポインタ
-	BaseTask* m_prev;
+	BaseTask* prev_;
 
 	//コンストラクタ
 	BaseTask()
 	{
-		m_next = nullptr;
-		m_prev = nullptr;
+		next_ = nullptr;
+		prev_ = nullptr;
 	}
 	//デストラクタ
 	virtual ~BaseTask() {}
@@ -28,24 +28,24 @@ class Task :public BaseTask
 private:
 public:
 	//templateで宣言したクラスのデータを保存
-	T m_data;
+	T data_;
 
 	Task() {}
 	~Task() {}
 
-	bool Run() override { return m_data.Update(); }
-	void Draw() override { m_data.Render(); }
+	bool Run() override { return data_.Update(); }
+	void Draw() override { data_.Render(); }
 };
 
 class TaskManager
 {
 private:
-	BaseTask m_taskList;
+	BaseTask taskList_;
 
 	TaskManager()
 	{
-		m_taskList.m_next = &m_taskList;
-		m_taskList.m_prev = &m_taskList;
+		taskList_.next_ = &taskList_;
+		taskList_.prev_ = &taskList_;
 	}
 public:
 	static TaskManager* GetInstance()
@@ -69,46 +69,46 @@ public:
 	{
 		Task<T>* task = new Task<T>;
 		Linktask(task);
-		return &task->m_data;
+		return &task->data_;
 	}
 
 private:
 	void Linktask(BaseTask* task)
 	{
-		task->m_next = &m_taskList;
-		task->m_prev = m_taskList.m_prev;
-		task->m_next->m_prev = task;
-		task->m_prev->m_next = task;
+		task->next_ = &taskList_;
+		task->prev_ = taskList_.prev_;
+		task->next_->prev_ = task;
+		task->prev_->next_ = task;
 	}
 
 public:
 	void Run()
 	{
-		BaseTask* task = m_taskList.m_next;
-		while (task != &m_taskList)
+		BaseTask* task = taskList_.next_;
+		while (task != &taskList_)
 		{
-			if (task->Run()) task = task->m_next;
+			if (task->Run()) task = task->next_;
 			else task = Kill(task);
 		}
 	}
 
 	void Render()
 	{
-		BaseTask* task = m_taskList.m_next;
-		while (task != &m_taskList)
+		BaseTask* task = taskList_.next_;
+		while (task != &taskList_)
 		{
 			task->Draw();
-			task = task->m_next;
+			task = task->next_;
 		}
 	}
 
 private:
 	BaseTask* Kill(BaseTask* task)
 	{
-		BaseTask* next = task->m_next;
+		BaseTask* next = task->next_;
 
-		task->m_next->m_prev = task->m_prev;
-		task->m_prev->m_next = task->m_next;
+		task->next_->prev_ = task->prev_;
+		task->prev_->next_ = task->next_;
 
 		delete task;
 
@@ -117,6 +117,6 @@ private:
 
 	void AllTaskKill()
 	{
-		for (BaseTask* task = m_taskList.m_next; task != &m_taskList; task = Kill(task));
+		for (BaseTask* task = taskList_.next_; task != &taskList_; task = Kill(task));
 	}
 };

@@ -27,17 +27,5 @@ public:
 
 	Player* GetPlayer();
 	Camera* GetCamera();
-	
-	//static GameManager* GetInstance()
-	//{
-	//	static GameManager* instance_ = nullptr;
-
-	//	if (!instance_)
-	//	{
-	//		instance_ = new GameManager;
-	//	}
-
-	//	return instance_;
-	//}
 };
 
