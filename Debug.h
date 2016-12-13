@@ -4,9 +4,9 @@
 #include <VertexTypes.h>
 #include <Effects.h>
 #include <SimpleMath.h>
+#include "Singleton.h"
 
-
-class Debug
+class Debug:public Singleton<Debug>
 {
 private:
 	std::unique_ptr<DirectX::BasicEffect> basicEffect_;
@@ -15,6 +15,8 @@ private:
 	static bool debugFlag_;
 	DirectX::SimpleMath::Vector3 start_;
 	DirectX::SimpleMath::Vector3 end_;
+
+	friend class Singleton<Debug>;
 
 	Debug();
 public:
@@ -25,16 +27,6 @@ public:
 
 	static void SwitchFlag() { debugFlag_ = !debugFlag_; }
 	static bool GetFlag() { return debugFlag_; }
-
-	static Debug* GetInstance()
-	{
-		static Debug* instance_ = nullptr;
-
-		if (!instance_)
-			instance_ = new Debug;
-
-		return instance_;	
-	}
 
 	void SetRay(DirectX::SimpleMath::Vector3 start, DirectX::SimpleMath::Vector3 end)
 	{

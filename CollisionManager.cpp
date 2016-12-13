@@ -202,16 +202,6 @@ void CollisionManager::Entry(Camera * mainCamera)
 	camera = mainCamera;
 }
 
-//CollisionManager* CollisionManager::GetInstance()
-//{
-//	static CollisionManager* instance_ = nullptr;
-//
-//	if (!instance_)
-//		instance_ = new CollisionManager;
-//
-//	return instance_;
-//}
-
 Box::Box()
 {
 	point[0] = Vector3(-0.5f, 0.5f, 0.5f);

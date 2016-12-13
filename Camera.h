@@ -74,15 +74,6 @@ public:
 	void Initialize(Camera* camera);
 	void Update();
 
-	/*static CameraController* GetInstance()
-	{
-		static CameraController* instance_ = nullptr;
-
-		if (!instance_)
-			instance_ = new CameraController;
-
-		return instance_;
-	}*/
 	void SetCamera(Camera* camera);
 
 	Camera* GetCamera() { return camera_; }

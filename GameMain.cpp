@@ -12,34 +12,19 @@
 
 GameMain::GameMain()
 {
-	//gameManager_ = GameManager::GetInstance();
-	debug_ = Debug::GetInstance();
-	//sceneManager_ = SceneManager::GetInstance();
-	/*collisionManager_ = CollisionManager::GetInstance();*/
 	taskManager_ = TaskManager::GetInstance();
-	spriteManager_ = SpriteManager::GetInstance();
 }
 
 GameMain::~GameMain()
 {
-	/*if (gameManager_)
-		delete gameManager_;*/
-	if (debug_)
-		delete debug_;
-	/*if (sceneManager_)
-		delete sceneManager_;*/
-	//if (collisionManager_)
-	//	delete collisionManager_;
 	if (taskManager_)
 		delete taskManager_;
-	if (spriteManager_)
-		delete spriteManager_;
 }
 
 void GameMain::Initialize()
 {
 	GameManager::GetInstance()->Initialize();
-	debug_->Initialize();
+	Debug::GetInstance()->Initialize();
 	SceneManager::GetInstance()->Initialize();
 }
 
@@ -59,7 +44,7 @@ void GameMain::Update()
 void GameMain::Render()
 {
 	SceneManager::GetInstance()->Render();
-	debug_->Draw();
+	Debug::GetInstance()->Draw();
 
 	taskManager_->Render();
 }

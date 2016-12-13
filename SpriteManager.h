@@ -2,12 +2,14 @@
 
 #include <map>
 #include "Texture.h"
+#include "Singleton.h"
 
-class SpriteManager
+class SpriteManager:public Singleton<SpriteManager>
 {
 private:
-	static SpriteManager* instance_;
 	std::map<std::wstring, Texture*> spritePool_;
+
+	friend class Singleton<SpriteManager>;
 
 	void TextureRelease();
 protected:
@@ -17,6 +19,6 @@ public:
 	~SpriteManager();
 
 	Texture* LoadSprite(wchar_t* fileName = nullptr);
-	static SpriteManager* GetInstance();
+	//static SpriteManager* GetInstance();
 };
 

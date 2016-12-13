@@ -17,7 +17,7 @@ PlayScene::PlayScene()
 {
 	stage_ = new Stage;
 	player_ = GameManager::GetInstance()->GetPlayer();
-	cameraController_ = new CameraController;// CameraController::GetInstance();
+	cameraController_ = new CameraController;
 }
 
 

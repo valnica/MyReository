@@ -1,7 +1,5 @@
 #include "SpriteManager.h"
 
-SpriteManager* SpriteManager::instance_ = nullptr;
-
 void SpriteManager::TextureRelease()
 {
 	auto it = spritePool_.begin();
@@ -20,7 +18,6 @@ SpriteManager::SpriteManager()
 SpriteManager::~SpriteManager()
 {
 	TextureRelease();
-	instance_ = nullptr;
 }
 
 Texture * SpriteManager::LoadSprite(wchar_t * fileName)
@@ -31,12 +28,3 @@ Texture * SpriteManager::LoadSprite(wchar_t * fileName)
 
 	return spritePool_[fileName];
 }
-
-SpriteManager * SpriteManager::GetInstance()
-{
-	if (!instance_)
-		instance_ = new SpriteManager;
-
-	return instance_;
-}
-

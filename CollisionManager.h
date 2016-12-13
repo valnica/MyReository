@@ -47,9 +47,6 @@ public:
 	void Entry(Marker* marker);
 	void Entry(Event* events);
 	void Entry(Camera* mainCamera);
-
-	//シングルトンでアクセス
-	//static CollisionManager* GetInstance();
 };
 
 class BoundingBox

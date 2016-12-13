@@ -7,6 +7,8 @@ class Singleton
 private:
 	static std::unique_ptr<T> instance_;
 public:
+	Singleton<T>() = default;
+	virtual ~Singleton<T>() = default;
 
 	static std::unique_ptr<T>& GetInstance()
 	{

@@ -4,7 +4,7 @@
 class Scene;
 class PlayScene;
 
-class SceneManager:public Singleton<SceneManager>
+class SceneManager :public Singleton<SceneManager>
 {
 private:
 	Scene* now_;
@@ -32,17 +32,5 @@ public:
 	void Finalize();
 
 	void ChageScene(SCENEID id);
-
-	//static SceneManager* GetInstance()
-	//{
-	//	static SceneManager* instance = nullptr;
-
-	//	if (!instance)
-	//	{
-	//		instance = new SceneManager;
-	//	}
-
-	//	return instance;
-	//}
 };
 
