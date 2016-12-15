@@ -28,8 +28,8 @@ private:
 	std::vector<LandShape*> landShape_;
 	std::vector<Marker*> marker_;
 	std::vector<Event*> event_;
-	Camera* camera;
-
+	Camera* camera_;
+	
 	friend Collision;
 	friend class Singleton<CollisionManager>;
 
@@ -46,7 +46,7 @@ public:
 	void Entry(LandShape* landShape);
 	void Entry(Marker* marker);
 	void Entry(Event* events);
-	void Entry(Camera* mainCamera);
+	void Entry(Camera* camera);
 };
 
 class BoundingBox

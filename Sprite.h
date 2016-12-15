@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include <SimpleMath.h>
 #include <DirectXColors.h>
+#include <memory>
 
 class Box2D
 {
@@ -17,7 +18,7 @@ public:
 class Sprite
 {
 private:
-	Texture* sprite_;
+	std::weak_ptr<Texture> sprite_;
 	DirectX::SimpleMath::Vector2 pos_;
 	RECT rect_;
 	DirectX::SimpleMath::Color color_;

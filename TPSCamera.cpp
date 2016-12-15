@@ -19,18 +19,19 @@ State<Camera>* TPSCamera::Input(Camera & camera)
 {
 	if (g_mouseTracker->rightButton == g_mouseTracker->PRESSED)
 	{
-		return new FPSCamera;
+		//return new FPSCamera;
+		return FPSCamera::GetInstance().get();
 	}
 	return nullptr;
 }
 
 void TPSCamera::Update(Camera & camera)
 {
-	Player* player = GameManager::GetInstance()->GetPlayer();
+	std::weak_ptr<Player> player = camera.GetTarget();
 
 	//カメラの設定に必要な変数の初期化
 	Vector3 eye = Vector3(0.0f, 0.0f, distance_);
-	Vector3 ref = player->GetEyePosition();
+	Vector3 ref = player.lock()->GetEyePosition();
 	Vector3 up = Vector3(0.0f, 1.0f, 0.0f);
 
 	rotate_.x -= g_mouse.x * 0.01f;
@@ -53,7 +54,7 @@ void TPSCamera::Update(Camera & camera)
 
 	//カメラの設定
 	camera.SetEye(eye);
-	camera.SetTarget(ref);
+	camera.SetRef(ref);
 	camera.SetUp(up);
 
 	CollisionManager::GetInstance()->Entry(&camera);

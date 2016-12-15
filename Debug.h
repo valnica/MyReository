@@ -4,6 +4,7 @@
 #include <VertexTypes.h>
 #include <Effects.h>
 #include <SimpleMath.h>
+#include <wrl.h>
 #include "Singleton.h"
 
 class Debug:public Singleton<Debug>
@@ -11,7 +12,7 @@ class Debug:public Singleton<Debug>
 private:
 	std::unique_ptr<DirectX::BasicEffect> basicEffect_;
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> primitiveBatch_;
-	ID3D11InputLayout* inputLayOut_;
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayOut_;
 	static bool debugFlag_;
 	DirectX::SimpleMath::Vector3 start_;
 	DirectX::SimpleMath::Vector3 end_;

@@ -23,7 +23,7 @@ void CollisionManager::Reset()
 	enemy_.clear();
 	landShape_.clear();
 	marker_.clear();
-	camera = nullptr;
+	camera_ = nullptr;
 }
 
 CollisionManager::CollisionManager()
@@ -61,7 +61,7 @@ void CollisionManager::Update()
 			Point3D point2 = grid.Calc3DPoint((*landShape)->GetTrans());
 
 			//分割した空間が隣接空間であるかどうか
-			if (!collision.NearPoint(point1, point2))
+			if (!collision.NearArea(point1, point2))
 			{
 				continue;
 			}
@@ -144,15 +144,15 @@ void CollisionManager::Update()
 	}
 
 	////////////////////////////カメラとオブジェクト//////////////////////////
-	if (camera)
+	if (camera_)
 	{
 		Vector3 inter{};
-		float distance = 10e10;
+		float distance = (float)10e10;
 		for (auto it = landShape_.begin(); it != landShape_.end(); it++)
 		{
 			Segment segment;
-			segment.start_ = camera->GetTarget();
-			segment.end_ = camera->GetEye();
+			segment.start_ = Camera::MainCamera().lock()->GetRef();
+			segment.end_ = Camera::MainCamera().lock()->GetEye();
 
 			if ((*it)->IntersectSegment(segment, &inter, 90))
 			{
@@ -161,8 +161,8 @@ void CollisionManager::Update()
 					distance = inter.Length();
 					Vector3 offset = segment.start_ - inter;
 					offset.Normalize();
-					camera->SetEye(inter + offset);
-					camera->Update();
+					Camera::MainCamera().lock()->SetEye(inter + offset);
+					Camera::MainCamera().lock()->Update();
 				}
 			}
 		}
@@ -197,9 +197,9 @@ void CollisionManager::Entry(Event * events)
 	event_.push_back(events);
 }
 
-void CollisionManager::Entry(Camera * mainCamera)
+void CollisionManager::Entry(Camera* camera)
 {
-	camera = mainCamera;
+	camera_ = camera;
 }
 
 Box::Box()

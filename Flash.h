@@ -1,12 +1,13 @@
 #pragma once
 #include "Effect.h"
+#include <memory>
 
 class Sprite;
 
 class Flash:public Effect
 {
 private:
-	Sprite* sprite_;
+	std::unique_ptr<Sprite> sprite_;
 	float alpha_;
 
 public:

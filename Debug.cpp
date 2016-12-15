@@ -17,8 +17,6 @@ Debug::Debug()
 
 Debug::~Debug()
 {
-	if (inputLayOut_)
-		inputLayOut_->Release();
 }
 
 void Debug::Initialize()
@@ -32,10 +30,10 @@ void Debug::Initialize()
 	basicEffect_->GetVertexShaderBytecode(&shaderByteCode, &byteCodeLength);
 	g_pd3dDevice.Get()->CreateInputLayout(VertexPositionColor::InputElements,
 		VertexPositionColor::InputElementCount,
-		shaderByteCode, byteCodeLength,&inputLayOut_);
+		shaderByteCode, byteCodeLength, inputLayOut_.GetAddressOf());
 }
 
-void Debug::DrawLine(Vector3 v1,Vector3 v2)
+void Debug::DrawLine(Vector3 v1, Vector3 v2)
 {
 	if (!debugFlag_) return;
 
@@ -46,11 +44,11 @@ void Debug::DrawLine(Vector3 v1,Vector3 v2)
 	g_pImmediateContext->RSSetState(state.CullNone());
 
 	basicEffect_->Apply(g_pImmediateContext.Get());
-	g_pImmediateContext->IASetInputLayout(inputLayOut_);
+	g_pImmediateContext->IASetInputLayout(inputLayOut_.Get());
 
 	Matrix world = Matrix::Identity;
-	Matrix view = GameManager::GetInstance()->GetCamera()->GetView();
-	Matrix proj = GameManager::GetInstance()->GetCamera()->GetProj();
+	Matrix view = Camera::MainCamera().lock()->GetView();
+	Matrix proj = Camera::MainCamera().lock()->GetProj();
 
 	basicEffect_->SetWorld(world);
 	basicEffect_->SetView(view);

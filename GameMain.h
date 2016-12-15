@@ -13,7 +13,6 @@ class SpriteManager;
 class GameMain
 {
 private:
-	TaskManager* taskManager_;
 
 public:
 	GameMain();

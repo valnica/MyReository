@@ -24,14 +24,12 @@ class ClearEvent :public Event
 private:
 	DirectX::SimpleMath::Vector3 pos_;
 	DirectX::SimpleMath::Vector3 scale_;
-	Stage* stage_;
-
 
 public:
 	ClearEvent() {};
 	~ClearEvent() {};
 
-	void Initialize(Stage* stage);
+	void Initialize();
 	bool Run() override;
 	void Render()
 	{

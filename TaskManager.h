@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Singleton.h"
+
 class BaseTask
 {
 private:
@@ -37,10 +39,12 @@ public:
 	void Draw() override { data_.Render(); }
 };
 
-class TaskManager
+class TaskManager:public Singleton<TaskManager>
 {
 private:
 	BaseTask taskList_;
+
+	friend class Singleton<TaskManager>;
 
 	TaskManager()
 	{
@@ -48,16 +52,6 @@ private:
 		taskList_.prev_ = &taskList_;
 	}
 public:
-	static TaskManager* GetInstance()
-	{
-		static TaskManager* instance = nullptr;
-
-		if (!instance)
-			instance = new TaskManager;
-
-		return instance;
-	}
-
 
 	~TaskManager()
 	{

@@ -12,13 +12,10 @@
 
 GameMain::GameMain()
 {
-	taskManager_ = TaskManager::GetInstance();
 }
 
 GameMain::~GameMain()
 {
-	if (taskManager_)
-		delete taskManager_;
 }
 
 void GameMain::Initialize()
@@ -38,15 +35,14 @@ void GameMain::Update()
 	if (!flag)
 		SceneManager::GetInstance()->Update();
 
-	taskManager_->Run();
+	TaskManager::GetInstance()->Run();
 }
 
 void GameMain::Render()
 {
 	SceneManager::GetInstance()->Render();
 	Debug::GetInstance()->Draw();
-
-	taskManager_->Render();
+	TaskManager::GetInstance()->Render();
 }
 
 void GameMain::Finalize()

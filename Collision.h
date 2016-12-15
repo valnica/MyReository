@@ -57,5 +57,5 @@ public:
 	bool MarkerInView();
 	bool Box2Point(BoundingBox box, DirectX::SimpleMath::Vector3 point);
 	bool Box2Box(BoundingBox box1, BoundingBox box2);
-	bool NearPoint(Point3D point1, Point3D point2);
+	bool NearArea(Point3D point1, Point3D point2);
 };

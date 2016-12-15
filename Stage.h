@@ -10,11 +10,12 @@ class ClearEvent;
 class Stage
 {
 private:
-	std::vector<LandShape*> landshapeList_;
-	bool clearFlag_;
-	Marker* marker_;
+	std::vector<std::shared_ptr<LandShape>> landshapeList_;
+	std::shared_ptr<Marker> marker_;
 	DirectX::SimpleMath::Vector3 startPos_;
-	ClearEvent* clearEvent;
+	std::shared_ptr<ClearEvent> clearEvent_;
+	
+	static bool clearFlag_;
 
 public:
 	Stage();
@@ -25,9 +26,8 @@ public:
 	void Render();
 	void Finalize();
 
-	Marker* GetClearMarker() { return marker_; }
-	void SetClearFlag(bool flag) { clearFlag_ = flag; }
+	static void SetClearFlag() { clearFlag_ = !clearFlag_; }
 	DirectX::SimpleMath::Vector3 GetStartPos() { return startPos_; }
-	bool GetClearFlag() { return clearFlag_; }
+	static bool GetClearFlag() { return clearFlag_; }
 };
 

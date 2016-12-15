@@ -40,7 +40,7 @@ void PlayerMove::Update(Player & player)
 
 		if (collision.MarkerInView())
 		{
-			player.GetStage()->SetClearFlag(true);
+			Stage::SetClearFlag();
 		}
 	}
 

@@ -12,9 +12,7 @@ class LandShapeCommonDef;
 class GameManager:public Singleton<GameManager>
 {
 private:
-	Player* player_;
-	Camera* camera_;
-	DirectX::EffectFactory* factory_;
+	std::shared_ptr<DirectX::EffectFactory> factory_;
 	LandShapeCommonDef* landshapeCommondef_;
 
 	friend class Singleton<GameManager>;
@@ -24,8 +22,5 @@ public:
 	~GameManager();
 
 	void Initialize();
-
-	Player* GetPlayer();
-	Camera* GetCamera();
 };
 

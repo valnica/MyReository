@@ -7,17 +7,16 @@
 class SpriteManager:public Singleton<SpriteManager>
 {
 private:
-	std::map<std::wstring, Texture*> spritePool_;
+	std::map<std::wstring, std::shared_ptr<Texture>> spritePool_;
 
 	friend class Singleton<SpriteManager>;
 
-	void TextureRelease();
 protected:
 	SpriteManager();
 
 public:
 	~SpriteManager();
 
-	Texture* LoadSprite(wchar_t* fileName = nullptr);
+	std::shared_ptr<Texture> LoadSprite(wchar_t* fileName = nullptr);
 };
 

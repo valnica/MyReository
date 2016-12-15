@@ -106,10 +106,10 @@ void Player::Render()
 	g_spriteFont->DrawString(g_spriteBatch.get(), flag, Vector2(0, 100));
 }
 
-void Player::SetStage(Stage * stage)
-{
-	stage_ = stage;
-}
+//void Player::SetStage(Stage * stage)
+//{
+//	stage_ = stage;
+//}
 
 //À•W‚Ìİ’è
 void Player::SetPosition(Vector3 pos)

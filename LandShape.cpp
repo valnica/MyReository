@@ -95,7 +95,8 @@ void LandShape::Calc()
 
 void LandShape::Draw()
 {
-	if (!Debug::GetFlag())
+	object_.Draw();
+	/*if (!Debug::GetFlag())
 	{
 		object_.Draw();
 	}
@@ -132,7 +133,7 @@ void LandShape::Draw()
 		common_->primitiveBatch_->DrawIndexed(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST, index, numIndex, vertex, numVertex);
 
 		common_->primitiveBatch_->End();
-	}
+	}*/
 
 	box_.Draw();
 }

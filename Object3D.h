@@ -12,16 +12,16 @@ private:
 	static ID3D11Device* device_;
 	static ID3D11DeviceContext* deviceContext_;
 	static DirectX::CommonStates* state_;
-	static DirectX::EffectFactory* effect_;
-	static Camera* camera_;
+	static std::weak_ptr<DirectX::EffectFactory> effect_;
+	static std::weak_ptr<Camera> camera_;
 	static std::map<std::wstring, std::unique_ptr<DirectX::Model>> modelArray_;
 
 public:
 	static void SetDevice(ID3D11Device* device) { device_ = device; }
 	static void SetContext(ID3D11DeviceContext* devicecontect) { deviceContext_ = devicecontect; }
 	static void SetState(DirectX::CommonStates* state) { state_ = state; }
-	static void SetEffect(DirectX::EffectFactory* effect) { effect_ = effect; }
-	static void SetCamera(Camera* camera) { camera_ = camera; }
+	static void SetEffect(std::shared_ptr<DirectX::EffectFactory> effect) { effect_ = effect; }
+	static void SetCamera(std::shared_ptr<Camera> camera) { camera_ = camera; }
 
 private:
 	const DirectX::Model* model_;

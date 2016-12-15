@@ -4,6 +4,7 @@
 #include <SimpleMath.h>
 #include "Camera.h"
 #include "GameManager.h"
+#include <memory>
 
 using namespace DirectX::SimpleMath;
 
@@ -42,8 +43,8 @@ void TPSMode::Update(Player & player)
 	if (vec == Vector3::Zero) return;
 
 	//ƒJƒƒ‰‚©‚çplayer‚ÌŒü‚«‚ðŽæ“¾
-	Camera* camera = GameManager::GetInstance()->GetCamera();
-	Vector3 eye = camera->GetEye();
+	std::weak_ptr<Camera> camera = Camera::MainCamera();
+	Vector3 eye = camera.lock()->GetEye();
 	Vector3 dir = player.GetPosition() - eye;
 	dir.y = 0.0f;
 

@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="ClearScene.h" />
     <ClInclude Include="ClearState.h" />
     <ClInclude Include="Collision.h" />

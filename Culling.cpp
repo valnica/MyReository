@@ -16,7 +16,7 @@ Culling::~Culling()
 {
 }
 
-bool Culling::InView(Box& box,Camera* camera,int required,float sx, float sy)
+bool Culling::InView(Box& box,std::weak_ptr<Camera> camera,int required,float sx, float sy)
 {
 	int num = 0;
 	for (int i = 0; i < 8; i++)
@@ -24,8 +24,8 @@ bool Culling::InView(Box& box,Camera* camera,int required,float sx, float sy)
 		//ビューポート行列を計算
 		Matrix trans = Matrix::CreateTranslation(box.point[i]);
 		Matrix world = Matrix::Identity;
-		Matrix view = camera->GetView();
-		Matrix proj = camera->GetProj();
+		Matrix view = camera.lock()->GetView();
+		Matrix proj = camera.lock()->GetProj();
 
 		Matrix result = trans * world * view * proj;
 

@@ -10,29 +10,18 @@ using namespace DirectX;
 
 GameManager::GameManager()
 {
-	player_ = new Player;
-	camera_ = new Camera(480, 640);
-	factory_ = new EffectFactory(g_pd3dDevice.Get());
 	landshapeCommondef_ = new LandShapeCommonDef;
 }
 
 GameManager::~GameManager()
 {
-	if (camera_)
-		delete camera_;
-
-	if (factory_)
-		delete factory_;
-
 	if (landshapeCommondef_)
 		delete landshapeCommondef_;
-
-	if (player_)
-		delete player_;
 }
 
 void GameManager::Initialize()
 {
+	factory_.reset(new EffectFactory(g_pd3dDevice.Get()));
 	factory_->SetDirectory(L"Resources\\cModels");
 
 	//3Dオブジェクトの初期化
@@ -40,21 +29,11 @@ void GameManager::Initialize()
 	Object3D::SetContext(g_pImmediateContext.Get());
 	Object3D::SetState(g_state.get());
 	Object3D::SetEffect(factory_);
-	Object3D::SetCamera(camera_);
+	//Object3D::SetCamera(camera_);
 
 	//地形の初期設定
-	landshapeCommondef_->camera_ = camera_;
+	//landshapeCommondef_->camera_ = camera_;
 	landshapeCommondef_->device_ = g_pd3dDevice.Get();
 	landshapeCommondef_->deviceContext_ = g_pImmediateContext.Get();
 	LandShape::InitializeCommon(landshapeCommondef_);
-}
-
-Player * GameManager::GetPlayer()
-{
-	return player_;
-}
-
-Camera* GameManager::GetCamera()
-{
-	return camera_;
 }

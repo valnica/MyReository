@@ -4,8 +4,9 @@
 #include <SimpleMath.h>
 #include "Object3D.h"
 #include "List.h"
+#include "Character.h"
 
-class Enemy
+class Enemy:public Character
 {
 private:
 	enum PARTS

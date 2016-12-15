@@ -12,28 +12,14 @@
 
 using namespace DirectX::SimpleMath;
 
+bool Stage::clearFlag_ = false;
+
 Stage::Stage()
 {
-	marker_ = new Marker;
-	clearEvent = new ClearEvent;
 }
 
 Stage::~Stage()
 {
-	if (marker_)
-		delete marker_;
-
-	if (clearEvent)
-		delete clearEvent;
-
-	auto landShape = landshapeList_.begin();
-	while (landShape != landshapeList_.end())
-	{
-		if ((*landShape))
-			delete *landShape;
-
-		landShape = landshapeList_.erase(landShape);
-	}
 }
 
 void Stage::Initialize()
@@ -100,7 +86,8 @@ void Stage::Initialize()
 	for (int i = 0; i < numLandShapeTable; i++)
 	{
 		LandShapeTable* table = &landShapeTable[i];
-		LandShape* landShape = new LandShape;
+		std::shared_ptr<LandShape> landShape;
+		landShape.reset(new LandShape);
 		wchar_t* mdlName = nullptr;
 		wchar_t* cmoName = nullptr;
 
@@ -120,19 +107,23 @@ void Stage::Initialize()
 	}
 
 	clearFlag_ = false;
+
+	marker_.reset(new Marker);
 	marker_->Initialize();
 	Vector3 pos(-5.0f, 0.5f, 25.0f);
 	marker_->SetPosition(pos);
 	startPos_ = Vector3(-25.0f, 0.0f, 35.0f);
 	landShape.box_.Initialize();
 
-	clearEvent->Initialize(this);
-	clearEvent->SetPosition(Vector3(-25.0f, 0.0f, 35.0f));
-	clearEvent->SetScale(Vector3(10.0f, 10.0f, 10.0f));
+	clearEvent_.reset(new ClearEvent);
+	clearEvent_->Initialize();
+	clearEvent_->SetPosition(Vector3(-25.0f, 0.0f, 35.0f));
+	clearEvent_->SetScale(Vector3(10.0f, 10.0f, 10.0f));
+
 	Box box;
 	box.Initialize();
-	clearEvent->SetBox(box);
-	CollisionManager::GetInstance()->Entry(clearEvent);
+	clearEvent_->SetBox(box);
+	CollisionManager::GetInstance()->Entry(clearEvent_.get());
 }
 
 void Stage::Update()

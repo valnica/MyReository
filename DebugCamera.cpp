@@ -21,7 +21,8 @@ State<Camera>* DebugCamera::Input(Camera & camera)
 {
 	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::O))
 	{
-		return new FPSCamera;
+		//return new FPSCamera;
+		return FPSCamera::GetInstance().get();
 	}
 
 	return nullptr;
@@ -63,6 +64,6 @@ void DebugCamera::Update(Camera & camera)
 
 	//ƒJƒƒ‰‚Ìİ’è
 	camera.SetEye(eye);
-	camera.SetTarget(ref);
+	camera.SetRef(ref);
 	camera.SetUp(up);
 }

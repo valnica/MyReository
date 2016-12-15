@@ -2,15 +2,17 @@
 #include "Object3D.h"
 #include "State.h"
 #include "CollisionNode.h"
+#include "Character.h"
+
+namespace Math = DirectX::SimpleMath;
 
 class Stage;
 
-class Player
+class Player:public Character
 {
 private:
 	State<Player>* state_;
-	Stage* stage_;
-	
+
 	enum PARTS
 	{
 		EMPTY,
@@ -33,22 +35,19 @@ public:
 	void Update();
 	void Render();
 
-	void SetStage(Stage* stage);
-	Stage* GetStage() { return stage_; }
-
 	//ポジションのセッターとゲッター
-	void SetPosition(DirectX::SimpleMath::Vector3 pos);
-	DirectX::SimpleMath::Vector3 GetPosition();
+	void SetPosition(Math::Vector3 pos);
+	Math::Vector3 GetPosition();
 	
 	//回転角のセッターとゲッター
-	void SetRotate(DirectX::SimpleMath::Vector3 rot);
-	DirectX::SimpleMath::Vector3 GetRotate();
+	void SetRotate(Math::Vector3 rot);
+	Math::Vector3 GetRotate();
 
-	void SetHeadRotate(DirectX::SimpleMath::Vector3 rot);
-	DirectX::SimpleMath::Vector3 GetHeadRotate();
+	void SetHeadRotate(Math::Vector3 rot);
+	Math::Vector3 GetHeadRotate();
 
-	DirectX::SimpleMath::Vector3 GetEyePosition();
-	DirectX::SimpleMath::Matrix GetEyeMatrix();
+	Math::Vector3 GetEyePosition();
+	Math::Matrix GetEyeMatrix();
 
 	SphereNode& GetCollisionBody() { return collisionBody_; }
 	void Found();

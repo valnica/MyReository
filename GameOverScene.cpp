@@ -23,13 +23,18 @@ GameOverScene::~GameOverScene()
 
 void GameOverScene::Initialize()
 {
-	player_ = GameManager::GetInstance()->GetPlayer();
+	//player_ = GameManager::GetInstance()->GetPlayer();
+	player_.reset(new Player);
 	player_->Initialize();
 	player_->SetState(new GameOverState);
 
-	camera_ = GameManager::GetInstance()->GetCamera();
-	camera_->SetTarget(player_->GetPosition() + Vector3(0.0f,1.0f,0.0f));
+	//camera_ = GameManager::GetInstance()->GetCamera();
+	camera_.reset(new Camera((float)WINDOW_H, (float)WINDOW_W));
+	camera_->SetRef(player_->GetPosition() + Vector3(0.0f,1.0f,0.0f));
 	camera_->SetEye(player_->GetPosition() + Vector3(0.0f, 3.0f, -5.0f));
+
+	Object3D::SetCamera(camera_);
+	Camera::MainCamera(camera_);
 }
 
 void GameOverScene::Update()

@@ -8,6 +8,7 @@
 #include <SimpleMath.h>
 #include "CollisionManager.h"
 #include "TPSMode.h"
+#include "Character.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -15,43 +16,38 @@ using namespace DirectX::SimpleMath;
 
 PlayScene::PlayScene()
 {
-	stage_ = new Stage;
-	player_ = GameManager::GetInstance()->GetPlayer();
-	cameraController_ = new CameraController;
+	//player_ = GameManager::GetInstance()->GetPlayer();
 }
-
 
 PlayScene::~PlayScene()
 {
-	if (stage_)
-		delete stage_;
-
-	auto enemy = enemy_.begin();
+	/*auto enemy = enemy_.begin();
 	while (enemy != enemy_.end())
 	{
 		if ((*enemy))
 			delete *enemy;
 
 		enemy = enemy_.erase(enemy);
-	}
-
-	if (cameraController_)
-		delete cameraController_;
+	}*/
 }
 
 void PlayScene::Initialize()
 {
-	collisionManager_ = CollisionManager::GetInstance().get();
-	collisionManager_->Initialize();
+	CollisionManager::GetInstance()->Initialize();
 
+	stage_.reset(new Stage);
 	stage_->Initialize();
 
+	player_.reset(new Player);
 	player_->Initialize();
-	player_->SetStage(stage_);
 	player_->SetPosition(stage_->GetStartPos());
 	player_->SetState(new TPSMode);
 
-	cameraController_->Initialize(GameManager::GetInstance()->GetCamera());
+	camera_.reset(new Camera((float)WINDOW_H,(float)WINDOW_W));
+	camera_->SetTarget(player_);
+
+	cameraController_.reset(new CameraController);
+	cameraController_->Initialize(camera_);
 	
 	//ìGÇÃê›íË
 	List<Vector3> movePoint;
@@ -59,7 +55,8 @@ void PlayScene::Initialize()
 	movePoint.PushBack(Vector3(-25.0f, 0.0f, -25.0f));
 	movePoint.PushBack(Vector3(-5.0f, 0.0f, -25.0f));
 	movePoint.PushBack(Vector3(-5.0f, 0.0f, -5.0f));
-	Enemy* enemy = new Enemy;
+	std::shared_ptr<Enemy> enemy;
+	enemy.reset(new Enemy);
 	enemy->SetMovePoint(movePoint);
 	enemy->Initialize();
 	enemy_.push_back(enemy);
@@ -69,7 +66,7 @@ void PlayScene::Initialize()
 	movePoint.PushBack(Vector3(-5.0f, 0.0f, -5.0f));
 	movePoint.PushBack(Vector3(-25.0f, 0.0f, -5.0f));
 	movePoint.PushBack(Vector3(-25.0f, 0.0f, -25.0f));
-	enemy = new Enemy;
+	enemy.reset(new Enemy);
 	enemy->SetMovePoint(movePoint);
 	enemy->Initialize();
 	enemy_.push_back(enemy);
@@ -77,10 +74,13 @@ void PlayScene::Initialize()
 	movePoint.Clear();
 	movePoint.PushBack(Vector3(25.0f, 0.0f, 25.0f));
 	movePoint.PushBack(Vector3(25.0f, 0.0f, -25.0f));
-	enemy = new Enemy;
+	enemy.reset(new Enemy);
 	enemy->SetMovePoint(movePoint);
 	enemy->Initialize();
 	enemy_.push_back(enemy);
+
+	Object3D::SetCamera(camera_);
+	Camera::MainCamera(camera_);
 }
 
 void PlayScene::Update()
@@ -93,7 +93,7 @@ void PlayScene::Update()
 	}
 
 	cameraController_->Update();
-	collisionManager_->Update();
+	CollisionManager::GetInstance()->Update();
 }
 
 void PlayScene::Render()

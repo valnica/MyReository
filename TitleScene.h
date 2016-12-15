@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Lerp.h"
+#include <memory>
 
 class Sprite;
 class Stage;
@@ -10,10 +11,10 @@ class Camera;
 class TitleScene:public Scene
 {
 private:
-	Sprite* sprite_[2];
+	std::unique_ptr<Sprite> sprite_[2];
 	int alpha_;
-	Stage* stage_;
-	Camera* camera_;
+	std::unique_ptr<Stage> stage_;
+	std::shared_ptr<Camera> camera_;
 
 public:
 	TitleScene();

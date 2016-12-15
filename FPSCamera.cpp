@@ -25,7 +25,8 @@ State<Camera>* FPSCamera::Input(Camera & camera)
 {
 	if (g_mouseTracker->rightButton == g_mouseTracker->RELEASED)
 	{
-		return new TPSCamera;
+		//return new TPSCamera;
+		return TPSCamera::GetInstance().get();
 	}
 
 	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::O))
@@ -38,15 +39,15 @@ State<Camera>* FPSCamera::Input(Camera & camera)
 
 void FPSCamera::Update(Camera & camera)
 {
-	Player* player = GameManager::GetInstance()->GetPlayer();
+	std::weak_ptr<Player> player = camera.GetTarget();
 
 	//playerの行列をtrans rotate scaleに分解
 	Vector3 pos;
 	Quaternion qua;
 	Vector3 scale;
-	player->GetEyeMatrix().Decompose(scale, qua, pos);
+	player.lock()->GetEyeMatrix().Decompose(scale, qua, pos);
 
-	Vector3 angle = player->GetRotate() + player->GetHeadRotate();
+	Vector3 angle = player.lock()->GetRotate() + player.lock()->GetHeadRotate();
 
 	//カメラの設定に必要な変数の初期化
 	Vector3 eye = pos;
@@ -69,6 +70,6 @@ void FPSCamera::Update(Camera & camera)
 
 	//カメラの設定
 	camera.SetEye(eye);
-	camera.SetTarget(ref);
+	camera.SetRef(ref);
 	camera.SetUp(up);
 }

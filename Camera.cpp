@@ -3,11 +3,14 @@
 #include "Player.h"
 #include "FPSCamera.h"
 #include "TPSCamera.h"
+#include "Character.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
+
+std::weak_ptr<Camera> Camera::main_;
 
 Camera::Camera(float window_h, float window_w)
 	:fovY_(XMConvertToRadians(45.0f)), aspect_(window_w / window_h)
@@ -16,7 +19,7 @@ Camera::Camera(float window_h, float window_w)
 	view_ = Matrix::Identity;
 	proj_ = Matrix::Identity;
 	eye_ = Vector3(0.0f, 2.0f, 3.0f);
-	target_ = Vector3(0.0f, 1.0f, 0.0f);
+	ref_ = Vector3(0.0f, 1.0f, 0.0f);
 	up_ = Vector3(0.0f, 1.0f, 0.0f);
 }
 
@@ -26,7 +29,7 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	view_ = Matrix::CreateLookAt(eye_, target_, up_);
+	view_ = Matrix::CreateLookAt(eye_, ref_, up_);
 	proj_ = Matrix::CreatePerspectiveFieldOfView(fovY_, aspect_, near_, far_);
 }
 
@@ -51,39 +54,35 @@ void Camera::SetFar(float farPos)
 }
 
 CameraController::CameraController()
-	:camera_(nullptr)
 {
-	state_ = new TPSCamera;
 }
 
 CameraController::~CameraController()
 {
-	if (state_)
-		delete state_;
 }
 
-void CameraController::Initialize(Camera* camera)
+void CameraController::Initialize(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
+	state_ = TPSCamera::GetInstance().get();
 }
 
 void CameraController::Update()
 {
-	State<Camera>* state = state_->Input(*camera_);
+	State<Camera>* state = state_->Input(*camera_.lock());
 	
 	if (state)
 	{
-		delete state_;
 		state_ = state;
 	}
 
-	state_->Update(*camera_);
+	state_->Update(*camera_.lock());
 
 	//カメラのアップデート
-	camera_->Update();
+	camera_.lock()->Update();
 }
 
-void CameraController::SetCamera(Camera * camera)
+void CameraController::SetCamera(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
 }

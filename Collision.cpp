@@ -664,15 +664,15 @@ bool Collision::InFrontView(const ViewInfo& viewInfo)
 bool Collision::MarkerInView()
 {
 	auto collisioManager = CollisionManager::GetInstance().get();
-	Camera* camera = GameManager::GetInstance()->GetCamera();
+	std::weak_ptr<Camera> camera = Camera::MainCamera();
 
 	bool flag = false;
 
 	for (auto marker = collisioManager->marker_.begin(); marker != collisioManager->marker_.end(); marker++)
 	{
-		if (Culling::InView((*marker)->GetBox(), GameManager::GetInstance()->GetCamera(), 8, 0.5f, 0.5f))
+		if (Culling::InView((*marker)->GetBox(), Camera::MainCamera(), 8, 0.5f, 0.5f))
 		{
-			Vector3 eye = camera->GetEye();
+			Vector3 eye = camera.lock()->GetEye();
 			Vector3 ref = (*marker)->GetPos();
 			LandShape* land = RayCast(eye, ref);
 			
@@ -708,7 +708,7 @@ bool Collision::Box2Box(BoundingBox box1, BoundingBox box2)
 	return false;
 }
 
-bool Collision::NearPoint(Point3D point1, Point3D point2)
+bool Collision::NearArea(Point3D point1, Point3D point2)
 {
 	if (abs(point2.x_ - point1.x_) <= 1 &&
 		abs(point2.y_ - point1.y_) <= 1 &&

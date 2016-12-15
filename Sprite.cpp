@@ -46,7 +46,7 @@ void Sprite::Draw()
 	//flag‚ªtrue‚È‚ç‚Î‰æ‘œ‚Ì’†S‚ð‹N“_‚É•`‰æ
 	if (origineFlag_)
 		origine = Vector2((rect_.right - rect_.left) / 2.0f, (rect_.bottom - rect_.top) / 2.0f);
-	g_spriteBatch->Draw(sprite_->m_pTexture, pos_, &rect_, color_, angle_, origine, scale_, SpriteEffects_None, depth_);
+	g_spriteBatch->Draw(sprite_.lock()->m_pTexture, pos_, &rect_, color_, angle_, origine, scale_, SpriteEffects_None, depth_);
 }
 
 void Sprite::SetPos(DirectX::SimpleMath::Vector2 pos)

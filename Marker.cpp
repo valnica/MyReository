@@ -37,7 +37,7 @@ void Marker::Render()
 	box_.Draw();
 
 	wchar_t flag[20];
-	if (Culling::InView(box_, GameManager::GetInstance()->GetCamera(), 6, 0.5f, 0.5f))
+	if (Culling::InView(box_, Camera::MainCamera(), 6, 0.5f, 0.5f))
 	{
 		swprintf_s(flag, 20, L"In Camera = true");
 	}
