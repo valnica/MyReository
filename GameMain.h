@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include "GameBase.h"
 
 class GameManager;
 class Scene;
@@ -10,7 +11,7 @@ class CollisionManager;
 class TaskManager;
 class SpriteManager;
 
-class GameMain
+class GameMain:public GameBase
 {
 private:
 

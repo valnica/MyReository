@@ -11,6 +11,7 @@
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 GameMain::GameMain()
+	:GameBase(this)
 {
 }
 

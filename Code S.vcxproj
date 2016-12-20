@@ -101,6 +101,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Flash.cpp" />
+    <ClCompile Include="GameBase.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="Lerp.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TPSCamera.cpp" />
     <ClCompile Include="TPSMode.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -143,6 +145,7 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Flash.h" />
+    <ClInclude Include="GameBase.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="Lerp.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
@@ -180,6 +184,7 @@
     <ClInclude Include="TPSCamera.h" />
     <ClInclude Include="TPSMode.h" />
     <ClInclude Include="Utility.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -195,6 +200,9 @@
     <MeshContentTask Include="Resources\Models\Marker.FBX" />
     <MeshContentTask Include="Resources\Models\PlayerBody.FBX" />
     <MeshContentTask Include="Resources\Models\PlayerHead.FBX" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Code S.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
