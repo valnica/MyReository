@@ -47,7 +47,6 @@ private:
 
 public:
 	Camera(float Window_h,float Window_w);
-
 	virtual ~Camera();
 
 	void Update();
@@ -77,7 +76,10 @@ class CameraState;
 class CameraController
 {
 private:
+	//ƒJƒƒ‰‚Ìstate
 	State<Camera>* state_;
+
+	//ƒJƒƒ‰
 	std::weak_ptr<Camera> camera_;
 
 public:

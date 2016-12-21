@@ -26,7 +26,7 @@ public:
 	void Render();
 	void Finalize();
 
-	static void SetClearFlag() { clearFlag_ = !clearFlag_; }
+	static void SetClearFlag() { clearFlag_ = true; }
 	DirectX::SimpleMath::Vector3 GetStartPos() { return startPos_; }
 	static bool GetClearFlag() { return clearFlag_; }
 };

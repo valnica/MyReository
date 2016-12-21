@@ -10,8 +10,12 @@ class Window
 {
 private:
 	static const DWORD WINDOW_STYLE = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
-	HINSTANCE hInst_;	// インスタンスハンドル
-	HWND hWnd_;	// ウインドウハンドル
+	
+	//インスタンスハンドル
+	HINSTANCE hInst_;
+	
+	// ウインドウハンドル
+	HWND hWnd_;
 
 public:
 	Window();

@@ -16,11 +16,10 @@ GameBase::GameBase()
 {
 }
 
-GameBase::GameBase(GameMain * gameMain)
-	:main_(gameMain)
+GameBase::GameBase(GameBase * game)
+	:game_(game)
 {
 }
-
 
 GameBase::~GameBase()
 {
@@ -52,7 +51,7 @@ void GameBase::Main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	DirectXTK_SetWindow(window_->GetWindowHandle(), WINDOW_W / 2.0f, WINDOW_H / 2.0f);
 
-	main_->Initialize();
+	game_->Initialize();
 
 	// メインループ
 	MSG msg = { 0 };
@@ -74,7 +73,7 @@ void GameBase::Main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			// キー入力やマウス情報の更新
 			DirectXTK_UpdateInputState();
 
-			main_->Update();
+			game_->Update();
 
 			// バックバッファのクリア
 			g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView.Get(), DirectX::Colors::MidnightBlue);
@@ -85,19 +84,10 @@ void GameBase::Main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			//---------- ここで描画コマンドを発行する　---------//
 			g_spriteBatch->Begin(SpriteSortMode_BackToFront, g_state->NonPremultiplied(), g_state->PointClamp());
 
-			main_->Render();
+			game_->Render();
 
 			// fpsの表示
 			g_spriteFont->DrawString(g_spriteBatch.get(), buf, Vector2(0, 0));
-
-			wchar_t mousePosX[20];
-			swprintf_s(mousePosX, 20, L"mouse_x = %d", g_mouse.x);
-			g_spriteFont->DrawString(g_spriteBatch.get(), mousePosX, Vector2(0, 20));
-
-			wchar_t mousePosY[20];
-			swprintf_s(mousePosY, 20, L"mouse_y = %d", g_mouse.y);
-			g_spriteFont->DrawString(g_spriteBatch.get(), mousePosY, Vector2(0, 40));
-
 
 			g_spriteBatch->End();
 
@@ -118,5 +108,5 @@ void GameBase::Main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// DirectXデバイス周りの終了処理
 	Direct3D_CleanupDevice();
 
-	main_->Finalize();
+	game_->Finalize();
 }

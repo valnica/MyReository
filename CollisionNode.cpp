@@ -6,8 +6,6 @@
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-bool CollisionNode::debugVisible_ = false;
-
 SphereNode::SphereNode()
 {
 	localRadius_ = 1.0f;
@@ -104,5 +102,3 @@ void CapsuleNode::SetRotate(DirectX::SimpleMath::Vector3 & rotate)
 {
 	object_.SetRotate(rotate);
 }
-
-

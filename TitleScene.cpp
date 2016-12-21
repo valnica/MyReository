@@ -37,7 +37,7 @@ void TitleScene::Initialize()
 	camera_->SetRef(Vector3(0.0f, 0.0f, 0.0f));
 	camera_->SetUp(Vector3(0.0f, 1.0f, 0.0f));
 
-	Object3D::SetCamera(camera_);
+	//Object3D::SetCamera(camera_);
 	Camera::MainCamera(camera_);
 }
 

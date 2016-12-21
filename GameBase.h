@@ -3,18 +3,21 @@
 #include <memory>
 #include <Windows.h>
 
-class GameMain;
 class Window;
 
 class GameBase
 {
 private:
-	GameMain* main_;
+	GameBase* game_;
 	std::unique_ptr<Window> window_;
 
+	virtual void Initialize() = 0;
+	virtual void Update() = 0;
+	virtual void Render() = 0;
+	virtual void Finalize() = 0;
 public:
 	GameBase();
-	GameBase(GameMain* gameMain);
+	GameBase(GameBase* game);
 	~GameBase();
 
 	void Main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);

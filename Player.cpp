@@ -54,7 +54,6 @@ void Player::Initialize()
 	parts_[HEAD].SetParentWorld(&parts_[BODY].GetWorld());
 
 	//視点の位置
-	//parts_[EYE].LoadModelFromFile(L"Resources\\cModels\\PlayerHead.cmo");
 	parts_[EYE].SetTrans(Vector3(0.0f, 0.1f, -0.3f));
 	parts_[EYE].SetRotate(Vector3(0.0f, 0.0f, 0.0f));
 	parts_[EYE].SetScale(Vector3(0.3f, 0.3f, 0.3f));
@@ -64,6 +63,12 @@ void Player::Initialize()
 	collisionBody_.SetTrans(Vector3(0.0f, 0.85f, 0.3f));
 	collisionBody_.SetLocalRadius(1.0f);
 	collisionBody_.SetParentMatrix(&parts_[EMPTY].GetLocalWorld());
+}
+
+void Player::Initialize(State<Player>* state)
+{
+	state_ = state;
+	Initialize();
 }
 
 //更新処理
@@ -105,11 +110,6 @@ void Player::Render()
 		swprintf_s(flag, 20, L"PlayerFront = false");
 	g_spriteFont->DrawString(g_spriteBatch.get(), flag, Vector2(0, 100));
 }
-
-//void Player::SetStage(Stage * stage)
-//{
-//	stage_ = stage;
-//}
 
 //座標の設定
 void Player::SetPosition(Vector3 pos)

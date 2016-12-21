@@ -10,7 +10,7 @@ ID3D11Device* Object3D::device_;
 ID3D11DeviceContext* Object3D::deviceContext_;
 CommonStates* Object3D::state_;
 std::weak_ptr<EffectFactory> Object3D::effect_;
-std::weak_ptr<Camera> Object3D::camera_;
+//std::weak_ptr<Camera> Object3D::camera_;
 std::map<std::wstring, std::unique_ptr<DirectX::Model>> Object3D::modelArray_;
 
 Object3D::Object3D()
@@ -94,9 +94,9 @@ void Object3D::Draw()
 {
 	if (!model_) return;
 
-	assert(camera_.lock());
-	const Matrix& view = camera_.lock()->GetView();
-	const Matrix& proj = camera_.lock()->GetProj();
+	assert(Camera::MainCamera().lock());
+	const Matrix& view = Camera::MainCamera().lock()->GetView();//camera_.lock()->GetView();
+	const Matrix& proj = Camera::MainCamera().lock()->GetProj();//camera_.lock()->GetProj();
 
 	assert(deviceContext_);
 	assert(state_);

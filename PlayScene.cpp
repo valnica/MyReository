@@ -16,19 +16,10 @@ using namespace DirectX::SimpleMath;
 
 PlayScene::PlayScene()
 {
-	//player_ = GameManager::GetInstance()->GetPlayer();
 }
 
 PlayScene::~PlayScene()
 {
-	/*auto enemy = enemy_.begin();
-	while (enemy != enemy_.end())
-	{
-		if ((*enemy))
-			delete *enemy;
-
-		enemy = enemy_.erase(enemy);
-	}*/
 }
 
 void PlayScene::Initialize()
@@ -39,9 +30,8 @@ void PlayScene::Initialize()
 	stage_->Initialize();
 
 	player_.reset(new Player);
-	player_->Initialize();
+	player_->Initialize(new TPSMode);
 	player_->SetPosition(stage_->GetStartPos());
-	player_->SetState(new TPSMode);
 
 	camera_.reset(new Camera((float)WINDOW_H,(float)WINDOW_W));
 	camera_->SetTarget(player_);
@@ -79,7 +69,7 @@ void PlayScene::Initialize()
 	enemy->Initialize();
 	enemy_.push_back(enemy);
 
-	Object3D::SetCamera(camera_);
+	//Object3D::SetCamera(camera_);
 	Camera::MainCamera(camera_);
 }
 

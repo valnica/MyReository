@@ -28,13 +28,7 @@ void GameMain::Initialize()
 
 void GameMain::Update()
 {
-	static bool flag = false;
-
-	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::P))
-		flag = !flag;
-
-	if (!flag)
-		SceneManager::GetInstance()->Update();
+	SceneManager::GetInstance()->Update();
 
 	TaskManager::GetInstance()->Run();
 }

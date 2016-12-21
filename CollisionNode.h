@@ -3,17 +3,6 @@
 #include "Object3D.h"
 #include "CollisionManager.h"
 
-class CollisionNode
-{
-protected:
-	static bool debugVisible_;
-public:
-	static void SwitchDebugVisible() {
-		debugVisible_ = !debugVisible_; 
-	}
-	static bool GetDebugVisible() { return debugVisible_; }
-};
-
 class SphereNode :public Sphere
 {
 protected:

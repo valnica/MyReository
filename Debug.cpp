@@ -66,5 +66,13 @@ void Debug::DrawLine(Vector3 v1, Vector3 v2)
 
 void Debug::Draw()
 {
+	wchar_t mousePosX[20];
+	swprintf_s(mousePosX, 20, L"mouse_x = %d", g_mouse.x);
+	g_spriteFont->DrawString(g_spriteBatch.get(), mousePosX, Vector2(0, 20));
+
+	wchar_t mousePosY[20];
+	swprintf_s(mousePosY, 20, L"mouse_y = %d", g_mouse.y);
+	g_spriteFont->DrawString(g_spriteBatch.get(), mousePosY, Vector2(0, 40));
+
 	DrawLine(start_, end_);
 }

@@ -19,9 +19,9 @@ public:
 	GameMain();
 	~GameMain();
 
-	void Initialize();
-	void Update();
-	void Render();
-	void Finalize();
+	void Initialize() override;
+	void Update() override;
+	void Render() override;
+	void Finalize() override;
 };
 
