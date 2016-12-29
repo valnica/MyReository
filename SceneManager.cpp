@@ -13,7 +13,7 @@ using namespace DirectX::SimpleMath;
 
 SceneManager::SceneManager()
 {
-	now_ = new ClearScene;
+	now_ = new TitleScene;
 }
 
 

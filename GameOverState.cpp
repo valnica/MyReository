@@ -23,5 +23,4 @@ void GameOverState::Update(Player & player)
 	float rot = sinf(angle_) * 50.0f;
 
 	player.SetHeadRotate(DirectX::SimpleMath::Vector3(-20.0f, rot, 0.0f));
-
 }

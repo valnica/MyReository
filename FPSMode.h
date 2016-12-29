@@ -4,15 +4,15 @@
 
 class Player;
 
-class PlayerMove :
+class FPSMode :
 	public State<Player>
 {
 private:
 	const float speed_ = 0.2f;
 
 public:
-	PlayerMove();
-	~PlayerMove();
+	FPSMode();
+	~FPSMode();
 
 	State* Input(Player& player) override;
 	void Update(Player& player) override;

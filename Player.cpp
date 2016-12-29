@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "State.h"
-#include "PlayerMove.h"
 #include "Utility.h"
 #include "Stage.h"
 #include "CollisionManager.h"
@@ -23,7 +22,6 @@ void Player::Calc()
 //コンストラクタ
 Player::Player()
 {
-	state_ = new TPSMode;
 }
 
 //デストラクタ

@@ -95,8 +95,8 @@ void Object3D::Draw()
 	if (!model_) return;
 
 	assert(Camera::MainCamera().lock());
-	const Matrix& view = Camera::MainCamera().lock()->GetView();//camera_.lock()->GetView();
-	const Matrix& proj = Camera::MainCamera().lock()->GetProj();//camera_.lock()->GetProj();
+	const Matrix& view = Camera::MainCamera().lock()->GetView();
+	const Matrix& proj = Camera::MainCamera().lock()->GetProj();
 
 	assert(deviceContext_);
 	assert(state_);

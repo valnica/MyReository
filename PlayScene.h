@@ -17,8 +17,7 @@ class PlayScene:public Scene
 private:
 	std::unique_ptr<Stage> stage_;
 	std::unique_ptr<CameraController> cameraController_;
-	std::shared_ptr<Player> player_;
-	std::vector<std::shared_ptr<Enemy>> enemy_;
+	std::vector<std::shared_ptr<Character>> character_;
 	std::shared_ptr<Camera> camera_;
 
 public:

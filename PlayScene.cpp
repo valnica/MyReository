@@ -29,12 +29,14 @@ void PlayScene::Initialize()
 	stage_.reset(new Stage);
 	stage_->Initialize();
 
-	player_.reset(new Player);
-	player_->Initialize(new TPSMode);
-	player_->SetPosition(stage_->GetStartPos());
+	std::shared_ptr<Player> player;
+	player.reset(new Player);
+	player->Initialize(new TPSMode);
+	player->SetPosition(stage_->GetStartPos());
+	character_.push_back(player);
 
 	camera_.reset(new Camera((float)WINDOW_H,(float)WINDOW_W));
-	camera_->SetTarget(player_);
+	camera_->SetTarget(player);
 
 	cameraController_.reset(new CameraController);
 	cameraController_->Initialize(camera_);
@@ -49,7 +51,7 @@ void PlayScene::Initialize()
 	enemy.reset(new Enemy);
 	enemy->SetMovePoint(movePoint);
 	enemy->Initialize();
-	enemy_.push_back(enemy);
+	character_.push_back(enemy);
 
 	movePoint.Clear();
 	movePoint.PushBack(Vector3(-5.0f, 0.0f, -25.0f));
@@ -59,7 +61,7 @@ void PlayScene::Initialize()
 	enemy.reset(new Enemy);
 	enemy->SetMovePoint(movePoint);
 	enemy->Initialize();
-	enemy_.push_back(enemy);
+	character_.push_back(enemy);
 
 	movePoint.Clear();
 	movePoint.PushBack(Vector3(25.0f, 0.0f, 25.0f));
@@ -67,7 +69,7 @@ void PlayScene::Initialize()
 	enemy.reset(new Enemy);
 	enemy->SetMovePoint(movePoint);
 	enemy->Initialize();
-	enemy_.push_back(enemy);
+	character_.push_back(enemy);
 
 	//Object3D::SetCamera(camera_);
 	Camera::MainCamera(camera_);
@@ -76,8 +78,7 @@ void PlayScene::Initialize()
 void PlayScene::Update()
 {
 	stage_->Update();
-	player_->Update();
-	for (auto it = enemy_.begin(); it != enemy_.end(); it++)
+	for (auto it = character_.begin(); it != character_.end(); it++)
 	{
 		(*it)->Update();
 	}
@@ -89,8 +90,7 @@ void PlayScene::Update()
 void PlayScene::Render()
 {
 	stage_->Render();
-	player_->Render();
-	for (auto it = enemy_.begin(); it != enemy_.end(); it++)
+	for (auto it = character_.begin(); it != character_.end(); it++)
 	{
 		(*it)->Render();
 	}

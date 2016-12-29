@@ -1,4 +1,4 @@
-#include "PlayerMove.h"
+#include "FPSMode.h"
 #include "Player.h"
 #include "Stage.h"
 #include "Marker.h"
@@ -13,15 +13,15 @@
 
 using namespace DirectX::SimpleMath;
 
-PlayerMove::PlayerMove()
+FPSMode::FPSMode()
 {
 }
 
-PlayerMove::~PlayerMove()
+FPSMode::~FPSMode()
 {
 }
 
-State<Player> * PlayerMove::Input(Player& player)
+State<Player> * FPSMode::Input(Player& player)
 {
 	if (g_mouseTracker->rightButton == g_mouseTracker->RELEASED)
 	{
@@ -30,7 +30,7 @@ State<Player> * PlayerMove::Input(Player& player)
 	return nullptr;
 }
 
-void PlayerMove::Update(Player & player)
+void FPSMode::Update(Player & player)
 {
 	//左クリックで写真を撮る
 	if (g_mouseTracker->leftButton == g_mouseTracker->PRESSED)
@@ -46,7 +46,7 @@ void PlayerMove::Update(Player & player)
 
 	//カメラの移動量取得
 	Vector2 amountOfMoment = Vector2((float)g_mouse.x, (float)g_mouse.y);
-	
+
 	Vector3 vel = Vector3::Zero;
 	float angle = 0;
 
@@ -54,7 +54,7 @@ void PlayerMove::Update(Player & player)
 		vel += Vector3::Forward;
 	if (g_key.S)
 		vel += Vector3::Backward;
-		
+
 	angle -= amountOfMoment.x;
 
 	Vector3 rot = player.GetRotate();

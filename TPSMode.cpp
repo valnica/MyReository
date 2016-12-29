@@ -1,6 +1,6 @@
 #include "TPSMode.h"
 #include "Player.h"
-#include "PlayerMove.h"
+#include "FPSMode.h"
 #include <SimpleMath.h>
 #include "Camera.h"
 #include "GameManager.h"
@@ -20,7 +20,7 @@ State<Player>* TPSMode::Input(Player & player)
 {
 	if (g_mouseTracker->rightButton == g_mouseTracker->PRESSED)
 	{
-		return new PlayerMove;
+		return new FPSMode;
 	}
 	return nullptr;
 }

@@ -7,6 +7,7 @@ class Player;
 class ClearState:public State<Player>
 {
 private:
+	float angle_;
 
 public:
 	ClearState();

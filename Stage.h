@@ -9,7 +9,7 @@ class ClearEvent;
 
 class Stage
 {
-private:
+protected:
 	std::vector<std::shared_ptr<LandShape>> landshapeList_;
 	std::shared_ptr<Marker> marker_;
 	DirectX::SimpleMath::Vector3 startPos_;
@@ -19,12 +19,12 @@ private:
 
 public:
 	Stage();
-	~Stage();
+	virtual ~Stage();
 
-	void Initialize();
-	void Update();
-	void Render();
-	void Finalize();
+	virtual void Initialize();
+	virtual void Update();
+	virtual void Render();
+	virtual void Finalize();
 
 	static void SetClearFlag() { clearFlag_ = true; }
 	DirectX::SimpleMath::Vector3 GetStartPos() { return startPos_; }
