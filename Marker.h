@@ -20,5 +20,6 @@ public:
 	Box& GetBox() { return box_; }
 	DirectX::SimpleMath::Vector3 GetPos() { return marker_.GetTrans(); }
 	void SetPosition(DirectX::SimpleMath::Vector3 pos);
+	void SetRotate(DirectX::SimpleMath::Vector3 rot);
 };
 

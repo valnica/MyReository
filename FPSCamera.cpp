@@ -64,11 +64,16 @@ void FPSCamera::Update(Camera & camera)
 	ref = Vector3::TransformNormal(ref, rot);
 	ref = eye + ref;
 
+	//シームレスにするための処理
+	Vector3 eyeAmount = eye - camera.GetEye();
+	eyeAmount *= 0.3f;
+
 	//upベクトルを回すための計算
 	rot = rotX * rotY;
 	up = Vector3::TransformNormal(up, rot);
 
 	//カメラの設定
+	//camera.SetEye(camera.GetEye() + eyeAmount);
 	camera.SetEye(eye);
 	camera.SetRef(ref);
 	camera.SetUp(up);

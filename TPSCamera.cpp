@@ -8,6 +8,7 @@
 using namespace DirectX::SimpleMath;
 
 TPSCamera::TPSCamera()
+	:sensitivity_(0.01f)
 {
 }
 
@@ -34,8 +35,8 @@ void TPSCamera::Update(Camera & camera)
 	Vector3 ref = player.lock()->GetEyePosition();
 	Vector3 up = Vector3(0.0f, 1.0f, 0.0f);
 
-	rotate_.x -= g_mouse.x * 0.01f;
-	rotate_.y -= g_mouse.y * 0.01f;
+	rotate_.x -= g_mouse.x * sensitivity_;
+	rotate_.y -= g_mouse.y * sensitivity_;
 	Clamp(-90.0f * 3.14f / 180.0f, 90.0f* 3.14f / 180.0f, rotate_.y);
 
 	//視点を回すための計算
@@ -48,11 +49,16 @@ void TPSCamera::Update(Camera & camera)
 	eye = Vector3::Transform(eye, rot);
 	eye += ref;
 
+	//シームレスにするための処理
+	Vector3 eyeAmount = eye - camera.GetEye();
+	eyeAmount *= 0.1f;
+
 	//upベクトルを回すための計算
 	rot = rotX * rotY;
 	up = Vector3::Transform(up, rot);
 
 	//カメラの設定
+	//camera.SetEye(camera.GetEye() + eyeAmount);
 	camera.SetEye(eye);
 	camera.SetRef(ref);
 	camera.SetUp(up);

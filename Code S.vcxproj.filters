@@ -331,10 +331,18 @@
     <MeshContentTask Include="Resources\Models\HitSphere.FBX">
       <Filter>リソース ファイル</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Resources\Models\Display.FBX">
+      <Filter>リソース ファイル</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Code S.rc">
       <Filter>リソース ファイル</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Models\digital.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
 </Project>

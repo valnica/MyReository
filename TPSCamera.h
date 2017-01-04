@@ -9,6 +9,7 @@ class TPSCamera:public State<Camera>,public Singleton<TPSCamera>
 private:
 	const float distance_ = 10;
 	DirectX::SimpleMath::Vector3 rotate_;
+	float sensitivity_;
 
 	friend class Singleton<TPSCamera>;
 

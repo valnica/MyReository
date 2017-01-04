@@ -13,18 +13,19 @@ using namespace DirectX::SimpleMath;
 
 SceneManager::SceneManager()
 {
-	now_ = new TitleScene;
+	//now_ = new TitleScene;
+	//now_ = new ClearScene;
+	//now_ = new GameOverScene;
 }
 
 
 SceneManager::~SceneManager()
 {
-	if (now_)
-		delete now_;
 }
 
 void SceneManager::Initialize()
 {
+	now_.reset(new TitleScene);
 	now_->Initialize();
 
 	flag = 0;
@@ -34,9 +35,6 @@ void SceneManager::Update()
 {
 	if (next_)
 	{
-		if (now_)
-			delete now_;
-
 		now_ = next_;
 		next_ = nullptr;
 		now_->Initialize();
@@ -64,19 +62,19 @@ void SceneManager::ChageScene(SceneManager::SCENEID id)
 	switch (id)
 	{
 	case SceneManager::SCENEID::TITLE:
-		next_ = new TitleScene;
+		next_.reset(new TitleScene);
 		break;
 
 	case SceneManager::SCENEID::PLAY:
-		next_ = new PlayScene;
+		next_.reset(new PlayScene);
 		break;
 
 	case SceneManager::SCENEID::CLEAR:
-		next_ = new ClearScene;
+		next_.reset(new ClearScene);
 		break;
 
 	case SceneManager::SCENEID::GAMEOVER:
-		next_ = new GameOverScene;
+		next_.reset(new GameOverScene);
 		break;
 
 	default:

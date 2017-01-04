@@ -10,7 +10,6 @@ ID3D11Device* Object3D::device_;
 ID3D11DeviceContext* Object3D::deviceContext_;
 CommonStates* Object3D::state_;
 std::weak_ptr<EffectFactory> Object3D::effect_;
-//std::weak_ptr<Camera> Object3D::camera_;
 std::map<std::wstring, std::unique_ptr<DirectX::Model>> Object3D::modelArray_;
 
 Object3D::Object3D()

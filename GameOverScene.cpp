@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "GameManager.h"
 #include "GameOverState.h"
+#include "ResultStage.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -23,10 +24,14 @@ void GameOverScene::Initialize()
 {
 	player_.reset(new Player);
 	player_->Initialize(new GameOverState);
+	player_->SetPosition(Vector3(-1.0f, 0.0f, 0.0f));
 
 	camera_.reset(new Camera((float)WINDOW_H, (float)WINDOW_W));
-	camera_->SetRef(player_->GetPosition() + Vector3(0.0f,1.0f,0.0f));
-	camera_->SetEye(player_->GetPosition() + Vector3(0.0f, 3.0f, -5.0f));
+	camera_->SetRef(Vector3(0.0f, 1.0f, 0.0f));
+	camera_->SetEye(camera_->GetRef() + Vector3(0.0f, 1.0f, -5.0f));
+
+	stage_.reset(new ResultStage);
+	stage_->Initialize();
 
 	Camera::MainCamera(camera_);
 }
@@ -37,6 +42,8 @@ void GameOverScene::Update()
 
 	camera_->Update();
 
+	stage_->Update();
+
 	if (g_mouseTracker->leftButton == g_mouseTracker->PRESSED)
 	{
 		SceneManager::GetInstance()->ChageScene(SceneManager::SCENEID::TITLE);
@@ -46,6 +53,8 @@ void GameOverScene::Update()
 void GameOverScene::Render()
 {
 	player_->Render();
+
+	stage_->Render();
 
 	wchar_t flag[10];
 	swprintf_s(flag, 10, L"Game Over");

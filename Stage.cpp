@@ -8,7 +8,7 @@
 #include "GameManager.h"
 #include "Event.h"
 
-#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)	
 
 using namespace DirectX::SimpleMath;
 
@@ -110,8 +110,9 @@ void Stage::Initialize()
 
 	marker_.reset(new Marker);
 	marker_->Initialize();
-	Vector3 pos(-5.0f, 0.5f, 25.0f);
-	marker_->SetPosition(pos);
+	marker_->SetPosition(Vector3(-5.0f, 0.5f, 25.0f));
+	marker_->SetRotate(Vector3(0.0f, 90.0f, 0.0f));
+
 	startPos_ = Vector3(-25.0f, 0.0f, 35.0f);
 	landShape.box_.Initialize();
 

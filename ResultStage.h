@@ -1,19 +1,24 @@
 #pragma once
 
-#include "Stage.h"
+#include <memory>
+#include <vector>
 
-class ResultStage:public Stage
+class LandShape;
+class Marker;
+
+class ResultStage
 {
 private:
-
+	std::vector<std::shared_ptr<LandShape>> landshapeList_;
+	std::shared_ptr<Marker> marker_;
 
 public:
 	ResultStage();
 	~ResultStage();
 
-	void Initialize() override;
-	void Update() override;
-	void Render() override;
-	void Finalize() override;
+	void Initialize();
+	void Update();
+	void Render();
+	void Finalize();
 };
 

@@ -1,14 +1,16 @@
 #pragma once
 #include "Singleton.h"
 
+#include <memory>
+
 class Scene;
 class PlayScene;
 
 class SceneManager :public Singleton<SceneManager>
 {
 private:
-	Scene* now_;
-	Scene* next_;
+	std::shared_ptr<Scene> now_;
+	std::shared_ptr<Scene> next_;
 
 	int flag;
 

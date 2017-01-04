@@ -71,7 +71,6 @@ void PlayScene::Initialize()
 	enemy->Initialize();
 	character_.push_back(enemy);
 
-	//Object3D::SetCamera(camera_);
 	Camera::MainCamera(camera_);
 }
 

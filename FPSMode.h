@@ -8,7 +8,6 @@ class FPSMode :
 	public State<Player>
 {
 private:
-	const float speed_ = 0.2f;
 
 public:
 	FPSMode();

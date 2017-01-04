@@ -196,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Resources\Models\Box.FBX" />
+    <MeshContentTask Include="Resources\Models\Display.FBX" />
     <MeshContentTask Include="Resources\Models\Enemy.FBX" />
     <MeshContentTask Include="Resources\Models\Floor.FBX" />
     <MeshContentTask Include="Resources\Models\HitSphere.FBX" />
@@ -205,6 +206,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Code S.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Models\digital.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
