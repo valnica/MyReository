@@ -1,14 +1,31 @@
+//////////////////////////////////////////////
+// Name : TPSCamera
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 
 #include "State.h"
 #include "Camera.h"
 #include <SimpleMath.h>
 
+//////////////////////////////////////////////
+// Name : TPSCamera
+//
+// Over View : 客観視点のState
+//////////////////////////////////////////////
 class TPSCamera:public State<Camera>,public Singleton<TPSCamera>
 {
 private:
+	//注視点との距離
 	const float distance_ = 10;
+	
+	//回転角
 	DirectX::SimpleMath::Vector3 rotate_;
+	
+	//マウス感度
 	float sensitivity_;
 
 	friend class Singleton<TPSCamera>;
@@ -17,6 +34,7 @@ private:
 public:
 	~TPSCamera();
 
+	//State切り替え関数
 	State<Camera>* Input(Camera& camera) override;
 	void Update(Camera& camera) override;
 };

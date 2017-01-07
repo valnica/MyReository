@@ -13,9 +13,6 @@ using namespace DirectX::SimpleMath;
 
 SceneManager::SceneManager()
 {
-	//now_ = new TitleScene;
-	//now_ = new ClearScene;
-	//now_ = new GameOverScene;
 }
 
 
@@ -25,7 +22,7 @@ SceneManager::~SceneManager()
 
 void SceneManager::Initialize()
 {
-	now_.reset(new TitleScene);
+	now_.reset(new ClearScene);
 	now_->Initialize();
 
 	flag = 0;

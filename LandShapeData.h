@@ -1,9 +1,21 @@
+//////////////////////////////////////////////
+// Name : LandShapeData
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 
 #include <vector>
 #include <memory>
 #include <SimpleMath.h>
 
+//////////////////////////////////////////////
+// Class Name : LandShapeData
+//
+// Over View : 地形読み込み用のクラス
+//////////////////////////////////////////////
 class LandShapeData
 {
 public:
@@ -54,6 +66,7 @@ public:
 	std::vector<VERTEX_LANDSHAPE> vertices_;
 	std::vector<USHORT> indices_;
 
+	//読み込み
 	static std::unique_ptr<LandShapeData> CreateFromMDL(const char* meshData);
 	static std::unique_ptr<LandShapeData> CreateFromMDL(const wchar_t* szFileName);
 	static void	UpdateNodeMatrices(int index, const NodeInfo* nodeInfo_array, DirectX::SimpleMath::Matrix* parentMatrix, std::vector<std::vector<VERTEX_LANDSHAPE>>& vertexArray);

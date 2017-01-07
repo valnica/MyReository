@@ -1,13 +1,29 @@
+//////////////////////////////////////////////
+// Name : List
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 
+//////////////////////////////////////////////
+// Class Name : ListNode
+//
+// Over View : リストでのデータ保存用のクラス
+//////////////////////////////////////////////
 template <class T>
 class ListNode
 {
 private:
+	//Templateで保存する変数
 	T data_;
 
 public:
+	//リストの次のポインタ
 	ListNode* next_;
+
+	//リストの前のポインタ
 	ListNode* prev_;
 
 	ListNode<T>()
@@ -21,6 +37,7 @@ public:
 	}
 	~ListNode<T>() {};
 
+	//データの取得
 	T GetData()
 	{
 		return data_;
@@ -36,10 +53,16 @@ public:
 	}
 };
 
+//////////////////////////////////////////////
+// Class Name : List
+//
+// Over View : 双方向連結リスト
+//////////////////////////////////////////////
 template <class T>
 class List
 {
 private:
+	//データ保存用の変数
 	ListNode<T>* node_;
 
 public:
@@ -49,6 +72,15 @@ public:
 	}
 	~List<T>(){};
 
+	//////////////////////////////////////////////
+	// Name : PushBack
+	//
+	// Over View : リストの一番後ろに追加
+	//
+	// Argument : 保存するデータ
+	//
+	// Return : 無し
+	//////////////////////////////////////////////
 	void PushBack(T data)
 	{
 		ListNode<T>* node = new ListNode<T>(data);
@@ -67,6 +99,16 @@ public:
 			node_->prev_ = node;
 		}
 	}
+
+	//////////////////////////////////////////////
+	// Name : Top
+	//
+	// Over View : 戦闘のデータ管理変数の取得
+	//
+	// Argument : 無し
+	//
+	// Return : ListNodeのポインタ 
+	//////////////////////////////////////////////
 	ListNode<T>* Top()
 	{
 		return node_;
@@ -79,11 +121,29 @@ public:
 		return *this;
 	}
 
+	//////////////////////////////////////////////
+	// Name : Clear
+	//
+	// Over View : リストの初期化
+	//
+	// Argument : 無し
+	//
+	// Return : 無し 
+	//////////////////////////////////////////////
 	void Clear()
 	{
 		node_ = nullptr;
 	}
 
+	//////////////////////////////////////////////
+	// Name : DataAllDelete
+	//
+	// Over View : データの全消去
+	//
+	// Argument : 無し
+	//
+	// Return : 無し 
+	//////////////////////////////////////////////
 	void DataAllDelete()
 	{
 		auto node = node_->next_;

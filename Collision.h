@@ -1,10 +1,17 @@
+//////////////////////////////////////////////
+// Name : Collition
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 #include "CollisionManager.h"
 
 /////////////////////////////////////////
-// class name : Point3D
+// Class Name : Point3D
 //
-// over view  : 空間分割の戻り値用のクラス
+// Over View  : 空間分割の戻り値用のクラス
 /////////////////////////////////////////
 class Point3D
 {
@@ -22,19 +29,29 @@ public:
 };
 
 /////////////////////////////////////////
-// class name : Grid
+// Class Name : Grid
 //
-// over view  : 空間分割用のクラス
+// Over View  : 空間分割用のクラス
 /////////////////////////////////////////
 class Grid
 {
 private:
 
 public:
+	//分割の大きさ
 	const float gridX_ = 10.0f;
 	const float gridY_ = 10.0f;
 	const float gridZ_ = 10.0f;
 
+	//////////////////////////////////////////////
+	// Name : Calc3DPoint
+	//
+	// Over View : 空間分割時の分割ポイントの計算
+	//
+	// Argument : 座標
+	//
+	// Return :  空間分割時のポイント
+	//////////////////////////////////////////////
 	Point3D Calc3DPoint(DirectX::SimpleMath::Vector3 pos)
 	{
 		int x = (int)(pos.x / gridX_);
@@ -46,9 +63,9 @@ public:
 };
 
 /////////////////////////////////////////
-// class name : Collision
+// Class Name : Collision
 //
-// over view  : 当たり判定用のクラス
+// Over View  : 当たり判定用のクラス
 /////////////////////////////////////////
 class Collision
 {

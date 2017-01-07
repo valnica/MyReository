@@ -1,6 +1,21 @@
+//////////////////////////////////////////////
+// Name : Utility
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 
-//指定した範囲に補正する
+//////////////////////////////////////////////
+// Name : Clamp
+//
+// Over View : 指定した範囲に制限する
+//
+// Argument : 最小値、最大値、 制限するデータ
+//
+// Return : 無し
+//////////////////////////////////////////////
 template <typename T>
 void Clamp(T min, T max, T& data)
 {
@@ -8,6 +23,15 @@ void Clamp(T min, T max, T& data)
 	else if (data < min) data = min;
 }
 
+//////////////////////////////////////////////
+// Name : Swap
+//
+// Over View : データの入れ替え
+//
+// Argument : 入れ替えデータ１、入れ替えデータ２
+//
+// Return : 増し
+//////////////////////////////////////////////
 template <typename T>
 void Swap(T& dataA, T& dataB)
 {

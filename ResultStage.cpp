@@ -42,16 +42,16 @@ void ResultStage::Initialize()
 	landShape.rotate_ = Vector3(0.0f, 0.0f, 0.0f);
 	landShape.scale_ = Vector3(10.0f, 10.0f, 10.0f);
 	landShape.box_.Initialize();
-	landShape.mldName_ = L"Resources\\MDL\\Box.MDL";
-	landShape.cmoName_ = L"Resources\\cModels\\Box.cmo";
+	landShape.mldName_ = L"Resources\\MDL\\Wall.MDL";
+	landShape.cmoName_ = L"Resources\\cModels\\Wall.cmo";
 	landShapeTable.push_back(landShape);
 
 	landShape.trans_ = Vector3(5.0f, 0.0f, 10.0f);
 	landShape.rotate_ = Vector3(0.0f, 0.0f, 0.0f);
 	landShape.scale_ = Vector3(10.0f, 10.0f, 10.0f);
 	landShape.box_.Initialize();
-	landShape.mldName_ = L"Resources\\MDL\\Box.MDL";
-	landShape.cmoName_ = L"Resources\\cModels\\Box.cmo";
+	landShape.mldName_ = L"Resources\\MDL\\Wall.MDL";
+	landShape.cmoName_ = L"Resources\\cModels\\Wall.cmo";
 	landShapeTable.push_back(landShape);
 
 	int numLandShapeTable = landShapeTable.size();

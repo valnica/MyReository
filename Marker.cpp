@@ -21,7 +21,7 @@ void Marker::Initialize()
 	marker_.LoadModelFromFile(L"Resources\\cModels\\Display.cmo");
 	marker_.SetTrans(Vector3(0.0f, 0.0f, 0.0f));
 	marker_.SetRotate(Vector3(0.0f, 0.0f, 0.0f));
-	marker_.SetScale(Vector3(2.0f, 1.0f, 1.0f));
+	marker_.SetScale(Vector3(2.0f, 1.5f, 1.0f));
 }
 
 void Marker::Update()

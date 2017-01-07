@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : Window
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 
 #include <Windows.h>
@@ -6,6 +13,11 @@
 #include "Direct3D.h"
 #include "DirectXTK.h"
 
+//////////////////////////////////////////////
+// Name : Window
+//
+// Over View : Window管理クラス
+//////////////////////////////////////////////
 class Window
 {
 private:
@@ -24,9 +36,11 @@ public:
 	bool Initialize();
 	void Finalize();
 
+	//Windowの初期化
 	HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow);
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
+	//ウィンドウハンドルの取得
 	HWND GetWindowHandle();
 };
 

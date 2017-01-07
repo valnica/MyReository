@@ -120,7 +120,6 @@
     <ClCompile Include="ImaseLib\FPSTimer.cpp" />
     <ClCompile Include="LandShape.cpp" />
     <ClCompile Include="LandShapeData.cpp" />
-    <ClCompile Include="Line.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -165,7 +164,6 @@
     <ClInclude Include="ImaseLib\FPSTimer.h" />
     <ClInclude Include="LandShape.h" />
     <ClInclude Include="LandShapeData.h" />
-    <ClInclude Include="Line.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="Player.h" />
@@ -203,12 +201,10 @@
     <MeshContentTask Include="Resources\Models\Marker.FBX" />
     <MeshContentTask Include="Resources\Models\PlayerBody.FBX" />
     <MeshContentTask Include="Resources\Models\PlayerHead.FBX" />
+    <MeshContentTask Include="Resources\Models\Wall.FBX" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Code S.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\Models\digital.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : ResultStage
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 
 #include <memory>
@@ -6,9 +13,15 @@
 class LandShape;
 class Marker;
 
+//////////////////////////////////////////////
+// Class Name : ResultStage
+//
+// Over View : リザルト用のステージ
+//////////////////////////////////////////////
 class ResultStage
 {
 private:
+	//地形
 	std::vector<std::shared_ptr<LandShape>> landshapeList_;
 	std::shared_ptr<Marker> marker_;
 

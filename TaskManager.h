@@ -1,13 +1,26 @@
+//////////////////////////////////////////////
+// Name : TaskManager
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 
 #include "Singleton.h"
 
+//////////////////////////////////////////////
+// Class Name : BaseTask
+//
+// Over View : タスクでのデータ管理クラス
+//////////////////////////////////////////////
 class BaseTask
 {
 private:
 public:
 	//次のタスクへのポインタ
 	BaseTask* next_;
+
 	//前のタスクへのポインタ
 	BaseTask* prev_;
 
@@ -17,6 +30,7 @@ public:
 		next_ = nullptr;
 		prev_ = nullptr;
 	}
+
 	//デストラクタ
 	virtual ~BaseTask() {}
 
@@ -24,6 +38,11 @@ public:
 	virtual void Draw() { return; }
 };
 
+//////////////////////////////////////////////
+// Class Name : Task
+//
+// Over View : Task
+//////////////////////////////////////////////
 template <typename T>
 class Task :public BaseTask
 {
@@ -39,9 +58,15 @@ public:
 	void Draw() override { data_.Render(); }
 };
 
+//////////////////////////////////////////////
+// Class Name : TaskManager
+//
+// Over View : タスクの管理クラス
+//////////////////////////////////////////////
 class TaskManager:public Singleton<TaskManager>
 {
 private:
+	//空のタスク
 	BaseTask taskList_;
 
 	friend class Singleton<TaskManager>;
@@ -58,6 +83,15 @@ public:
 		AllTaskKill();
 	}
 
+	//////////////////////////////////////////////
+	// Name : Add
+	//
+	// Over View : タスクにデータ追加
+	//
+	// Argument : 無し
+	//
+	// Return : データ 
+	//////////////////////////////////////////////
 	template <typename T>
 	T* Add()
 	{
@@ -67,6 +101,15 @@ public:
 	}
 
 private:
+	//////////////////////////////////////////////
+	// Name : LinkTask
+	//
+	// Over View : タスクを繋げる
+	//
+	// Argument : タスクのデータ
+	//
+	// Return : 無し
+	//////////////////////////////////////////////
 	void Linktask(BaseTask* task)
 	{
 		task->next_ = &taskList_;
@@ -76,6 +119,15 @@ private:
 	}
 
 public:
+	//////////////////////////////////////////////
+	// Name : Run
+	//
+	// Over View : タスクを走らせる
+	//
+	// Argument : 無し
+	//
+	// Return : 無し 
+	//////////////////////////////////////////////
 	void Run()
 	{
 		BaseTask* task = taskList_.next_;
@@ -86,6 +138,15 @@ public:
 		}
 	}
 
+	//////////////////////////////////////////////
+	// Name : Render
+	//
+	// Over View : 描画
+	//
+	// Argument : 無し
+	//
+	// Return : 無し 
+	//////////////////////////////////////////////
 	void Render()
 	{
 		BaseTask* task = taskList_.next_;
@@ -97,6 +158,15 @@ public:
 	}
 
 private:
+	//////////////////////////////////////////////
+	// Name : Kill
+	//
+	// Over View : タスクを終了させる
+	//
+	// Argument : 終了させるデータ
+	//
+	// Return : 次のタスク
+	//////////////////////////////////////////////
 	BaseTask* Kill(BaseTask* task)
 	{
 		BaseTask* next = task->next_;
@@ -109,6 +179,15 @@ private:
 		return next;
 	}
 
+	//////////////////////////////////////////////
+	// Name : TaskAllKill
+	//
+	// Over View : 全タスクの終了
+	//
+	// Argument : 無し
+	//
+	// Return : 無し 
+	//////////////////////////////////////////////
 	void AllTaskKill()
 	{
 		for (BaseTask* task = taskList_.next_; task != &taskList_; task = Kill(task));

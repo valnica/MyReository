@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : SceneManager
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 #include "Singleton.h"
 
@@ -6,12 +13,21 @@
 class Scene;
 class PlayScene;
 
+//////////////////////////////////////////////
+// Class Name : SceneManager
+//
+// Over View : シーンの管理クラス
+//////////////////////////////////////////////
 class SceneManager :public Singleton<SceneManager>
 {
 private:
+	//今のシーン
 	std::shared_ptr<Scene> now_;
+	
+	//次のシーン
 	std::shared_ptr<Scene> next_;
 
+	//デバッグフラグ
 	int flag;
 
 	friend class Singleton<SceneManager>;
@@ -20,6 +36,7 @@ private:
 public:
 	~SceneManager();
 
+	//シーンの定義
 	enum class SCENEID
 	{
 		TITLE,
@@ -33,6 +50,7 @@ public:
 	void Render();
 	void Finalize();
 
+	//シーンの変更
 	void ChageScene(SCENEID id);
 };
 

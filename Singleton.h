@@ -1,15 +1,30 @@
+//////////////////////////////////////////////
+// Name : Singleton
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 #include <memory>
 
+//////////////////////////////////////////////
+// Class Name : Singleton
+//
+// Over View : シングルトンにするためのクラス
+//////////////////////////////////////////////
 template <class T>
 class Singleton
 {
 private:
+	//シングルトン用の変数
 	static std::unique_ptr<T> instance_;
+
 public:
 	Singleton<T>() = default;
 	virtual ~Singleton<T>() = default;
 
+	//インスタンスの取得
 	static std::unique_ptr<T>& GetInstance()
 	{
 		if (!instance_)
@@ -18,6 +33,7 @@ public:
 		return instance_;
 	}
 
+	//シングルトンのリセット
 	void Reset()
 	{
 		instance_.reset();

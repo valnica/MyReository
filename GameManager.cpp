@@ -21,7 +21,7 @@ GameManager::~GameManager()
 
 void GameManager::Initialize()
 {
-	factory_.reset(new EffectFactory(g_pd3dDevice.Get()));
+	factory_.reset(new DGSLEffectFactory(g_pd3dDevice.Get()));
 	factory_->SetDirectory(L"Resources\\cModels");
 
 	//3Dオブジェクトの初期化

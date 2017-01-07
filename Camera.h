@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : Camera
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/8 
+//////////////////////////////////////////////
 #pragma once
 
 #include "DirectXTK.h"
@@ -10,9 +17,15 @@ namespace Math = DirectX::SimpleMath;
 class Character;
 class Player;
 
+//////////////////////////////////////////////
+// Class Name : Camera
+//
+// Over View : カメラ
+//////////////////////////////////////////////
 class Camera
 {
 private:
+	//メインカメラ
 	static std::weak_ptr<Camera> main_;
 
 	//カメラの位置
@@ -51,11 +64,16 @@ public:
 
 	void Update();
 
+	//注視点にするキャラクターの設定
 	void SetTarget(std::shared_ptr<Player> target) { target_ = target; }
+	//注視点にしているキャラクターの取得
 	std::weak_ptr<Player> GetTarget() { return target_; }
+	//メインカメラの設定
 	static void MainCamera(std::shared_ptr<Camera> camera) { main_ = camera; }
+	//メインカメラの取得
 	static std::weak_ptr<Camera> MainCamera() { return main_; }
 
+	//カメラの設定
 	void SetFovY(float fov);
 	void SetAspect(float w, float h);
 	void SetNear(float nearPos);
@@ -64,6 +82,7 @@ public:
 	void SetRef(const Math::Vector3 pos) { ref_ = pos; }
 	void SetUp(const Math::Vector3 pos) { up_ = pos; }
 	
+	//カメラの情報の取得
 	const Math::Vector3& GetEye() const { return eye_; }
 	const Math::Vector3& GetRef() const { return ref_; }
 	const Math::Vector3& GetUp() const { return up_; }
@@ -73,6 +92,11 @@ public:
 
 class CameraState;
 
+//////////////////////////////////////////////
+// Class Name : CameraController
+//
+// Over View : カメラを操作するためのクラス
+//////////////////////////////////////////////
 class CameraController
 {
 private:
@@ -89,5 +113,6 @@ public:
 	void Initialize(std::shared_ptr<Camera> camera);
 	void Update();
 
+	//カメラの設定
 	void SetCamera(std::shared_ptr<Camera> camera);
 };

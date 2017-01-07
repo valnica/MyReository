@@ -24,7 +24,7 @@ void Flash::Initialize()
 
 bool Flash::Update()
 {
-	alpha_ -= 0.05;
+	alpha_ -= 0.05f;
 
 	if (alpha_ < 0)
 		return false;
