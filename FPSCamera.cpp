@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : FPSCamera
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include <SimpleMath.h>
 #include "FPSCamera.h"
 #include "Camera.h"
@@ -11,21 +18,42 @@
 
 using namespace DirectX::SimpleMath;
 
-
+//////////////////////////////////////////////
+// Name : FPSCamera
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 FPSCamera::FPSCamera()
 {
 }
 
-
+//////////////////////////////////////////////
+// Name : ~FPSCamera
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 FPSCamera::~FPSCamera()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Input
+//
+// Over View : State切り替え
+//
+// Argument : Cameraの参照
+//
+// Return :  無し
+//////////////////////////////////////////////
 State<Camera>* FPSCamera::Input(Camera & camera)
 {
+	//遷移条件と遷移先
 	if (g_mouseTracker->rightButton == g_mouseTracker->RELEASED)
 	{
-		//return new TPSCamera;
 		return TPSCamera::GetInstance().get();
 	}
 
@@ -37,9 +65,18 @@ State<Camera>* FPSCamera::Input(Camera & camera)
 	return nullptr;
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : カメラの参照
+//
+// Return :  無し
+//////////////////////////////////////////////
 void FPSCamera::Update(Camera & camera)
 {
-	std::weak_ptr<Player> player = camera.GetTarget();
+	auto player = camera.GetTarget();
 
 	//playerの行列をtrans rotate scaleに分解
 	Vector3 pos;
@@ -73,7 +110,6 @@ void FPSCamera::Update(Camera & camera)
 	up = Vector3::TransformNormal(up, rot);
 
 	//カメラの設定
-	//camera.SetEye(camera.GetEye() + eyeAmount);
 	camera.SetEye(eye);
 	camera.SetRef(ref);
 	camera.SetUp(up);

@@ -3,7 +3,7 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/8 
+// Date : 2017/1/9
 //////////////////////////////////////////////
 #pragma once
 
@@ -24,8 +24,6 @@ class LandShapeCommonDef;
 class GameManager:public Singleton<GameManager>
 {
 private:
-	std::shared_ptr<DirectX::DGSLEffectFactory> factory_;
-	LandShapeCommonDef* landshapeCommondef_;
 
 	friend class Singleton<GameManager>;
 

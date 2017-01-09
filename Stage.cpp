@@ -1,12 +1,20 @@
+//////////////////////////////////////////////
+// Name : Stage
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include <SimpleMath.h>
 #include "Stage.h"
 #include "LandShape.h"
 #include "Marker.h"
 #include "CollisionNode.h"
-#include "Debug.h"
 #include "Culling.h"
 #include "GameManager.h"
 #include "Event.h"
+
+#include "Debug.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)	
 
@@ -14,16 +22,40 @@ using namespace DirectX::SimpleMath;
 
 bool Stage::clearFlag_ = false;
 
+//////////////////////////////////////////////
+// Name : Stage
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Stage::Stage()
 {
 }
 
+//////////////////////////////////////////////
+// Name : ~Stage
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Stage::~Stage()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Stage::Initialize()
 {
+	//地形の設定
 	struct LandShapeTable
 	{
 		Vector3 trans_;
@@ -66,7 +98,7 @@ void Stage::Initialize()
 			landShape.rotate_ = Vector3(0.0f, 0.0f, 0.0f);
 			landShape.scale_ = Vector3(10.0f, 10.0f, 10.0f);
 			landShape.box_.Initialize();
-			landShape.mldName_ = L"Resources\\MDL\\Wall.MDL";
+			landShape.mldName_ = L"Resources\\MDL\\Box.MDL";
 			landShape.cmoName_ = L"Resources\\cModels\\Wall.cmo";
 			landShapeTable.push_back(landShape);
 		}
@@ -76,7 +108,7 @@ void Stage::Initialize()
 	landShape.rotate_ = Vector3(0.0f, 0.0f, 0.0f);
 	landShape.scale_ = Vector3(10.0f, 10.0f, 2.0f);
 	landShape.box_.Initialize();
-	landShape.mldName_ = L"Resources\\MDL\\Wall.MDL";
+	landShape.mldName_ = L"Resources\\MDL\\Box.MDL";
 	landShape.cmoName_ = L"Resources\\cModels\\Wall.cmo";
 	landShapeTable.push_back(landShape);
 
@@ -106,34 +138,49 @@ void Stage::Initialize()
 		landshapeList_[i] = std::move(landShape);
 	}
 
+	//クリアフラグの初期化
 	clearFlag_ = false;
 
+	//写真を撮るオブジェクトの初期化
 	marker_.reset(new Marker);
 	marker_->Initialize();
-	marker_->SetPosition(Vector3(-5.0f, 0.5f, 25.0f));
+	marker_->SetPosition(Vector3(-9.0f, 7.5f, 25.0f));
 	marker_->SetRotate(Vector3(0.0f, 90.0f, 0.0f));
+	marker_->SetScale(Vector3(4.0f, 3.0f, 0.0f));
 
+	//プレイヤーのスタート地点の設定
 	startPos_ = Vector3(-25.0f, 0.0f, 35.0f);
-	landShape.box_.Initialize();
 
+	//クリアイベントの初期化
 	clearEvent_.reset(new ClearEvent);
 	clearEvent_->Initialize();
 	clearEvent_->SetPosition(Vector3(-25.0f, 0.0f, 35.0f));
 	clearEvent_->SetScale(Vector3(10.0f, 10.0f, 10.0f));
-
 	Box box;
 	box.Initialize();
 	clearEvent_->SetBox(box);
 	CollisionManager::GetInstance()->Entry(clearEvent_.get());
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Stage::Update()
 {
+#ifdef DEBUG
 	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::Q))
 	{
 		Debug::SwitchFlag();
 	}
+#endif
 
+	//更新処理
 	for (auto it = landshapeList_.begin(); it != landshapeList_.end(); it++)
 	{
 		(*it)->Update();
@@ -141,28 +188,46 @@ void Stage::Update()
 	marker_->Update();
 }
 
+//////////////////////////////////////////////
+// Name : Render
+//
+// Over View : 描画処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Stage::Render()
 {
+	//描画処理
 	for (auto it = landshapeList_.begin(); it != landshapeList_.end(); it++)
 	{
 		if (!*it) continue;
 
 		(*it)->Calc();
-
-		//if (Culling::InView((*it)->GetBox(), GameManager::GetInstance()->GetCamera(), 1))
-			(*it)->Draw();
+		(*it)->Draw();
 	}
-
 	marker_->Render();
 
+#ifdef DEBUG
 	wchar_t flag[20];
 	if (clearFlag_)
 		swprintf_s(flag, 20, L"ClearFlag = true");
 	else
 		swprintf_s(flag, 20, L"ClearFlag = false");
 	g_spriteFont->DrawString(g_spriteBatch.get(), flag, Vector2(0, 60));
+#endif
 }
 
+//////////////////////////////////////////////
+// Name : Finalize
+//
+// Over View : 終了処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Stage::Finalize()
 {
 }

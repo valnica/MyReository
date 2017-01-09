@@ -3,13 +3,15 @@
 //
 // Author : 山田 聖弥
 //
-// Date : 2017/1/8 
+// Date : 2017/1/9
 //////////////////////////////////////////////
 #pragma once
 #include "Object3D.h"
 #include "State.h"
 #include "CollisionNode.h"
 #include "Character.h"
+
+#include "Debug.h"
 
 namespace Math = DirectX::SimpleMath;
 
@@ -37,7 +39,10 @@ private:
 		NUM_PARTS
 	};
 
-	bool flag_;
+#ifdef DEBUG
+	//デバッグフラグ
+	bool debugFlag_;
+#endif
 
 	//当たり判定オブジェクト
 	SphereNode collisionBody_;
@@ -75,7 +80,7 @@ public:
 	//見つかった通知
 	void Found();
 
-
+	//ワールド計算
 	void Calc();
 };
 

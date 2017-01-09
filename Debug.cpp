@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : Debug
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "Debug.h"
 #include "Direct3D.h"
 #include <CommonStates.h>
@@ -11,16 +18,40 @@ using namespace DirectX::SimpleMath;
 
 bool Debug::debugFlag_ = false;
 
+//////////////////////////////////////////////
+// Name : Debug
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Debug::Debug()
 {
 }
 
+//////////////////////////////////////////////
+// Name : ~Debug
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Debug::~Debug()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Debug::Initialize()
 {
+	//プリミティブ描画に必要な初期処理
 	basicEffect_.reset(new BasicEffect(g_pd3dDevice.Get()));
 	basicEffect_->SetVertexColorEnabled(true);
 	primitiveBatch_.reset(new PrimitiveBatch<VertexPositionColor>(g_pImmediateContext.Get()));
@@ -33,6 +64,15 @@ void Debug::Initialize()
 		shaderByteCode, byteCodeLength, inputLayOut_.GetAddressOf());
 }
 
+//////////////////////////////////////////////
+// Name : DrawLine
+//
+// Over View : デバッグラインび描画
+//
+// Argument : 始点、終点
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Debug::DrawLine(Vector3 v1, Vector3 v2)
 {
 	if (!debugFlag_) return;
@@ -64,8 +104,18 @@ void Debug::DrawLine(Vector3 v1, Vector3 v2)
 	primitiveBatch_->End();
 }
 
+//////////////////////////////////////////////
+// Name : Draw
+//
+// Over View : デバッグ情報の描画
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Debug::Draw()
 {
+#ifdef DEBUG
 	wchar_t mousePosX[20];
 	swprintf_s(mousePosX, 20, L"mouse_x = %d", g_mouse.x);
 	g_spriteFont->DrawString(g_spriteBatch.get(), mousePosX, Vector2(0, 20));
@@ -75,4 +125,6 @@ void Debug::Draw()
 	g_spriteFont->DrawString(g_spriteBatch.get(), mousePosY, Vector2(0, 40));
 
 	DrawLine(start_, end_);
+
+#endif //DEBUG
 }

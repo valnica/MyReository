@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Class Name : Calling
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "Culling.h"
 #include "Object3D.h"
 #include "Camera.h"
@@ -7,15 +14,38 @@
 
 using namespace DirectX::SimpleMath;
 
+//////////////////////////////////////////////
+// Name : Culling
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Culling::Culling()
 {
 }
 
-
+//////////////////////////////////////////////
+// Name : ~Culling
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Culling::~Culling()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Inview
+//
+// Over View : 画面内に入ってるかの判定
+//
+// Argument : ボックス、カメラ、画面内に入ってる判定に必要な頂点の数、
+//            画面の幅-1~1、画面の高さ-1~1
+//
+// Return :  無し
+//////////////////////////////////////////////
 bool Culling::InView(Box& box,std::weak_ptr<Camera> camera,int required,float sx, float sy)
 {
 	int num = 0;
@@ -42,6 +72,7 @@ bool Culling::InView(Box& box,std::weak_ptr<Camera> camera,int required,float sx
 		}
 	}
 
+	//必要分頂点が入っていれば
 	if (num >= required)
 		return true;
 	else

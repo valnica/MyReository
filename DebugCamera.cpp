@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : Debug Camera
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "DebugCamera.h"
 #include "Camera.h"
 #include "DirectXTK.h"
@@ -8,26 +15,58 @@
 
 using namespace DirectX::SimpleMath;
 
+//////////////////////////////////////////////
+// Name : DebugCamera
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 DebugCamera::DebugCamera()
 	:distance_(10.0f),rotate_(Vector3::Zero)
 {
 }
 
+//////////////////////////////////////////////
+// Name : ~DebugCamera
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 DebugCamera::~DebugCamera()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Input
+//
+// Over View : Stateの切り替え
+//
+// Argument : カメラの参照
+//
+// Return :  無し
+//////////////////////////////////////////////
 State<Camera>* DebugCamera::Input(Camera & camera)
 {
+	//遷移条件と遷移先
 	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::O))
 	{
-		//return new FPSCamera;
 		return FPSCamera::GetInstance().get();
 	}
 
 	return nullptr;
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : カメラの参照
+//
+// Return :  無し
+//////////////////////////////////////////////
 void DebugCamera::Update(Camera & camera)
 {
 	//カメラの設定に必要な変数の初期化

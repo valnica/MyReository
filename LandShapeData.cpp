@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : LandShapeData
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "LandShapeData.h"
 #include <fstream>
 
@@ -7,6 +14,15 @@ using namespace std;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
+//////////////////////////////////////////////
+// Name : CreateFromMDL
+//
+// Over View : MDLの読み込み
+//
+// Argument : MDLのパス
+//
+// Return : 地形のポインタ
+//////////////////////////////////////////////
 unique_ptr<LandShapeData> LandShapeData::CreateFromMDL(const char * meshData)
 {
 	const void* head = meshData;
@@ -91,6 +107,15 @@ unique_ptr<LandShapeData> LandShapeData::CreateFromMDL(const char * meshData)
 	return landShape;
 }
 
+//////////////////////////////////////////////
+// Name : CreateFromMDL
+//
+// Over View : MDLの読み込み
+//
+// Argument : MDLのパス
+//
+// Return : 地形のポインタ
+//////////////////////////////////////////////
 unique_ptr<LandShapeData> LandShapeData::CreateFromMDL(const wchar_t * szFileName)
 {
 	ifstream ifs;
@@ -123,6 +148,15 @@ unique_ptr<LandShapeData> LandShapeData::CreateFromMDL(const wchar_t * szFileNam
 	return model;
 }
 
+//////////////////////////////////////////////
+// Name : UpdateNodeMatrices
+//
+// Over View : ワールドの更新
+//
+// Argument : 情報番号、ノードの情報、親の行列、頂点の配列
+//
+// Return :  無し
+//////////////////////////////////////////////
 void LandShapeData::UpdateNodeMatrices(int index, const NodeInfo * nodeInfo_array, DirectX::SimpleMath::Matrix * parentMatrix, std::vector<std::vector<VERTEX_LANDSHAPE>>& vertexArray)
 {
 	const NodeInfo* nodeInfo = &nodeInfo_array[index];
@@ -146,7 +180,7 @@ void LandShapeData::UpdateNodeMatrices(int index, const NodeInfo * nodeInfo_arra
 
 			char str[256];
 
-			//sprintf_s(str, "(%.3f,%.3f, %.3f)\n", it->pos_.x, it->pos_.y, it->pos_.z);
+			sprintf_s(str, "(%.3f,%.3f, %.3f)\n", it->pos_.x, it->pos_.y, it->pos_.z);
 
 			OutputDebugStringA(str);
 		}

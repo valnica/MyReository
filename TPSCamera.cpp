@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : TPSCamera
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "TPSCamera.h"
 #include "FPSCamera.h"
 #include "Utility.h"
@@ -7,25 +14,56 @@
 
 using namespace DirectX::SimpleMath;
 
+//////////////////////////////////////////////
+// Name : TPSCamera
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 TPSCamera::TPSCamera()
 	:sensitivity_(0.01f)
 {
 }
 
+//////////////////////////////////////////////
+// Name : ~TPSCamera
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 TPSCamera::~TPSCamera()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Input
+//
+// Over View : state切り替え
+//
+// Argument : カメラの参照
+//
+// Return : state
+//////////////////////////////////////////////
 State<Camera>* TPSCamera::Input(Camera & camera)
 {
 	if (g_mouseTracker->rightButton == g_mouseTracker->PRESSED)
 	{
-		//return new FPSCamera;
 		return FPSCamera::GetInstance().get();
 	}
 	return nullptr;
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : カメラの参照
+//
+// Return :  無し
+//////////////////////////////////////////////
 void TPSCamera::Update(Camera & camera)
 {
 	std::weak_ptr<Player> player = camera.GetTarget();
@@ -63,5 +101,6 @@ void TPSCamera::Update(Camera & camera)
 	camera.SetRef(ref);
 	camera.SetUp(up);
 
+	//当たり判定に登録
 	CollisionManager::GetInstance()->Entry(&camera);
 }

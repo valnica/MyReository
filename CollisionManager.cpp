@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : COllitionManager
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "CollisionManager.h"
 #include "DirectXTK.h"
 #include "Debug.h"
@@ -16,6 +23,15 @@
 
 using namespace DirectX::SimpleMath;
 
+//////////////////////////////////////////////
+// Name : Reset
+//
+// Over View : 登録されてるオブジェクトのリセット
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void CollisionManager::Reset()
 {
 	//登録されてるオブジェクトのリセット
@@ -26,15 +42,37 @@ void CollisionManager::Reset()
 	camera_ = nullptr;
 }
 
+//////////////////////////////////////////////
+// Name : CollitionManager
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 CollisionManager::CollisionManager()
 {
 }
 
-
+//////////////////////////////////////////////
+// Name : ~CollitionManager
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 CollisionManager::~CollisionManager()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void CollisionManager::Initialize()
 {
 	player_.clear();
@@ -44,6 +82,15 @@ void CollisionManager::Initialize()
 	event_.clear();
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void CollisionManager::Update()
 {
 	Collision collision;
@@ -107,18 +154,6 @@ void CollisionManager::Update()
 					SceneManager::GetInstance()->ChageScene(SceneManager::SCENEID::GAMEOVER);
 				}
 			}
-
-			//遮蔽物があるかないか判定
-			/*Camera camera(640, 480);
-			camera.SetEye((*enemy)->GetPositon());
-			Vector3 ref(0.0f, 0.0f, -(*enemy)->GetViewDistance());
-			Matrix rot = Matrix::CreateRotationY((*enemy)->GetRotate().y * 3.14f / 180.0f);
-			ref = Vector3::TransformNormal(ref, rot);
-			camera.SetTarget((*enemy)->GetPositon() + ref);
-			camera.Update();*/
-
-			//if (Culling::InView((*landShape)->GetBox(), &camera, 1))
-
 		}
 	}
 
@@ -172,36 +207,97 @@ void CollisionManager::Update()
 	Reset();
 }
 
+//////////////////////////////////////////////
+// Name : Entry
+//
+// Over View : 当たり判定に登録
+//
+// Argument : Playerのポインタ
+//
+// Return :  無し
+//////////////////////////////////////////////
 void CollisionManager::Entry(Player * player)
 {
 	player_.push_back(player);
 }
 
+//////////////////////////////////////////////
+// Name : Entry
+//
+// Over View : 当たり判定に登録
+//
+// Argument : Enemyのポインタ
+//
+// Return :  無し
+//////////////////////////////////////////////
 void CollisionManager::Entry(Enemy * enemy)
 {
 	enemy_.push_back(enemy);
 }
 
+//////////////////////////////////////////////
+// Name : Entry
+//
+// Over View : 当たり判定に登録
+//
+// Argument : LandShapeのポインタ
+//
+// Return :  無し
+//////////////////////////////////////////////
 void CollisionManager::Entry(LandShape * landShape)
 {
 	landShape_.push_back(landShape);
 }
 
+//////////////////////////////////////////////
+// Name : Entry
+//
+// Over View : 当たり判定に登録
+//
+// Argument : Markerのポインタ
+//
+// Return :  無し
+//////////////////////////////////////////////
 void CollisionManager::Entry(Marker * marker)
 {
 	marker_.push_back(marker);
 }
 
+//////////////////////////////////////////////
+// Name : Entry
+//
+// Over View : 当たり判定に登録
+//
+// Argument : Eventのポインタ
+//
+// Return :  無し
+//////////////////////////////////////////////
 void CollisionManager::Entry(Event * events)
 {
 	event_.push_back(events);
 }
 
+//////////////////////////////////////////////
+// Name : Entry
+//
+// Over View : 当たり判定に登録
+//
+// Argument : Cameraのポインタ
+//
+// Return :  無し
+//////////////////////////////////////////////
 void CollisionManager::Entry(Camera* camera)
 {
 	camera_ = camera;
 }
 
+//////////////////////////////////////////////
+// Name : Box
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Box::Box()
 {
 	point[0] = Vector3(-0.5f, 0.5f, 0.5f);
@@ -214,6 +310,15 @@ Box::Box()
 	point[7] = Vector3(0.5f, -0.5f, 0.5f);
 }
 
+//////////////////////////////////////////////
+// Name : Translation
+//
+// Over View : 座標の設定
+//
+// Argument : 座標
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Box::Translation(DirectX::SimpleMath::Vector3 pos)
 {
 	for (int i = 0; i < 8; i++)
@@ -222,6 +327,15 @@ void Box::Translation(DirectX::SimpleMath::Vector3 pos)
 	}
 }
 
+//////////////////////////////////////////////
+// Name : SetScale
+//
+// Over View : 大きさの設定
+//
+// Argument : 大きさ
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Box::SetScale(DirectX::SimpleMath::Vector3 scale)
 {
 	for (int i = 0; i < 8; i++)
@@ -230,12 +344,31 @@ void Box::SetScale(DirectX::SimpleMath::Vector3 scale)
 	}
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Box::Initialize()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Draw
+//
+// Over View : ボックスのデバッグ表示
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Box::Draw()
 {
+#ifdef DEBUG
 	Debug::GetInstance()->DrawLine(point[0], point[1]);
 	Debug::GetInstance()->DrawLine(point[1], point[2]);
 	Debug::GetInstance()->DrawLine(point[2], point[3]);
@@ -248,4 +381,6 @@ void Box::Draw()
 	Debug::GetInstance()->DrawLine(point[1], point[5]);
 	Debug::GetInstance()->DrawLine(point[2], point[6]);
 	Debug::GetInstance()->DrawLine(point[3], point[7]);
+
+#endif //DEBUG
 }

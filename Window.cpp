@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : Window
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "Window.h"
 
 using namespace Microsoft::WRL;
@@ -10,16 +17,38 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 #include <crtdbg.h>
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
+//////////////////////////////////////////////
+// Name : Window
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Window::Window()
 	:hInst_(nullptr),hWnd_(nullptr)
 {
 }
 
-
+//////////////////////////////////////////////
+// Name : Window
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Window::~Window()
 {
 }
 
+//////////////////////////////////////////////
+// Name : InitWindow
+//
+// Over View : ウィンドウの初期化
+//
+// Argument : 
+//
+// Return : 
+//////////////////////////////////////////////
 HRESULT Window::InitWindow(HINSTANCE hInstance, int nCmdShow)
 {
 	// ウインドウクラスを登録する
@@ -55,27 +84,41 @@ HRESULT Window::InitWindow(HINSTANCE hInstance, int nCmdShow)
 	return S_OK;
 }
 
+//////////////////////////////////////////////
+// Name : WndProc
+//
+// Over View : メッセージの確認
+//
+// Argument : 
+//
+// Return : 
+//////////////////////////////////////////////
 LRESULT Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
-	case WM_DESTROY:		// ウインドウが破棄されたメッセージ
-		PostQuitMessage(0);	// WM_QUITメッセージを送出する（メインループを抜ける）
+	// ウインドウが破棄されたメッセージ
+	case WM_DESTROY:		
+		// WM_QUITメッセージを送出する（メインループを抜ける）
+		PostQuitMessage(0);	
 		break;
 
-	case WM_ACTIVATEAPP:	// ウインドウがアクティブ化、非アクティブ化する時に来るメッセージ
+	// ウインドウがアクティブ化、非アクティブ化する時に来るメッセージ
+	case WM_ACTIVATEAPP:	
 		Keyboard::ProcessMessage(message, wParam, lParam);
 		Mouse::ProcessMessage(message, wParam, lParam);
 		break;
 
-	case WM_KEYDOWN:		// キー入力関係のメッセージ
+	// キー入力関係のメッセージ
+	case WM_KEYDOWN:		
 	case WM_SYSKEYDOWN:
 	case WM_KEYUP:
 	case WM_SYSKEYUP:
 		Keyboard::ProcessMessage(message, wParam, lParam);
 		break;
 
-	case WM_INPUT:			// マウス関係のメッセージ
+	// マウス関係のメッセージ
+	case WM_INPUT:			
 	case WM_MOUSEMOVE:
 	case WM_LBUTTONDOWN:
 	case WM_LBUTTONUP:
@@ -98,6 +141,15 @@ LRESULT Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+//////////////////////////////////////////////
+// Name : GetWindowHandle
+//
+// Over View : ウィンドウハンドルの取得
+//
+// Argument : 無し
+//
+// Return : ウィンドウハンドル
+//////////////////////////////////////////////
 HWND Window::GetWindowHandle()
 {
 	return hWnd_;

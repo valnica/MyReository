@@ -3,7 +3,7 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/8 
+// Date : 2017/1/9
 //////////////////////////////////////////////
 #pragma once
 
@@ -13,6 +13,8 @@
 #include <SimpleMath.h>
 #include <wrl.h>
 #include "Singleton.h"
+
+#define DEBUG
 
 //////////////////////////////////////////////
 // Class Name : Debug

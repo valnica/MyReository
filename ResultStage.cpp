@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : ResultStage
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "ResultStage.h"
 #include "LandShape.h"
 #include "Marker.h"
@@ -6,17 +13,40 @@
 
 using namespace DirectX::SimpleMath;
 
-
+//////////////////////////////////////////////
+// Name : ResultStage
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 ResultStage::ResultStage()
 {
 }
 
+//////////////////////////////////////////////
+// Name : ~ResultStage
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 ResultStage::~ResultStage()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void ResultStage::Initialize()
 {
+	//地形の設定
 	struct LandShapeTable
 	{
 		Vector3 trans_;
@@ -80,14 +110,25 @@ void ResultStage::Initialize()
 		landshapeList_[i] = std::move(landShape);
 	}
 
+	//写真で取るオブジェクトの設定
 	marker_.reset(new Marker);
 	marker_->Initialize();
 	marker_->SetPosition(Vector3(1.5f, 2.0f, 1.0f));
 	marker_->SetRotate(Vector3(0.0f, 180.0f, 0.0f));
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void ResultStage::Update()
 {
+	//更新処理
 	for (auto it = landshapeList_.begin(); it != landshapeList_.end(); it++)
 	{
 		(*it)->Update();
@@ -95,8 +136,18 @@ void ResultStage::Update()
 	marker_->Update();
 }
 
+//////////////////////////////////////////////
+// Name : Render
+//
+// Over View : 描画処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void ResultStage::Render()
 {
+	//描画処理
 	for (auto it = landshapeList_.begin(); it != landshapeList_.end(); it++)
 	{
 		(*it)->Calc();
@@ -105,6 +156,15 @@ void ResultStage::Render()
 	marker_->Render();
 }
 
+//////////////////////////////////////////////
+// Name : Finalize
+//
+// Over View : 終了処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void ResultStage::Finalize()
 {
 }

@@ -3,7 +3,7 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/8 
+// Date : 2017/1/9
 //////////////////////////////////////////////
 
 #pragma once
@@ -26,7 +26,7 @@ private:
 	static ID3D11Device* device_;
 	static ID3D11DeviceContext* deviceContext_;
 	static DirectX::CommonStates* state_;
-	static std::weak_ptr<DirectX::DGSLEffectFactory> effect_;
+	static std::shared_ptr<DirectX::DGSLEffectFactory> effect_;
 	static std::map<std::wstring, std::unique_ptr<DirectX::Model>> modelArray_;
 
 public:

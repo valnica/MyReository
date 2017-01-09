@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : SceneManager
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "SceneManager.h"
 #include "Scene.h"
 #include "TitleScene.h"
@@ -11,25 +18,56 @@
 
 using namespace DirectX::SimpleMath;
 
+//////////////////////////////////////////////
+// Name : SceneManager
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 SceneManager::SceneManager()
 {
 }
 
-
+//////////////////////////////////////////////
+// Name : ~SceneManager
+//
+// Over View : ~デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 SceneManager::~SceneManager()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void SceneManager::Initialize()
 {
-	now_.reset(new ClearScene);
+	//初期化
+	now_.reset(new TitleScene);
 	now_->Initialize();
-
-	flag = 0;
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void SceneManager::Update()
 {
+	//遷移先があればシーン遷移
 	if (next_)
 	{
 		now_ = next_;
@@ -37,23 +75,48 @@ void SceneManager::Update()
 		now_->Initialize();
 	}
 
-	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::Delete))
-		Initialize();
-
-	if (flag == 0)
-		now_->Update();
+	now_->Update();
 }
 
+//////////////////////////////////////////////
+// Name : Render
+//
+// Over View : 描画処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void SceneManager::Render()
 {
+	//描画
 	now_->Render();
 }
 
+//////////////////////////////////////////////
+// Name : Finalize
+//
+// Over View : 終了処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void SceneManager::Finalize()
 {
+	//終了処理
 	now_->Finalize();
 }
 
+//////////////////////////////////////////////
+// Name : ChangeScene
+//
+// Over View : シーン遷移の設定
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void SceneManager::ChageScene(SceneManager::SCENEID id)
 {
 	switch (id)

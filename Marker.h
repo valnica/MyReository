@@ -3,7 +3,7 @@
 //
 // Author : R“c ¹–í
 //
-// Date : 2017/1/8 
+// Date : 2017/1/9
 //////////////////////////////////////////////
 #pragma once
 
@@ -43,5 +43,8 @@ public:
 	
 	//‰ñ“]Šp‚Ìİ’è
 	void SetRotate(DirectX::SimpleMath::Vector3 rot);
+
+	//‘å‚«‚³‚Ìİ’è
+	void SetScale(DirectX::SimpleMath::Vector3 scale);
 };
 

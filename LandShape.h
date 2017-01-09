@@ -3,7 +3,7 @@
 //
 // Author : 山田 聖弥
 //
-// Date : 2017/1/8 
+// Date : 2017/1/9
 //////////////////////////////////////////////
 #pragma once
 
@@ -40,16 +40,15 @@ class LandShapeCommon
 {
 	friend class LandShape;
 public:
-	LandShapeCommon(LandShapeCommonDef* def);
+	LandShapeCommon(std::shared_ptr<LandShapeCommonDef> def);
 	~LandShapeCommon();
 protected:
 	//地形に必要な変数
-	Camera* camera_;
 	std::unique_ptr<DirectX::CommonStates> state_;
 	std::unique_ptr<DirectX::EffectFactory> effectFactory_;
 	std::unique_ptr<DirectX::BasicEffect> effect_;
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionNormal>> primitiveBatch_;
-	ID3D11InputLayout* inputLayout_;
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout_;
 	ID3D11DeviceContext* deviceContext_;
 };
 
@@ -74,7 +73,7 @@ protected:
 	Box box_;
 
 public:
-	static void InitializeCommon(LandShapeCommonDef* def);
+	static void InitializeCommon(std::shared_ptr<LandShapeCommonDef>);
 
 	LandShape();
 	void Initialize(const wchar_t* fileNameMDL, const wchar_t* fileNameCMO = nullptr);

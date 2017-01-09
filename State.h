@@ -10,9 +10,9 @@
 #include "Singleton.h"
 
 //////////////////////////////////////////////
-// Name : Camera
+// Class Name : State
 //
-// Over View : カメラ
+// Over View : Stateの基底クラス
 //////////////////////////////////////////////
 template <class T>
 class State
@@ -23,6 +23,7 @@ public:
 	State() {};
 	virtual ~State() {};
 
+	//State切り替えクラス
 	virtual State<T>* Input(T& data) = 0;
 	virtual void Update(T& data) = 0;
 };

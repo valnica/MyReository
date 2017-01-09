@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : GameManager
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "GameManager.h"
 #include "Object3D.h"
 #include "Player.h"
@@ -8,32 +15,54 @@
 
 using namespace DirectX;
 
+//////////////////////////////////////////////
+// Name : GameManager
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 GameManager::GameManager()
 {
-	landshapeCommondef_ = new LandShapeCommonDef;
 }
 
+//////////////////////////////////////////////
+// Name : ~GameManager
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 GameManager::~GameManager()
 {
-	if (landshapeCommondef_)
-		delete landshapeCommondef_;
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void GameManager::Initialize()
 {
-	factory_.reset(new DGSLEffectFactory(g_pd3dDevice.Get()));
-	factory_->SetDirectory(L"Resources\\cModels");
+
+	std::shared_ptr<DirectX::DGSLEffectFactory> factory;
+	factory.reset(new DGSLEffectFactory(g_pd3dDevice.Get()));
+	factory->SetDirectory(L"Resources\\cModels");
 
 	//3Dオブジェクトの初期化
 	Object3D::SetDevice(g_pd3dDevice.Get());
 	Object3D::SetContext(g_pImmediateContext.Get());
 	Object3D::SetState(g_state.get());
-	Object3D::SetEffect(factory_);
-	//Object3D::SetCamera(camera_);
+	Object3D::SetEffect(factory);
 
 	//地形の初期設定
-	//landshapeCommondef_->camera_ = camera_;
-	landshapeCommondef_->device_ = g_pd3dDevice.Get();
-	landshapeCommondef_->deviceContext_ = g_pImmediateContext.Get();
-	LandShape::InitializeCommon(landshapeCommondef_);
+	std::shared_ptr<LandShapeCommonDef> landshapeCommondef;
+	landshapeCommondef.reset(new LandShapeCommonDef);
+	landshapeCommondef->device_ = g_pd3dDevice.Get();
+	landshapeCommondef->deviceContext_ = g_pImmediateContext.Get();
+	LandShape::InitializeCommon(landshapeCommondef);
 }

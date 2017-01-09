@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : Player
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "Player.h"
 #include "State.h"
 #include "Utility.h"
@@ -9,7 +16,15 @@
 
 using namespace DirectX::SimpleMath;
 
-//モデルの行列計算
+//////////////////////////////////////////////
+// Name : Calc
+//
+// Over View : ワールド計算
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Player::Calc()
 {
 	int a = 0;
@@ -19,19 +34,39 @@ void Player::Calc()
 	}
 }
 
-//コンストラクタ
+//////////////////////////////////////////////
+// Name : Player
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Player::Player()
 {
 }
 
-//デストラクタ
+//////////////////////////////////////////////
+// Name : ~Player
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Player::~Player()
 {
 	if (state_)
 		delete state_;
 }
 
-//初期化
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Player::Initialize()
 {
 	//空のオブジェクト
@@ -57,19 +92,37 @@ void Player::Initialize()
 	parts_[EYE].SetScale(Vector3(0.3f, 0.3f, 0.3f));
 	parts_[EYE].SetParentWorld(&parts_[HEAD].GetWorld());
 
+	//当たり判定用のモデルの初期化
 	collisionBody_.Initialize();
 	collisionBody_.SetTrans(Vector3(0.0f, 0.85f, 0.3f));
 	collisionBody_.SetLocalRadius(1.0f);
 	collisionBody_.SetParentMatrix(&parts_[EMPTY].GetLocalWorld());
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : state
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Player::Initialize(State<Player>* state)
 {
 	state_ = state;
 	Initialize();
 }
 
-//更新処理
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Player::Update()
 {
 	//Stateパターン
@@ -86,12 +139,22 @@ void Player::Update()
 
 	collisionBody_.Update();
 
+	//当たり判定に登録
 	CollisionManager::GetInstance()->Entry(this);
 
-	flag_ = false;
+	//デバッグフラグの初期化
+	debugFlag_ = false;
 }
 
-//描画
+//////////////////////////////////////////////
+// Name : Render
+//
+// Over View : 描画処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Player::Render()
 {
 	for (int i = 0; i < NUM_PARTS; i++)
@@ -101,39 +164,81 @@ void Player::Render()
 
 	collisionBody_.Draw();
 
+#ifdef DEBUG
 	wchar_t flag[20];
-	if (flag_)
+	if (debugFlag_)
 		swprintf_s(flag, 20, L"PlayerFront = true");
 	else
 		swprintf_s(flag, 20, L"PlayerFront = false");
 	g_spriteFont->DrawString(g_spriteBatch.get(), flag, Vector2(0, 100));
+#endif //デバッグ
 }
 
-//座標の設定
+//////////////////////////////////////////////
+// Name : SetPosition
+//
+// Over View : 座標の設定
+//
+// Argument : 座標
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Player::SetPosition(Vector3 pos)
 {
 	parts_[EMPTY].SetTrans(pos);
 }
 
-//座標の取得
+//////////////////////////////////////////////
+// Name : GetPosition
+//
+// Over View : 座標の取得
+//
+// Argument : 無し
+//
+// Return :  座標
+//////////////////////////////////////////////
 DirectX::SimpleMath::Vector3 Player::GetPosition()
 {
 	return parts_[EMPTY].GetTrans();
 }
 
-//回転角の設定
+//////////////////////////////////////////////
+// Name : SetRotate
+//
+// Over View : 回転角の設定
+//
+// Argument : 回転角
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Player::SetRotate(DirectX::SimpleMath::Vector3 rot)
 {
 	parts_[EMPTY].SetRotate(rot);
 }
 
-//回転角の取得
+//////////////////////////////////////////////
+// Name : GetRotate
+//
+// Over View : 回転角の取得
+//
+// Argument : 無し
+//
+// Return :  回転角
+//////////////////////////////////////////////
 DirectX::SimpleMath::Vector3 Player::GetRotate()
 {
 	return parts_[EMPTY].GetRotate();
 }
 
-//頭パーツの回転角の設定
+//////////////////////////////////////////////
+// Name : SetHeadRotate
+//
+// Over View : 頭の回転角の設定
+//
+// Argument : 回転角
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Player::SetHeadRotate(Vector3 rot)
 {
 	//首の可動域に補正
@@ -143,13 +248,29 @@ void Player::SetHeadRotate(Vector3 rot)
 	parts_[HEAD].SetRotate(rot);
 }
 
-//頭パーツの回転角の取得
+//////////////////////////////////////////////
+// Name : GetHeadRotate
+//
+// Over View : 回転角の取得
+//
+// Argument : 無し
+//
+// Return :  回転角
+//////////////////////////////////////////////
 Vector3 Player::GetHeadRotate()
 {
 	return parts_[HEAD].GetRotate();
 }
 
-//視線の座標を取得
+//////////////////////////////////////////////
+// Name : GetEyePosition
+//
+// Over View : 目の座標取得
+//
+// Argument : 無し
+//
+// Return : 目の座標
+//////////////////////////////////////////////
 Vector3 Player::GetEyePosition()
 {
 	Vector3 pos;
@@ -159,13 +280,32 @@ Vector3 Player::GetEyePosition()
 	return pos;
 }
 
-//視線の行列を取得
+//////////////////////////////////////////////
+// Name : GetEyeMatrix
+//
+// Over View : 目の行列を取得
+//
+// Argument : 無し
+//
+// Return : 目のワールド
+//////////////////////////////////////////////
 Matrix Player::GetEyeMatrix()
 {
 	return parts_[EYE].GetWorld();
 }
 
+//////////////////////////////////////////////
+// Name : Found
+//
+// Over View : 見つかった通知
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Player::Found()
 {
-	flag_ = true;
+#ifdef DEBUG
+	debugFlag_ = true;
+#endif
 }

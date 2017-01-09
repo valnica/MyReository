@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : TPSMode
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "TPSMode.h"
 #include "Player.h"
 #include "FPSMode.h"
@@ -8,14 +15,37 @@
 
 using namespace DirectX::SimpleMath;
 
+//////////////////////////////////////////////
+// Name : TPSMode
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 TPSMode::TPSMode()
 {
 }
 
+//////////////////////////////////////////////
+// Name : ~TPSMode
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 TPSMode::~TPSMode()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Input
+//
+// Over View : state切り替え
+//
+// Argument : プレイヤーの参照
+//
+// Return :  state
+//////////////////////////////////////////////
 State<Player>* TPSMode::Input(Player & player)
 {
 	if (g_mouseTracker->rightButton == g_mouseTracker->PRESSED)
@@ -25,11 +55,21 @@ State<Player>* TPSMode::Input(Player & player)
 	return nullptr;
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : プレイヤーの参照
+//
+// Return :  無し
+//////////////////////////////////////////////
 void TPSMode::Update(Player & player)
 {
 	//移動ベクトル
 	Vector3 vec = Vector3::Zero;
 
+	//移動の入力
 	if (g_key.W)
 		vec += Vector3(0.0f, 0.0f, -1.0f);
 	if (g_key.S)

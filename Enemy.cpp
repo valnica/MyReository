@@ -1,23 +1,53 @@
+//////////////////////////////////////////////
+// Name : Enemy
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "Enemy.h"
-#include "Debug.h"
 #include "GameManager.h"
 #include "Player.h"
 #include "CollisionManager.h"
+
+#include "Debug.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 using namespace DirectX::SimpleMath;
 
+//////////////////////////////////////////////
+// Name : Enemy
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Enemy::Enemy()
 {
 }
 
-
+//////////////////////////////////////////////
+// Name : ~Enemy
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 Enemy::~Enemy()
 {
 	movePoint_.DataAllDelete();
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Enemy::Initialize()
 {
 	//空のオブジェクト
@@ -37,14 +67,26 @@ void Enemy::Initialize()
 	parts_[HEAD].SetScale(Vector3(1.0f, 1.0f, 1.0f));
 	parts_[HEAD].SetParentWorld(&parts_[BODY].GetWorld());
 
+	//AIの初期処理
 	now_ = movePoint_.Top();
 	moveCount_ =(int)((now_->next_->GetData() - now_->GetData()).Length() / moveSpeed_ * 60);
 	waitTime_ = 60; 
 	currentCount_ = 0;
+	
+	//視野の設定
 	viewAngle_ = 45.0f;
 	viewDistance_ = 30.0f;
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Enemy::Update()
 {
 	currentCount_++;
@@ -75,16 +117,28 @@ void Enemy::Update()
 		moveCount_ = (int)((now_->next_->GetData() - now_->GetData()).Length() / moveSpeed_ * 60);
 	}
 
+	//当たり判定に登録
 	CollisionManager::GetInstance()->Entry(this);
 }
 
+//////////////////////////////////////////////
+// Name : Render
+//
+// Over View : 描画処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Enemy::Render()
 {
+	//描画
 	for (int i = 0; i < NUM_PARTS; i++)
 	{
 		parts_[i].Draw();
 	}
 
+#ifdef DEBUG
 	//プレイヤーが視野内にいるかどうかのデバッグ
 	{
 		//デバッグ　向いている方向を描画
@@ -102,9 +156,18 @@ void Enemy::Render()
 		vec = Vector3::TransformNormal(dir, rot);
 		Debug::GetInstance()->DrawLine(parts_[EMPTY].GetTrans(),parts_[EMPTY].GetTrans() + vec);
 	}
-
+#endif
 }
 
+//////////////////////////////////////////////
+// Name : SetMovePoint
+//
+// Over View : 巡回場所のリストの設定
+//
+// Argument : 巡回場所を保存してあるリスト
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Enemy::SetMovePoint(List<DirectX::SimpleMath::Vector3> movePoint)
 {
 	movePoint_ = movePoint;

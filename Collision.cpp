@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : Collition
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "Collision.h"
 #include "LandShape.h"
 #include "Debug.h"
@@ -15,14 +22,15 @@ inline float Clamp(float _x, float _min, float _max)
 	return min(max(_x, _min), _max);
 }
 
-//--------------------------------------------------------------------------------------------
-// 説　明 : 点と線分の最近接点を計算
-// 引　数 : _point	点
-//			_segment	線分
-//			_closest	最近接点(結果出力用）
-// 戻り値 : なし
-// メ　モ : 
-//--------------------------------------------------------------------------------------------
+//////////////////////////////////////////////
+// Name : ClosestPtPoint2Segment
+//
+// Over View : 点と線分の最近接点を計算
+//
+// Argument : 点、線分、最近接点
+//
+// Return :  無し
+//////////////////////////////////////////////
 void ClosestPtPoint2Segment(const Vector3& _point, const Segment& _segment, Vector3* _closest)
 {
 	Vector3 segv;
@@ -40,34 +48,41 @@ void ClosestPtPoint2Segment(const Vector3& _point, const Segment& _segment, Vect
 	*_closest = t * segv + _segment.start_;
 }
 
-//--------------------------------------------------------------------------------------------
-// 説　明 : 線分と線分の最近接点を計算
-// 引　数 : _segment0	線分0
-//			_segment1	線分1
-//			_closest0	線分0上の最近接点(結果出力用）
-//			_closest1	線分1上の最近接点(結果出力用）
-// 戻り値 : なし
-// メ　モ : 
-//--------------------------------------------------------------------------------------------
+//////////////////////////////////////////////
+// Name : ClosestPtSegment2Segment
+//
+// Over View : 線分と線分の最近接点を計算
+//
+// Argument : 線分１、線分２、線分１の最近接点、線分２の最近接点
+//
+// Return :  無し
+//////////////////////////////////////////////
 void ClosestPtSegment2Segment(const Segment& _segment0, const Segment& _segment1, Vector3* _closest0, Vector3* _closest1)
 {
-	const float epsilon = 1.0e-5f;	// 誤差吸収用の微小な値
+	// 誤差吸収用の微小な値
+	const float epsilon = 1.0e-5f;	
 	Vector3 d0, d1, r;
 	float a, b, c, e, f;
 	float s, t;
 	float denom;
 	float tnom;
 
-	d0 = _segment0.end_ - _segment0.start_;		// 線分0の方向ベクトル
-	d1 = _segment1.end_ - _segment1.start_;		// 線分1の方向ベクトル
-	r = _segment0.start_ - _segment1.start_;	// 線分1の始点から線分0の始点へのベクトル
-	a = d0.Dot(d0);	// 線分0の距離の二乗
-	e = d1.Dot(d1);	// 線分1の距離の二乗
-					//	b = d0.Dot(d1);	// 最適化の為後方に移動した
-					//	c = d0.Dot(r);	// 最適化の為後方に移動した
-					//	f = d1.Dot(r);	// 最適化の為後方に移動した
+	// 線分0の方向ベクトル
+	d0 = _segment0.end_ - _segment0.start_;
 
-					// いづれかの線分の長さが0かどうかチェック
+	// 線分1の方向ベクトル
+	d1 = _segment1.end_ - _segment1.start_;	
+
+	// 線分1の始点から線分0の始点へのベクトル
+	r = _segment0.start_ - _segment1.start_;
+
+	// 線分0の距離の二乗
+	a = d0.Dot(d0);	
+
+	// 線分1の距離の二乗
+	e = d1.Dot(d1);	
+
+	// いづれかの線分の長さが0かどうかチェック
 	if (a <= epsilon && e <= epsilon)
 	{// 両方長さ0
 		*_closest0 = _segment0.start_;
@@ -91,9 +106,11 @@ void ClosestPtSegment2Segment(const Segment& _segment0, const Segment& _segment1
 	f = d1.Dot(r);
 	c = d0.Dot(r);
 
-	denom = a * e - b * b;	// 常に非負
-							// 線分が平行でない場合、直線0上の直線1に対する最近接点を計算、そして
-							// 線分0上にクランプ。そうでない場合は任意のsを選択
+	// 常に非負
+	denom = a * e - b * b;	
+	
+	// 線分が平行でない場合、直線0上の直線1に対する最近接点を計算、そして
+	// 線分0上にクランプ。そうでない場合は任意のsを選択
 	if (denom != 0)
 	{
 		s = Clamp((b * f - c * e) / denom, 0, 1);
@@ -125,22 +142,32 @@ void ClosestPtSegment2Segment(const Segment& _segment0, const Segment& _segment1
 	*_closest1 = t * d1 + _segment1.start_;
 }
 
-
-
+//////////////////////////////////////////////
+// Name : CheckSphere2Sphere
+//
+// Over View : 球と球の当たり判定
+//
+// Argument : 球１、球２、当たった場所の保存用変数
+//
+// Return :  当たった判定(当たったならtrue)
+//////////////////////////////////////////////
 bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, Vector3* inter)
 {
+	//距離の２乗を求める
 	Vector3 sub = sphereA.center_ - sphereB.center_;
-
 	float lengthSqured = VectorLengthSquare(sub);
 
+	//半径+半径の２乗を求める
 	float radius_sum = sphereA.radius_ + sphereB.radius_;
 	float radius_sumSquared = radius_sum * radius_sum;
 
+	//長さの２乗が半径+半径の２乗より短かったら当たってる
 	if (lengthSqured > radius_sumSquared)
 	{
 		return false;
 	}
 
+	//当たった点を保存
 	if (inter)
 	{
 		Vector3 Btointer = sub*sphereB.radius_ / (sphereA.radius_ + sphereB.radius_);
@@ -150,6 +177,15 @@ bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB,
 	return true;
 }
 
+//////////////////////////////////////////////
+// Name : VectorLengthSquare
+//
+// Over View : 長さの２乗のを求める
+//
+// Argument : 3次元ベクトル
+//
+// Return :  長さの２乗
+//////////////////////////////////////////////
 float Collision::VectorLengthSquare(DirectX::SimpleMath::Vector3 & v)
 {
 	float lenthSquared = v.LengthSquared();
@@ -157,6 +193,15 @@ float Collision::VectorLengthSquare(DirectX::SimpleMath::Vector3 & v)
 	return lenthSquared;
 }
 
+//////////////////////////////////////////////
+// Name : Distance3DSquared
+//
+// Over View : 2つのベクトルの距離の２乗を求める
+//
+// Argument : 3次元ベクトル1、3次元ベクトル2
+//
+// Return :  距離の２乗
+//////////////////////////////////////////////
 float Collision::Distance3DSquared(const DirectX::SimpleMath::Vector3 & p1, const DirectX::SimpleMath::Vector3 & p2)
 {
 	float distance = p1.x * p2.x + p1.y*p2.y + p1.z * p2.z;
@@ -164,18 +209,31 @@ float Collision::Distance3DSquared(const DirectX::SimpleMath::Vector3 & p1, cons
 	return distance;
 }
 
+//////////////////////////////////////////////
+// Name : CheckCapsule2Capsule
+//
+// Over View : カプセルとカプセルの当たり判定
+//
+// Argument : カプセル１、カプセル２、当たった場所を保存する変数
+//
+// Return :  当たった判定(当たったならtrue)
+//////////////////////////////////////////////
 bool Collision::CheckCapsule2Capsule(const Capsule & capsule1, const Capsule & capsule2, Vector3* inter)
 {
+	//距離の２乗をお求める
 	float distanceSQ = GetSqDistanceSegment2Segment(capsule1.segment_, capsule2.segment_);
 
+	//半径+半径の2乗を求める
 	float radisuSum = capsule1.radius_ + capsule2.radius_;
 	float radiusSumSQ = radisuSum * radisuSum;
 
+	//距離の２乗が半径+半径の２乗より小さければ当たってる
 	if (distanceSQ > radiusSumSQ)
 	{
 		return false;
 	}
 
+	//当たった場所を保存
 	if (inter)
 	{
 		Vector3 pointA, pointB;
@@ -189,18 +247,31 @@ bool Collision::CheckCapsule2Capsule(const Capsule & capsule1, const Capsule & c
 	return true;
 }
 
+//////////////////////////////////////////////
+// Name : CheckSphere2Capsule
+//
+// Over View : 球とカプセルの当たり判定
+//
+// Argument : 球、カプセル、当たった場所を保存する変数
+//
+// Return :  当たった判定(当たったならtrue)
+//////////////////////////////////////////////
 bool Collision::CheckSphere2Capsule(const Sphere & sphere, const Capsule & capsule, Vector3* inter)
 {
+	//距離の２乗を求める
 	float distanceSQ = GetSqDistancePoint2Segment(sphere.center_, capsule.segment_);
 
+	//半径+半径の２乗を求める
 	float radiusSum = sphere.radius_ + capsule.radius_;
 	float radiusSumSQ = radiusSum * radiusSum;
 
+	//距離の２乗が半径+半径の２乗より小さければ当たってる
 	if (distanceSQ > radiusSumSQ)
 	{
 		return false;
 	}
 
+	//当たった場所を保存
 	if (inter)
 	{
 		Vector3 point;
@@ -215,20 +286,19 @@ bool Collision::CheckSphere2Capsule(const Sphere & sphere, const Capsule & capsu
 	return true;
 }
 
-//--------------------------------------------------------------------------------------------
-// 説　明 : 点と線分の距離の二乗を取得
-// 引　数 : _point	点
-//			_segment	線分
-// 戻り値 : 点と線分の距離の二乗
-// メ　モ : 平方根を算出しない版
-//	線分の端点をA,B	点をCとして、
-//	①ABベクトルとACベクトルの内積が負の時、点Aが点Cの最近傍である
-//	②BAベクトルとBCベクトルの内積が負の時、点Bが点Cの最近傍である
-//	③　①、②に該当しない場合、点Cの射影がACの内側に存在するため、その点が最近傍である
-//--------------------------------------------------------------------------------------------
+//////////////////////////////////////////////
+// Name : GetSqDistancePoint2Segment
+//
+// Over View : 点と線分の最近距離の２乗を求める
+//
+// Argument : 点、線分
+//
+// Return :  距離の２乗
+//////////////////////////////////////////////
 float Collision::GetSqDistancePoint2Segment(const Vector3& _point, const Segment& _segment)
 {
-	const float epsilon = 1.0e-5f;	// 誤差吸収用の微小な値
+	// 誤差吸収用の微小な値
+	const float epsilon = 1.0e-5f;	
 	Vector3 SegmentSub;
 	Vector3 SegmentPoint;
 	Vector3 CP;
@@ -257,38 +327,43 @@ float Collision::GetSqDistancePoint2Segment(const Vector3& _point, const Segment
 	return CP.Dot(CP) / SegmentSub.Dot(SegmentSub);
 }
 
-//--------------------------------------------------------------------------------------------
-// 説　明 : 線分と線分の距離の二乗を取得
-// 引　数 : _segment0	線分0
-//			_segment1	線分1
-// 戻り値 : 線分と線分の距離の二乗
-// メ　モ : 平方根を算出しない版
-//	①直線上の最接近点が両方の線分の内側に存在する時
-//	②直線上の最接近点が一方のみの線分の内側に存在する時
-//	③直線上の最接近点が両方の線分の外側に存在する時
-//	それぞれのケースで二つの線分上の最接近点を求め、その距離を算出する
-//--------------------------------------------------------------------------------------------
+//////////////////////////////////////////////
+// Name : GetSqDistanceSegment2Segment
+//
+// Over View : 線分と線分の最近距離の２乗を求める
+//
+// Argument : 線分１、線分２
+//
+// Return :  距離の２乗
+//////////////////////////////////////////////
 float Collision::GetSqDistanceSegment2Segment(const Segment& _segment0, const Segment& _segment1)
 {
-	const float epsilon = 1.0e-5f;	// 誤差吸収用の微小な値
+	// 誤差吸収用の微小な値
+	const float epsilon = 1.0e-5f;	
 	Vector3 d0, d1, r;
-	Vector3 c0, c1;	// 二つの線分上の最接近点
-	Vector3 v;		// c1→c0ベクトル
+
+	// 二つの線分上の最接近点
+	Vector3 c0, c1;	
+
+	// c1→c0ベクトル
+	Vector3 v;		
 	float a, b, c, e, f;
 	float s, t;
 	float denom;
 	float tnom;
 
-	d0 = _segment0.end_ - _segment0.start_;	// 線分0の方向ベクトル
-	d1 = _segment1.end_ - _segment1.start_; // 線分1の方向ベクトル
-	r = _segment0.start_ - _segment1.start_; // 線分1の始点から線分0の始点へのベクトル
-	a = d0.Dot(d0);		// 線分0の距離の二乗
-	e = d1.Dot(d1);		// 線分1の距離の二乗
-						//	b = d0.Dot(d1);		// 最適化の為後方に移動した
-						//	c = d0.Dot(r);		// 最適化の為後方に移動した
-						//	f = d1.Dot(r);		// 最適化の為後方に移動した
+	// 線分0の方向ベクトル
+	d0 = _segment0.end_ - _segment0.start_;
+	// 線分1の方向ベクトル
+	d1 = _segment1.end_ - _segment1.start_;
+	// 線分1の始点から線分0の始点へのベクトル
+	r = _segment0.start_ - _segment1.start_; 
+	// 線分0の距離の二乗
+	a = d0.Dot(d0);
+	// 線分1の距離の二乗
+	e = d1.Dot(d1);
 
-						// いづれかの線分の長さが0かどうかチェック
+	// いづれかの線分の長さが0かどうかチェック
 	if (a <= epsilon && e <= epsilon)
 	{// 両方長さ0
 		v = _segment0.start_ - _segment1.start_;
@@ -310,9 +385,11 @@ float Collision::GetSqDistanceSegment2Segment(const Segment& _segment0, const Se
 	f = d1.Dot(r);
 	c = d0.Dot(r);
 
-	denom = a * e - b * b;	// 常に非負
-							// 線分が平行でない場合、直線0上の直線1に対する最近接点を計算、そして
-							// 線分0上にクランプ。そうでない場合は任意のsを選択
+	// 常に非負
+	denom = a * e - b * b;	
+	
+	// 線分が平行でない場合、直線0上の直線1に対する最近接点を計算、そして
+	// 線分0上にクランプ。そうでない場合は任意のsを選択
 	if (denom != 0)
 	{
 		s = Clamp((b * f - c * e) / denom, 0, 1);
@@ -347,16 +424,15 @@ float Collision::GetSqDistanceSegment2Segment(const Segment& _segment0, const Se
 	return v.Dot(v);
 }
 
-
-//--------------------------------------------------------------------------------------------
-// 説　明 : ３点から三角形を計算（反時計回りに指定）
-// 引　数 : _p0	点０
-//			_p1	点１
-//			_p2 点２
-//			_triangle 三角形(結果出力用）
-// 戻り値 : なし
-// メ　モ : 反時計回り順に３点指定する
-//--------------------------------------------------------------------------------------------
+//////////////////////////////////////////////
+// Name : ComputeTriangle
+//
+// Over View : ３角形を計算
+//
+// Argument : 頂点３つ、結果保存用変数
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Collision::ComputeTriangle(const Vector3& _p0, const Vector3& _p1, const Vector3& _p2, Triangle* _triangle)
 {
 	_triangle->P0 = _p0;
@@ -370,14 +446,15 @@ void Collision::ComputeTriangle(const Vector3& _p0, const Vector3& _p1, const Ve
 	_triangle->Normal.Normalize();
 }
 
-//--------------------------------------------------------------------------------------------
-// 説　明 : 点と三角形の最近接点を計算
-// 引　数 : _point	点
-//			_segment	線分
-//			_closest	最近接点(結果出力用）
-// 戻り値 : なし
-// メ　モ : 
-//--------------------------------------------------------------------------------------------
+//////////////////////////////////////////////
+// Name : ClosestPtPoint2Triangle
+//
+// Over View : 点と三角形の最近点の計算
+//
+// Argument : 点、三角形、結果保存用変数
+//
+// Return :  無し
+//////////////////////////////////////////////
 void Collision::ClosestPtPoint2Triangle(const Vector3& _point, const Triangle& _triangle, Vector3* _closest)
 {
 	// _pointがP0の外側の頂点領域の中にあるかどうかチェック
@@ -452,7 +529,15 @@ void Collision::ClosestPtPoint2Triangle(const Vector3& _point, const Triangle& _
 	*_closest = _triangle.P0 + P0_P1 * v + P0_P2 * w;
 }
 
-// 点と三角形の当たり判定
+//////////////////////////////////////////////
+// Name : CheckPoint2Triangle
+//
+// Over View : 点と三角形の当たり判定
+//
+// Argument : 点、三角形
+//
+// Return :  当たった判定(当たってればtrue)
+//////////////////////////////////////////////
 bool Collision::CheckPoint2Triangle(const Vector3& _point, const Triangle& _triangle)
 {
 	//点と三角形は同一平面上にあるものとしています。同一平面上に無い場合は正しい結果になりません
@@ -485,14 +570,15 @@ bool Collision::CheckPoint2Triangle(const Vector3& _point, const Triangle& _tria
 
 }
 
-//--------------------------------------------------------------------------------------------
-// 説　明 : 球と法線付き三角形の当たりチェック
-// 引　数 : _sphere		球
-//			_tri		法線付き三角形
-//			_inter		交点（省略可）
-// 戻り値 : 交差しているか否か
-// メ　モ : 裏面の当たりはとらない
-//--------------------------------------------------------------------------------------------
+//////////////////////////////////////////////
+// Name : CheckSphere2Triangle
+//
+// Over View : 球と三角形の当たり判定
+//
+// Argument : 球、三角形、当たった場所を保存する変数
+//
+// Return :  当たった判定(当たってればtrue)
+//////////////////////////////////////////////
 bool Collision::CheckSphere2Triangle(const Sphere& _sphere, const Triangle& _triangle, Vector3 *_inter)
 {
 	Vector3 p;
@@ -537,48 +623,63 @@ bool Collision::CheckSphere2Triangle(const Sphere& _sphere, const Triangle& _tri
 	return true;
 }
 
-//--------------------------------------------------------------------------------------------
-// 説　明 : 線分（有向）と法線付き三角形の当たりチェック
-// 引　数 : _segment		光線の線分（start→endが正方向）
-//			_tri		法線付き三角形
-//			_inter		交点（省略可）
-// 戻り値 : 交差しているか否か
-// メ　モ : 裏面の当たりはとらない
-//--------------------------------------------------------------------------------------------
+//////////////////////////////////////////////
+// Name : CheckSegment2Triangle
+//
+// Over View : 線分と三角形の当たり判定
+//
+// Argument : 線分、三角形、当たった場所を保存する変数
+//
+// Return :  当たった判定(当たってればtrue)
+//////////////////////////////////////////////
 bool Collision::CheckSegment2Triangle(const Segment& _segment, const Triangle& _triangle, Vector3 *_inter)
 {
-	const float epsilon = -1.0e-5f;	// 誤差吸収用の微小な値
-	Vector3 LayV;		// 線分の終点→始点
-	Vector3 tls;		// 三角形の頂点0→線分の始点
-	Vector3 tle;		// 三角形の頂点0→線分の終点
+	// 誤差吸収用の微小な値
+	const float epsilon = -1.0e-5f;	
+	// 線分の終点→始点
+	Vector3 LayV;		
+	// 三角形の頂点0→線分の始点
+	Vector3 tls;		
+	// 三角形の頂点0→線分の終点
+	Vector3 tle;	
 	float 	distl0;
 	float 	distl1;
 	float 	dp;
 	float 	denom;
 	float 	t;
-	Vector3	s;		// 直線と平面との交点
-	Vector3 st0;		// 交点→三角形の頂点0
-	Vector3 st1;		// 交点→三角形の頂点1
-	Vector3 st2;		// 交点→三角形の頂点2
-	Vector3 t01;		// 三角形の頂点0→頂点1
-	Vector3 t12;		// 三角形の頂点1→頂点2
-	Vector3 t20;		// 三角形の頂点2→頂点0
+	// 直線と平面との交点
+	Vector3	s;		
+	// 交点→三角形の頂点0
+	Vector3 st0;		
+	// 交点→三角形の頂点1
+	Vector3 st1;		
+	// 交点→三角形の頂点2
+	Vector3 st2;		
+	// 三角形の頂点0→頂点1
+	Vector3 t01;		
+	// 三角形の頂点1→頂点2
+	Vector3 t12;		
+	// 三角形の頂点2→頂点0
+	Vector3 t20;		
 	Vector3	m;
 
 	// 線分の始点が三角系の裏側にあれば、当たらない
 	tls = _segment.start_ - _triangle.P0;
-	distl0 = tls.Dot(_triangle.Normal);	// 線分の始点と平面の距離
+	// 線分の始点と平面の距離
+	distl0 = tls.Dot(_triangle.Normal);	
 	if (distl0 <= epsilon) return false;
 
 	// 線分の終点が三角系の表側にあれば、当たらない
 	tle = _segment.end_ - _triangle.P0;
-	distl1 = tle.Dot(_triangle.Normal);	// 線分の終点と平面の距離
+	// 線分の終点と平面の距離
+	distl1 = tle.Dot(_triangle.Normal);
 	if (distl1 >= -epsilon) return false;
 
 	// 直線と平面との交点sを取る
 	denom = distl0 - distl1;
 	t = distl0 / denom;
-	LayV = _segment.end_ - _segment.start_;	// 線分の方向ベクトルを取得
+	// 線分の方向ベクトルを取得
+	LayV = _segment.end_ - _segment.start_;	
 	s = t * LayV + _segment.start_;
 
 	// 交点が三角形の内側にあるかどうかを調べる。
@@ -603,15 +704,25 @@ bool Collision::CheckSegment2Triangle(const Segment& _segment, const Triangle& _
 	dp = m.Dot(_triangle.Normal);
 	if (dp <= epsilon) return false;
 
+	//当たった場所を保存
 	if (_inter)
 	{
-		*_inter = s;	// 交点をコピー
+		*_inter = s;
 	}
 
 	return true;
 }
 
-LandShape * Collision::RayCast(DirectX::SimpleMath::Vector3 origine, DirectX::SimpleMath::Vector3 ref)
+//////////////////////////////////////////////
+// Name : RayCast
+//
+// Over View : 線分と地形の当たり判定
+//
+// Argument : 線分の始点、線分の終点
+//
+// Return : 当たった地形を返す(当たっていなければnullptr)
+//////////////////////////////////////////////
+LandShape * Collision::RayCast(DirectX::SimpleMath::Vector3 origine, DirectX::SimpleMath::Vector3 end)
 {
 	auto collisionManager = CollisionManager::GetInstance().get();
 	LandShape* landShape = nullptr;
@@ -619,8 +730,7 @@ LandShape * Collision::RayCast(DirectX::SimpleMath::Vector3 origine, DirectX::Si
 
 	Segment segment;
 	segment.start_ = origine;
-	segment.end_ = ref;
-	//Debug::GetInstance()->SetRay(segment.start_, segment.end_);
+	segment.end_ = end;
 
 	for (auto it = collisionManager->landShape_.begin(); it != collisionManager->landShape_.end(); it++)
 	{
@@ -637,6 +747,15 @@ LandShape * Collision::RayCast(DirectX::SimpleMath::Vector3 origine, DirectX::Si
 	return landShape;
 }
 
+//////////////////////////////////////////////
+// Name : InFrontView
+//
+// Over View : 視界に対象がいるかの判定
+//
+// Argument : 視野内にいるか判定の引数用のクラス
+//
+// Return : 当たっているかの判定(当たっていればtrue)
+//////////////////////////////////////////////
 bool Collision::InFrontView(const ViewInfo& viewInfo)
 {
 	//eyeから見てどの角度か計算をする
@@ -661,6 +780,15 @@ bool Collision::InFrontView(const ViewInfo& viewInfo)
 	return true;
 }
 
+//////////////////////////////////////////////
+// Name : MarkerInView
+//
+// Over View : 写真撮る対象が撮れたかの判定
+//
+// Argument : 無し
+//
+// Return : 当たっているかの判定(当たっていればtrue)
+//////////////////////////////////////////////
 bool Collision::MarkerInView()
 {
 	auto collisioManager = CollisionManager::GetInstance().get();
@@ -668,6 +796,7 @@ bool Collision::MarkerInView()
 
 	bool flag = false;
 
+	//当たってる地形を探す
 	for (auto marker = collisioManager->marker_.begin(); marker != collisioManager->marker_.end(); marker++)
 	{
 		if (Culling::InView((*marker)->GetBox(), Camera::MainCamera(), 8, 0.5f, 0.5f))
@@ -684,6 +813,15 @@ bool Collision::MarkerInView()
 	return flag;
 }
 
+//////////////////////////////////////////////
+// Name : Box2Point
+//
+// Over View : ボックスと点の当たり判定
+//
+// Argument : ボックス、点
+//
+// Return : 当たっているかの判定(当たっていればtrue)
+//////////////////////////////////////////////
 bool Collision::Box2Point(BoundingBox box, DirectX::SimpleMath::Vector3 point)
 {
 	if (point.x > box.minX_ && point.x < box.maxX_
@@ -696,6 +834,15 @@ bool Collision::Box2Point(BoundingBox box, DirectX::SimpleMath::Vector3 point)
 	return false;
 }
 
+//////////////////////////////////////////////
+// Name : Box2Box
+//
+// Over View : ボックスとボックスの当たり判定
+//
+// Argument : ボックス1、ボックス2
+//
+// Return : 当たっているかの判定(当たっていればtrue)
+//////////////////////////////////////////////
 bool Collision::Box2Box(BoundingBox box1, BoundingBox box2)
 {
 	if (box1.maxX_ > box2.minX_ && box1.minX_ < box2.maxX_ &&
@@ -708,6 +855,15 @@ bool Collision::Box2Box(BoundingBox box1, BoundingBox box2)
 	return false;
 }
 
+//////////////////////////////////////////////
+// Name : NearArea
+//
+// Over View : 空間分割時に隣接エリアにいるかの判定
+//
+// Argument : ボックス1、ボックス2
+//
+// Return : 当たっているかの判定(当たっていればtrue)
+//////////////////////////////////////////////
 bool Collision::NearArea(Point3D point1, Point3D point2)
 {
 	if (abs(point2.x_ - point1.x_) <= 1 &&

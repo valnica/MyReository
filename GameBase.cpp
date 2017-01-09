@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+// Name : GameBase
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "GameBase.h"
 #include "GameMain.h"
 #include "ImaseLib\FPSTimer.h"
@@ -11,20 +18,49 @@ using namespace DirectX::SimpleMath;
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
-
+//////////////////////////////////////////////
+// Name : GameBase
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 GameBase::GameBase()
 {
 }
 
+//////////////////////////////////////////////
+// Name : GameBase
+//
+// Over View : コンストラクタ
+//
+// Argument : GameBaseの派生先のポインタ
+//////////////////////////////////////////////
 GameBase::GameBase(GameBase * game)
 	:game_(game)
 {
 }
 
+//////////////////////////////////////////////
+// Name : ~GameBase
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 GameBase::~GameBase()
 {
 }
 
+//////////////////////////////////////////////
+// Name : Main
+//
+// Over View : ゲームのメイン関数
+//
+// Argument : ゲームを回すのに必要な変数４つ
+//
+// Return :  無し
+//////////////////////////////////////////////
 void GameBase::Main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);

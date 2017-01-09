@@ -1,9 +1,17 @@
+//////////////////////////////////////////////
+// Class Name : LandShape
+//
+// Author : 山田 聖弥
+//
+// Date : 2017/1/9
+//////////////////////////////////////////////
 #include "LandShape.h"
 #include <fstream>
 #include <algorithm>
 #include "CollisionNode.h"
-#include "Debug.h"
 #include "Collision.h"
+
+#include "Debug.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -14,9 +22,16 @@ using namespace DirectX::SimpleMath;
 unique_ptr<LandShapeCommon> LandShape::common_;
 map<wstring, unique_ptr<LandShapeData>> LandShape::dataArray_;
 
-LandShapeCommon::LandShapeCommon(LandShapeCommonDef* def)
+//////////////////////////////////////////////
+// Name : LansShapeCommon
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
+LandShapeCommon::LandShapeCommon(std::shared_ptr<LandShapeCommonDef> def)
 {
-	camera_ = def->camera_;
+	//地形の描画に必要な変数の初期処理
 	state_.reset(new CommonStates(def->device_));
 	primitiveBatch_.reset(new PrimitiveBatch<VertexPositionNormal>(def->deviceContext_));
 
@@ -38,34 +53,62 @@ LandShapeCommon::LandShapeCommon(LandShapeCommonDef* def)
 	def->device_->CreateInputLayout(VertexPositionNormal::InputElements,
 		VertexPositionNormal::InputElementCount,
 		shaderByteCode, byteCodeLenght,
-		&inputLayout_);
+		inputLayout_.GetAddressOf());
 
 	deviceContext_ = def->deviceContext_;
 }
 
+//////////////////////////////////////////////
+// Name : ~LansShapeCommon
+//
+// Over View : デストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 LandShapeCommon::~LandShapeCommon()
 {
-	if (inputLayout_)
-	{
-		inputLayout_->Release();
-		inputLayout_ = nullptr;
-	}
 }
 
-void LandShape::InitializeCommon(LandShapeCommonDef* def)
+//////////////////////////////////////////////
+// Name : InitializeCommon
+//
+// Over View : 地形の共通設定クラスの初期化
+//
+// Argument : 地形のデフォルト設定用クラス
+//
+// Return :  無し
+//////////////////////////////////////////////
+void LandShape::InitializeCommon(std::shared_ptr<LandShapeCommonDef> def)
 {
 	if (common_) return;
 
 	common_.reset(new LandShapeCommon(def));
 }
 
+//////////////////////////////////////////////
+// Name : LandShape
+//
+// Over View : コンストラクタ
+//
+// Argument : 無し
+//////////////////////////////////////////////
 LandShape::LandShape()
 	:data_(nullptr)
 {
 }
 
+//////////////////////////////////////////////
+// Name : Initialize
+//
+// Over View : 初期化処理
+//
+// Argument : MDLのパス、CMOのパス
+//
+// Return :  無し
+//////////////////////////////////////////////
 void LandShape::Initialize(const wchar_t * fileNameMDL, const wchar_t * fileNameCMO)
 {
+	//MDL読み込んだことがあるか判定
 	if (fileNameMDL)
 	{
 		if (dataArray_.count(fileNameMDL) == 0)
@@ -75,17 +118,37 @@ void LandShape::Initialize(const wchar_t * fileNameMDL, const wchar_t * fileName
 		data_ = dataArray_[fileNameMDL].get();
 	}
 
+	//cmoの読み込み
 	if (fileNameCMO)
 	{
 		object_.LoadModelFromFile(fileNameCMO);
 	}
 }
 
+//////////////////////////////////////////////
+// Name : Update
+//
+// Over View : 更新処理
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void LandShape::Update()
 {
+	//当たり判定に登録
 	CollisionManager::GetInstance()->Entry(this);
 }
 
+//////////////////////////////////////////////
+// Name : Calc
+//
+// Over View : ワールド計算
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void LandShape::Calc()
 {
 	object_.Calc();
@@ -93,17 +156,26 @@ void LandShape::Calc()
 	world_ = world.Invert();
 }
 
+//////////////////////////////////////////////
+// Name : Draw
+//
+// Over View : 地形のモデルの描画
+//
+// Argument : 無し
+//
+// Return :  無し
+//////////////////////////////////////////////
 void LandShape::Draw()
 {
-	object_.Draw();
-	/*if (!Debug::GetFlag())
+	if (!Debug::GetFlag())
 	{
 		object_.Draw();
 	}
+#ifdef DEBUG
 	else if (data_)
 	{
-		const Matrix& view = common_->camera_->GetView();
-		const Matrix& proj = common_->camera_->GetProj();
+		const Matrix& view = Camera::MainCamera().lock()->GetView();
+		const Matrix& proj = Camera::MainCamera().lock()->GetView();
 
 		common_->effect_->SetWorld(object_.GetLocalWorld());
 		common_->effect_->SetView(view);
@@ -120,7 +192,7 @@ void LandShape::Draw()
 		auto samplerState = common_->state_->PointWrap();
 		common_->deviceContext_->PSSetSamplers(0, 1, &samplerState);
 
-		common_->deviceContext_->IASetInputLayout(common_->inputLayout_);
+		common_->deviceContext_->IASetInputLayout(common_->inputLayout_.Get());
 
 		common_->primitiveBatch_->Begin();
 
@@ -133,18 +205,32 @@ void LandShape::Draw()
 		common_->primitiveBatch_->DrawIndexed(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST, index, numIndex, vertex, numVertex);
 
 		common_->primitiveBatch_->End();
-	}*/
-
-	box_.Draw();
+		box_.Draw();
+	}
+#endif //DEBUG
 }
 
+//////////////////////////////////////////////
+// Name : IntersectSphere
+//
+// Over View : 地形と球の当たり判定
+//
+// Argument : 球、当たった場所を保存する変数
+//
+// Return :  無し
+//////////////////////////////////////////////
 bool LandShape::IntersectSphere(const Sphere & sphere, DirectX::SimpleMath::Vector3* reject)
 {
+	//MDLがあるかどうか
 	if (!data_) return false;
 
+	//三角形の数
 	int tri = data_->indices_.size() / 3;
+	
+	//当たったフラグ
 	bool hit = false;
 
+	//大きい数字で初期化
 	float distance = 1.0e5;
 	Vector3 inter;
 	Vector3 normal;
@@ -161,6 +247,7 @@ bool LandShape::IntersectSphere(const Sphere & sphere, DirectX::SimpleMath::Vect
 
 	Collision collision;
 
+	//当たり判定
 	for (int i = 0; i < tri; i++)
 	{
 		int index0 = data_->indices_[i * 3];
@@ -191,6 +278,7 @@ bool LandShape::IntersectSphere(const Sphere & sphere, DirectX::SimpleMath::Vect
 		}
 	}
 
+	//近い場所を保存
 	if (hit)
 	{
 		distance *= scale;
@@ -208,11 +296,15 @@ bool LandShape::IntersectSphere(const Sphere & sphere, DirectX::SimpleMath::Vect
 	return hit;
 }
 
-//--------------------------------------------------------------------------------------
-// 地形と線分の交差判定
-// segment : 線分
-// （出力）inter : 交点（ポリゴンの平面上で、点との再接近点の座標を返す）
-//--------------------------------------------------------------------------------------
+//////////////////////////////////////////////
+// Name : IntersectSegment
+//
+// Over View : 地形と線分の当たり判定
+//
+// Argument : 線分、当たった場所を保存する変数
+//
+// Return :  無し
+//////////////////////////////////////////////
 bool LandShape::IntersectSegment(const Segment& segment, Vector3* inter,float angleofFloor)
 {
 	if (data_ == nullptr) return false;

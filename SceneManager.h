@@ -3,7 +3,7 @@
 //
 // Author : 山田 聖弥
 //
-// Date : 2017/1/8 
+// Date : 2017/1/9
 //////////////////////////////////////////////
 #pragma once
 #include "Singleton.h"
@@ -26,9 +26,6 @@ private:
 	
 	//次のシーン
 	std::shared_ptr<Scene> next_;
-
-	//デバッグフラグ
-	int flag;
 
 	friend class Singleton<SceneManager>;
 
