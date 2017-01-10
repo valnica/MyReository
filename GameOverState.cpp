@@ -8,6 +8,8 @@
 #include "GameOverState.h"
 #include "Player.h"
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 const float headRollSpeed = 0.1f;
 const float rollSpeed = 50.0f;
 

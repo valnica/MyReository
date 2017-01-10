@@ -102,6 +102,8 @@
     <ClCompile Include="ClearState.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="FadeIn.cpp" />
+    <ClCompile Include="FadeOut.cpp" />
     <ClCompile Include="Flash.cpp" />
     <ClCompile Include="GameBase.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
@@ -147,6 +149,8 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="FadeIn.h" />
+    <ClInclude Include="FadeOut.h" />
     <ClInclude Include="Flash.h" />
     <ClInclude Include="GameBase.h" />
     <ClInclude Include="GameOverScene.h" />

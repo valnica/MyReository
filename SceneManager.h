@@ -9,9 +9,11 @@
 #include "Singleton.h"
 
 #include <memory>
+#include <stack>
 
 class Scene;
 class PlayScene;
+class FadeOut;
 
 //////////////////////////////////////////////
 // Class Name : SceneManager
@@ -27,8 +29,12 @@ private:
 	//次のシーン
 	std::shared_ptr<Scene> next_;
 
+	//フェード用の変数
+	std::stack<std::shared_ptr<Scene>> fade_;
+
 	friend class Singleton<SceneManager>;
 
+	friend class FadeOut;
 	SceneManager();
 public:
 	~SceneManager();

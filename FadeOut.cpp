@@ -8,10 +8,13 @@
 #include "FadeOut.h"
 #include "Sprite.h"
 #include "DirectXTK.h"
+#include "SceneManager.h"
+
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 using namespace DirectX::SimpleMath;
 
-const float fadeSpeed = 0.05f;
+const float fadeSpeed = 0.01f;
 
 //////////////////////////////////////////////
 // Name : Initialize
@@ -55,6 +58,7 @@ void FadeOut::Initialize()
 	sprite_->Initialize(L"Resources\\Images\\Fade.png", Vector2(WINDOW_W / 2.0f, WINDOW_H / 2.0f), RECT{ 0,0,2,2 }, true);
 	sprite_->SetScale(Vector2(WINDOW_W / 2.0f, WINDOW_H / 2.0f));
 	alpha_ = 0.0f;
+	sprite_->SetAlpha(alpha_);
 }
 
 //////////////////////////////////////////////
@@ -71,7 +75,14 @@ bool FadeOut::Update()
 	alpha_ += fadeSpeed;
 
 	if (alpha_ > 1.0f)
+	{
+		SceneManager::GetInstance()->now_ = SceneManager::GetInstance()->next_;
+		SceneManager::GetInstance()->next_ = nullptr;
+		SceneManager::GetInstance()->now_->Initialize();
 		return false;
+	}
+
+	sprite_->SetAlpha(alpha_);
 
 	return true;
 }

@@ -12,6 +12,9 @@
 #include "ClearScene.h"
 #include "GameOverScene.h"
 #include "DirectXTK.h"
+#include "FadeIn.h"
+#include "FadeOut.h"
+
 #include <SimpleMath.h>
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
@@ -67,12 +70,13 @@ void SceneManager::Initialize()
 //////////////////////////////////////////////
 void SceneManager::Update()
 {
-	//遷移先があればシーン遷移
-	if (next_)
+	//フェードがあればフェードしてシーン遷移
+	if (!fade_.empty())
 	{
-		now_ = next_;
-		next_ = nullptr;
-		now_->Initialize();
+		if (!fade_.top()->Update())
+		{
+			fade_.pop();
+		}
 	}
 
 	now_->Update();
@@ -91,6 +95,11 @@ void SceneManager::Render()
 {
 	//描画
 	now_->Render();
+
+	if (!fade_.empty())
+	{
+		fade_.top()->Render();
+	}
 }
 
 //////////////////////////////////////////////
@@ -119,6 +128,19 @@ void SceneManager::Finalize()
 //////////////////////////////////////////////
 void SceneManager::ChageScene(SceneManager::SCENEID id)
 {
+	if (next_)
+		return;
+
+	std::shared_ptr<FadeIn> fadeIn;
+	fadeIn.reset(new FadeIn);
+	fadeIn->Initialize();
+	std::shared_ptr<FadeOut> fadeOut;
+	fadeOut.reset(new FadeOut);
+	fadeOut->Initialize();
+
+	fade_.push(fadeIn);
+	fade_.push(fadeOut);
+
 	switch (id)
 	{
 	case SceneManager::SCENEID::TITLE:

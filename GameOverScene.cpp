@@ -13,6 +13,7 @@
 #include "GameManager.h"
 #include "GameOverState.h"
 #include "ResultStage.h"
+#include "Sprite.h"
 
 #include "Debug.h"
 
@@ -69,6 +70,10 @@ void GameOverScene::Initialize()
 	stage_.reset(new ResultStage);
 	stage_->Initialize();
 
+	sprite_.reset(new Sprite);
+	sprite_->Initialize(L"Resources\\Images\\CharData.png", Vector2(WINDOW_W / 7 * 2, WINDOW_H / 2), RECT{ 0,128,96,192 }, true);
+	sprite_->SetScale(3.0f);
+
 	//ƒƒCƒ“ƒJƒƒ‰‚É“o˜^
 	Camera::MainCamera(camera_);
 }
@@ -112,6 +117,7 @@ void GameOverScene::Render()
 	//•`‰æˆ—
 	player_->Render();
 	stage_->Render();
+	sprite_->Draw();
 
 #ifdef DEBUG
 	wchar_t flag[10];

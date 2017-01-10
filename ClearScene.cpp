@@ -12,6 +12,8 @@
 #include "ClearState.h"
 #include "Camera.h"
 #include "ResultStage.h"
+#include "Sprite.h"
+
 #include "Debug.h"
 
 #include <SimpleMath.h>
@@ -67,6 +69,10 @@ void ClearScene::Initialize()
 	stage_.reset(new ResultStage);
 	stage_->Initialize();
 
+	sprite_.reset(new Sprite);
+	sprite_->Initialize(L"Resources\\Images\\CharData.png", Vector2(WINDOW_W / 7 * 2, WINDOW_H / 2), RECT{ 0,64,96,128 }, true);
+	sprite_->SetScale(3.0f);
+
 	//ƒƒCƒ“ƒJƒƒ‰‚ÌÝ’è
 	Camera::MainCamera(camera_);
 }
@@ -110,6 +116,7 @@ void ClearScene::Render()
 	//•`‰æˆ—
 	player_->Render();
 	stage_->Render();
+	sprite_->Draw();
 
 #ifdef DEBUG
 	wchar_t flag[9];

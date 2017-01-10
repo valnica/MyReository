@@ -13,6 +13,7 @@
 class Player;
 class Camera;
 class ResultStage;
+class Sprite;
 
 //////////////////////////////////////////////
 // Class Name : ClearScene
@@ -26,6 +27,7 @@ private:
 	std::shared_ptr<Player> player_;
 	std::shared_ptr<Camera> camera_;
 	std::shared_ptr<ResultStage> stage_;
+	std::shared_ptr<Sprite> sprite_;
 
 public:
 	ClearScene();
