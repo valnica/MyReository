@@ -14,6 +14,8 @@
 #include "DebugCamera.h"
 #include "TPSCamera.h"
 
+#include "Debug.h"
+
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 using namespace DirectX::SimpleMath;
@@ -49,18 +51,20 @@ FPSCamera::~FPSCamera()
 //
 // Return :  –³‚µ
 //////////////////////////////////////////////
-State<Camera>* FPSCamera::Input(Camera & camera)
+std::shared_ptr<State<Camera>> FPSCamera::Input(Camera & camera)
 {
 	//‘JˆÚðŒ‚Æ‘JˆÚæ
 	if (g_mouseTracker->rightButton == g_mouseTracker->RELEASED)
 	{
-		return TPSCamera::GetInstance().get();
+		return TPSCamera::GetInstance();
 	}
 
+#ifdef DEBUG
 	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::O))
 	{
-		return new DebugCamera;
+		return DebugCamera::GetInstance();
 	}
+#endif
 
 	return nullptr;
 }

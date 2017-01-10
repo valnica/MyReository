@@ -42,7 +42,7 @@ ClearState::~ClearState()
 //
 // Return : Stateのポインタ
 //////////////////////////////////////////////
-State<Player>* ClearState::Input(Player & player)
+std::shared_ptr<State<Player>> ClearState::Input(Player & player)
 {
 	//遷移条件と遷移先のポインタを設定する
 

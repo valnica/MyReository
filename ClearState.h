@@ -16,7 +16,7 @@ class Player;
 //
 // Over View : プレイヤーのクリアシーンのState
 //////////////////////////////////////////////
-class ClearState:public State<Player>
+class ClearState:public State<Player>,public Singleton<ClearState>
 {
 private:
 	//首を回転させるための変数
@@ -27,7 +27,7 @@ public:
 	~ClearState();
 
 	//Stateの切り替え用の関数
-	State<Player>* Input(Player& player) override;
+	std::shared_ptr<State<Player>> Input(Player& player) override;
 	
 	void Update(Player& player) override;
 };

@@ -16,7 +16,7 @@ class Player;
 //
 // Over View : プレイヤーのゲームオーバーシーンのState
 //////////////////////////////////////////////
-class GameOverState:public State<Player>
+class GameOverState:public State<Player>,public Singleton<GameOverState>
 {
 private:
 	//首を回転させるための変数
@@ -27,7 +27,7 @@ public:
 	~GameOverState();
 
 	//State切り替え関数
-	State<Player>* Input(Player& player) override;
+	std::shared_ptr<State<Player>> Input(Player& player) override;
 	void Update(Player& player) override;
 };
 

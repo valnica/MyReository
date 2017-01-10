@@ -101,7 +101,7 @@ class CameraController
 {
 private:
 	//ƒJƒƒ‰‚Ìstate
-	State<Camera>* state_;
+	std::weak_ptr<State<Camera>> state_;
 
 	//ƒJƒƒ‰
 	std::weak_ptr<Camera> camera_;

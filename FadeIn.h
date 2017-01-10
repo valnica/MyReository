@@ -1,39 +1,35 @@
 //////////////////////////////////////////////
-// Name : TitleScene
+// Name : FadeIn
 //
 // Author : 山田 聖弥
 //
 // Date : 2017/1/9
 //////////////////////////////////////////////
 #pragma once
-
 #include "Scene.h"
 #include <memory>
 
 class Sprite;
-class Stage;
-class Camera;
 
 //////////////////////////////////////////////
-// Name : TitleScene
+// Class Name : FadeIn
 //
-// Over View : タイトルシーンを管理するクラス
+// Over View : フェードイン
 //////////////////////////////////////////////
-class TitleScene:public Scene
+class FadeIn :
+	public Scene
 {
 private:
-	//タイトルシーンに必要な変数
-	std::unique_ptr<Sprite> sprite_[2];
-	int alpha_;
-	std::unique_ptr<Stage> stage_;
-	std::shared_ptr<Camera> camera_;
+	std::shared_ptr<Sprite> sprite_;
+	float alpha_;
 
 public:
-	TitleScene();
-	~TitleScene();
+	FadeIn();
+	~FadeIn();
 
 	void Initialize() override;
 	bool Update() override;
 	void Render() override;
 	void Finalize() override;
 };
+

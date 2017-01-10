@@ -18,14 +18,14 @@ class Singleton
 {
 private:
 	//シングルトン用の変数
-	static std::unique_ptr<T> instance_;
+	static std::shared_ptr<T> instance_;
 
 public:
 	Singleton<T>() = default;
 	virtual ~Singleton<T>() = default;
 
 	//インスタンスの取得
-	static std::unique_ptr<T>& GetInstance()
+	static std::shared_ptr<T> GetInstance()
 	{
 		if (!instance_)
 			instance_.reset(new T);
@@ -41,4 +41,4 @@ public:
 };
 
 template <typename T>	
-std::unique_ptr<T> Singleton<T>::instance_ = nullptr;
+std::shared_ptr<T> Singleton<T>::instance_ = nullptr;

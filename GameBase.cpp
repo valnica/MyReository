@@ -11,6 +11,8 @@
 #include <SimpleMath.h>
 #include "Window.h"
 
+#include "Debug.h"
+
 using namespace Microsoft::WRL;
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -94,8 +96,10 @@ void GameBase::Main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	while (WM_QUIT != msg.message)
 	{
 		int fps = fpsTimer.GetNowFPS();
+#ifdef DEBUG
 		wchar_t buf[16];
 		swprintf_s(buf, 16, L"fps = %d", fps);
+#endif
 
 		// メッセージが来ているか調べる
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -122,8 +126,10 @@ void GameBase::Main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 			game_->Render();
 
+#ifdef DEBUG
 			// fpsの表示
 			g_spriteFont->DrawString(g_spriteBatch.get(), buf, Vector2(0, 0));
+#endif
 
 			g_spriteBatch->End();
 

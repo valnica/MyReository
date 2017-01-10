@@ -24,6 +24,6 @@ public:
 	virtual ~State() {};
 
 	//StateØ‚è‘Ö‚¦ƒNƒ‰ƒX
-	virtual State<T>* Input(T& data) = 0;
+	virtual std::shared_ptr<State<T>> Input(T& data) = 0;
 	virtual void Update(T& data) = 0;
 };

@@ -1,5 +1,5 @@
 //////////////////////////////////////////////
-// Name : TitleScene
+// Name : CameraFlame
 //
 // Author : 山田 聖弥
 //
@@ -7,33 +7,28 @@
 //////////////////////////////////////////////
 #pragma once
 
-#include "Scene.h"
 #include <memory>
+#include "Effect.h"
 
 class Sprite;
-class Stage;
-class Camera;
 
 //////////////////////////////////////////////
-// Name : TitleScene
+// Class Name : CameraFlame
 //
-// Over View : タイトルシーンを管理するクラス
+// Over View : カメラ
 //////////////////////////////////////////////
-class TitleScene:public Scene
+class CameraFlame:public Effect
 {
 private:
-	//タイトルシーンに必要な変数
-	std::unique_ptr<Sprite> sprite_[2];
-	int alpha_;
-	std::unique_ptr<Stage> stage_;
-	std::shared_ptr<Camera> camera_;
+	std::shared_ptr<Sprite> sprite_;
+	int count_;
 
 public:
-	TitleScene();
-	~TitleScene();
+	CameraFlame();
+	~CameraFlame();
 
 	void Initialize() override;
 	bool Update() override;
 	void Render() override;
-	void Finalize() override;
 };
+

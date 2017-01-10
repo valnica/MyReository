@@ -81,9 +81,9 @@ void TitleScene::Initialize()
 //
 // Argument : –³‚µ
 //
-// Return :  –³‚µ
+// Return :  –ðŠ„‚ªI‚í‚Á‚½‚©‚Ì”»’è
 //////////////////////////////////////////////
-void TitleScene::Update()
+bool TitleScene::Update()
 {
 	//‰æ‘œ‚Ì“_–Å
 	alpha_++;
@@ -111,6 +111,8 @@ void TitleScene::Update()
 	{
 		SceneManager::GetInstance()->ChageScene(SceneManager::SCENEID::PLAY);
 	}
+
+	return true;
 }
 
 //////////////////////////////////////////////

@@ -55,7 +55,7 @@ void ClearScene::Initialize()
 {
 	//プレイヤーの初期化
 	player_.reset(new Player);
-	player_->Initialize(new ClearState);
+	player_->Initialize(ClearState::GetInstance());
 	player_->SetPosition(Vector3(-1.0f, 0.0f, 0.0f));
 
 	//カメラの初期化
@@ -78,9 +78,9 @@ void ClearScene::Initialize()
 //
 // Argument : 無し
 //
-// Return : 無し 
+// Return : 役割が終わったかの判定 
 //////////////////////////////////////////////
-void ClearScene::Update()
+bool ClearScene::Update()
 {
 	//更新処理
 	player_->Update();
@@ -92,6 +92,8 @@ void ClearScene::Update()
 	{
 		SceneManager::GetInstance()->ChageScene(SceneManager::SCENEID::TITLE);
 	}
+
+	return true;
 }
 
 //////////////////////////////////////////////

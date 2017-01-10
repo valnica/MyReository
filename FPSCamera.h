@@ -26,7 +26,7 @@ public:
 	~FPSCamera();
 
 	//StateØ‚è‘Ö‚¦ŠÖ”
-	State<Camera>* Input(Camera& camera);
+	std::shared_ptr<State<Camera>> Input(Camera& camera);
 	void Update(Camera& camera);
 };
 

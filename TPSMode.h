@@ -17,7 +17,7 @@ class Player;
 //
 // Over View : 客観State
 //////////////////////////////////////////////
-class TPSMode:public State<Player>,Singleton<TPSMode>
+class TPSMode:public State<Player>,public Singleton<TPSMode>
 {
 private:
 	//移動スピード
@@ -28,6 +28,6 @@ public:
 	~TPSMode();
 
 	//State切り替え関数
-	State<Player>* Input(Player& player) override;
+	std::shared_ptr<State<Player>> Input(Player& player) override;
 	void Update(Player& player) override;
 };

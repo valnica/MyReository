@@ -157,7 +157,7 @@ CameraController::~CameraController()
 void CameraController::Initialize(std::shared_ptr<Camera> camera)
 {
 	camera_ = camera;
-	state_ = TPSCamera::GetInstance().get();
+	state_ = TPSCamera::GetInstance();
 }
 
 //////////////////////////////////////////////
@@ -172,14 +172,13 @@ void CameraController::Initialize(std::shared_ptr<Camera> camera)
 void CameraController::Update()
 {
 	//Stateの切り替え処理
-	State<Camera>* state = state_->Input(*camera_.lock());
-	if (state)
+	std::weak_ptr<State<Camera>> state = state_.lock()->Input(*camera_.lock());
+	if (state.lock())
 	{
 		state_ = state;
 	}
-
 	//Stateの更新処理
-	state_->Update(*camera_.lock());
+	state_.lock()->Update(*camera_.lock());
 
 	//カメラのアップデート
 	camera_.lock()->Update();
@@ -192,7 +191,7 @@ void CameraController::Update()
 //
 // Argument : カメラのポインタ
 //
-// Return : 無し 
+// Return : 無し
 //////////////////////////////////////////////
 void CameraController::SetCamera(std::shared_ptr<Camera> camera)
 {

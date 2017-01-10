@@ -60,7 +60,7 @@ void Object3D::LoadModelFromFile(const wchar_t * fileName)
 
 	//ì«Ç›çûÇÒÇæÇ±Ç∆Ç†ÇÈÇ©îªíË
 	if (modelArray_.count(fileName) == 0)
-		modelArray_[fileName] = Model::CreateFromCMO(device_, fileName, *effect_.get());
+		modelArray_[fileName] = Model::CreateFromCMO(device_, fileName, *effect_);
 
 	model_ = modelArray_[fileName].get();
 }

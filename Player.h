@@ -26,7 +26,7 @@ class Player:public Character
 {
 private:
 	//State
-	State<Player>* state_;
+	std::weak_ptr<State<Player>> state_;
 
 	//モデルパーツの定義
 	enum PARTS
@@ -54,7 +54,7 @@ public:
 	~Player();
 
 	void Initialize();
-	void Initialize(State<Player>* state);
+	void Initialize(std::shared_ptr<State<Player>> state);
 	void Update();
 	void Render();
 

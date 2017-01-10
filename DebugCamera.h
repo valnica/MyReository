@@ -17,7 +17,7 @@ class Camera;
 // Over View : デバッグカメラState
 //////////////////////////////////////////////
 class DebugCamera :
-	public State<Camera>
+	public State<Camera>,public Singleton<DebugCamera>
 {
 private:
 	//注視点との距離
@@ -31,7 +31,7 @@ public:
 	~DebugCamera();
 
 	//State切り替えの関数
-	State<Camera>* Input(Camera& camera);
+	std::shared_ptr<State<Camera>> Input(Camera& camera);
 	void Update(Camera& camera);
 };
 

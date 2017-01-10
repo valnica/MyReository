@@ -14,7 +14,7 @@
 #include <wrl.h>
 #include "Singleton.h"
 
-#define DEBUG
+//#define DEBUG
 
 //////////////////////////////////////////////
 // Class Name : Debug

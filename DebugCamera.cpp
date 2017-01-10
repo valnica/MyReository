@@ -47,14 +47,13 @@ DebugCamera::~DebugCamera()
 //
 // Return :  –³‚µ
 //////////////////////////////////////////////
-State<Camera>* DebugCamera::Input(Camera & camera)
+std::shared_ptr<State<Camera>> DebugCamera::Input(Camera & camera)
 {
 	//‘JˆÚðŒ‚Æ‘JˆÚæ
 	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::O))
 	{
-		return FPSCamera::GetInstance().get();
+		return FPSCamera::GetInstance();
 	}
-
 	return nullptr;
 }
 

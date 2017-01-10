@@ -28,7 +28,6 @@ public:
 	//地形に必要な変数
 	ID3D11Device* device_;
 	ID3D11DeviceContext* deviceContext_;
-	Camera* camera_;
 };
 
 //////////////////////////////////////////////

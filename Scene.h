@@ -19,7 +19,7 @@ public:
 	virtual ~Scene() {};
 
 	virtual void Initialize() = 0;
-	virtual void Update() = 0;
+	virtual bool Update() = 0;
 	virtual void Render() = 0;
 	virtual void Finalize() = 0;
 };

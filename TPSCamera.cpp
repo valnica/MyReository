@@ -46,12 +46,18 @@ TPSCamera::~TPSCamera()
 //
 // Return : state
 //////////////////////////////////////////////
-State<Camera>* TPSCamera::Input(Camera & camera)
+std::shared_ptr<State<Camera>> TPSCamera::Input(Camera & camera)
 {
 	if (g_mouseTracker->rightButton == g_mouseTracker->PRESSED)
 	{
-		return FPSCamera::GetInstance().get();
+		return FPSCamera::GetInstance();
 	}
+#ifdef DEBUG
+	if (g_keyTracker->IsKeyPressed(DirectX::Keyboard::O))
+	{
+		return DebugCamera::GetInstance();
+	}
+#endif
 	return nullptr;
 }
 

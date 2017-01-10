@@ -13,6 +13,8 @@
 #include "GameManager.h"
 #include <memory>
 
+#include "Debug.h"
+
 using namespace DirectX::SimpleMath;
 
 //////////////////////////////////////////////
@@ -46,11 +48,11 @@ TPSMode::~TPSMode()
 //
 // Return :  state
 //////////////////////////////////////////////
-State<Player>* TPSMode::Input(Player & player)
+std::shared_ptr<State<Player>> TPSMode::Input(Player & player)
 {
 	if (g_mouseTracker->rightButton == g_mouseTracker->PRESSED)
 	{
-		return new FPSMode;
+		return FPSMode::GetInstance();
 	}
 	return nullptr;
 }

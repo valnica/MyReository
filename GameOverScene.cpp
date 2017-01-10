@@ -57,7 +57,7 @@ void GameOverScene::Initialize()
 {
 	//プレイヤーの初期化
 	player_.reset(new Player);
-	player_->Initialize(new GameOverState);
+	player_->Initialize(GameOverState::GetInstance());
 	player_->SetPosition(Vector3(-1.0f, 0.0f, 0.0f));
 
 	//カメラの初期化
@@ -80,9 +80,9 @@ void GameOverScene::Initialize()
 //
 // Argument : 無し
 //
-// Return :  無し
+// Return :  役割が終わったかの判定
 //////////////////////////////////////////////
-void GameOverScene::Update()
+bool GameOverScene::Update()
 {
 	//更新処理
 	player_->Update();
@@ -94,6 +94,8 @@ void GameOverScene::Update()
 	{
 		SceneManager::GetInstance()->ChageScene(SceneManager::SCENEID::TITLE);
 	}
+
+	return true;
 }
 
 //////////////////////////////////////////////

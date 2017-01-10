@@ -1,5 +1,5 @@
 //////////////////////////////////////////////
-// Name : TitleScene
+// Name : FadeOut
 //
 // Author : 山田 聖弥
 //
@@ -11,29 +11,25 @@
 #include <memory>
 
 class Sprite;
-class Stage;
-class Camera;
 
 //////////////////////////////////////////////
-// Name : TitleScene
+// Class Name : FadeOut
 //
-// Over View : タイトルシーンを管理するクラス
+// Over View : フェードアウト
 //////////////////////////////////////////////
-class TitleScene:public Scene
+class FadeOut :public Scene
 {
 private:
-	//タイトルシーンに必要な変数
-	std::unique_ptr<Sprite> sprite_[2];
-	int alpha_;
-	std::unique_ptr<Stage> stage_;
-	std::shared_ptr<Camera> camera_;
+	std::shared_ptr<Sprite> sprite_;
+	float alpha_;
 
 public:
-	TitleScene();
-	~TitleScene();
+	FadeOut();
+	~FadeOut();
 
 	void Initialize() override;
 	bool Update() override;
 	void Render() override;
 	void Finalize() override;
 };
+

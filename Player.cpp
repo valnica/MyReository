@@ -54,8 +54,6 @@ Player::Player()
 //////////////////////////////////////////////
 Player::~Player()
 {
-	if (state_)
-		delete state_;
 }
 
 //////////////////////////////////////////////
@@ -108,7 +106,7 @@ void Player::Initialize()
 //
 // Return :  無し
 //////////////////////////////////////////////
-void Player::Initialize(State<Player>* state)
+void Player::Initialize(std::shared_ptr<State<Player>> state)
 {
 	state_ = state;
 	Initialize();
@@ -126,13 +124,12 @@ void Player::Initialize(State<Player>* state)
 void Player::Update()
 {
 	//Stateパターン
-	State<Player>* state = state_->Input(*this);
-	if (state)
+	std::weak_ptr<State<Player>> state = state_.lock()->Input(*this);
+	if (state.lock())
 	{
-		delete state_;
 		state_ = state;
 	}
-	state_->Update(*this);
+	state_.lock()->Update(*this);
 
 	//モデルの行列計算
 	Calc();
@@ -142,8 +139,10 @@ void Player::Update()
 	//当たり判定に登録
 	CollisionManager::GetInstance()->Entry(this);
 
+#ifdef DEBUG
 	//デバッグフラグの初期化
 	debugFlag_ = false;
+#endif
 }
 
 //////////////////////////////////////////////

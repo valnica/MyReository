@@ -35,6 +35,6 @@ public:
 	~TPSCamera();
 
 	//StateØ‚è‘Ö‚¦ŠÖ”
-	State<Camera>* Input(Camera& camera) override;
+	std::shared_ptr<State<Camera>> Input(Camera& camera) override;
 	void Update(Camera& camera) override;
 };

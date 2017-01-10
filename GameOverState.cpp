@@ -41,9 +41,9 @@ GameOverState::~GameOverState()
 //
 // Argument : プレイヤーの参照
 //
-// Return :  無し
+// Return :  プレイヤーのstate
 //////////////////////////////////////////////
-State<Player>* GameOverState::Input(Player & player)
+std::shared_ptr<State<Player>> GameOverState::Input(Player & player)
 {
 	return nullptr;
 }

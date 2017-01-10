@@ -15,6 +15,9 @@
 #include "TPSMode.h"
 #include "TaskManager.h"
 #include "Flash.h"
+#include "CameraFlame.h"
+
+#include "ClearFlagInfo.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -51,12 +54,12 @@ FPSMode::~FPSMode()
 //
 // Return :  –³‚µ
 //////////////////////////////////////////////
-State<Player> * FPSMode::Input(Player& player)
+std::shared_ptr<State<Player>>  FPSMode::Input(Player& player)
 {
 	//‘JˆÚðŒ‚Æ‘JˆÚæ
 	if (g_mouseTracker->rightButton == g_mouseTracker->RELEASED)
 	{
-		return new TPSMode;
+		return TPSMode::GetInstance();
 	}
 	return nullptr;
 }
@@ -81,6 +84,7 @@ void FPSMode::Update(Player & player)
 		if (collision.MarkerInView())
 		{
 			Stage::SetClearFlag();
+			TaskManager::GetInstance()->Add<ClearFlagInfo>()->Initialize();
 		}
 	}
 
@@ -97,4 +101,7 @@ void FPSMode::Update(Player & player)
 
 	player.SetRotate(player.GetRotate() + Vector3(0.0f, angle, 0.0f));
 	player.SetHeadRotate(player.GetHeadRotate() + Vector3(-amountOfMoment.y, 0.0f, 0.0f));
+
+	//ƒJƒƒ‰‚ÌƒtƒŒ[ƒ€‚ð“o˜^
+	TaskManager::GetInstance()->Add<CameraFlame>()->Initialize();
 }

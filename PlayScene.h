@@ -38,7 +38,7 @@ public:
 	~PlayScene();
 
 	void Initialize() override;
-	void Update() override;
+	bool Update() override;
 	void Render() override;
 	void Finalize() override;
 

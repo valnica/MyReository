@@ -66,7 +66,7 @@ void PlayScene::Initialize()
 	//プレイヤーの初期化
 	std::shared_ptr<Player> player;
 	player.reset(new Player);
-	player->Initialize(new TPSMode);
+	player->Initialize(TPSMode::GetInstance());
 	player->SetPosition(stage_->GetStartPos());
 	character_.push_back(player);
 
@@ -119,9 +119,9 @@ void PlayScene::Initialize()
 //
 // Argument : 無し
 //
-// Return :  無し
+// Return :  役割が終わったかの判定
 //////////////////////////////////////////////
-void PlayScene::Update()
+bool PlayScene::Update()
 {
 	//更新処理
 	stage_->Update();
@@ -132,6 +132,8 @@ void PlayScene::Update()
 
 	cameraController_->Update();
 	CollisionManager::GetInstance()->Update();
+
+	return true;
 }
 
 //////////////////////////////////////////////

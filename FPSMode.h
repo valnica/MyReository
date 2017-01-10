@@ -17,7 +17,7 @@ class Player;
 // Over View : åŠÏState
 //////////////////////////////////////////////
 class FPSMode :
-	public State<Player>
+	public State<Player>,public Singleton<FPSMode>
 {
 private:
 
@@ -26,7 +26,7 @@ public:
 	~FPSMode();
 
 	//StateØ‚è‘Ö‚¦ŠÖ”
-	State* Input(Player& player) override;
+	std::shared_ptr<State> Input(Player& player) override;
 	void Update(Player& player) override;
 };
 

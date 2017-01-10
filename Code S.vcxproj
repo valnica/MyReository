@@ -96,6 +96,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraFlame.cpp" />
+    <ClCompile Include="ClearFlagInfo.cpp" />
     <ClCompile Include="ClearScene.cpp" />
     <ClCompile Include="ClearState.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -104,7 +106,6 @@
     <ClCompile Include="GameBase.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="GameOverState.cpp" />
-    <ClCompile Include="Lerp.cpp" />
     <ClCompile Include="Marker.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="CollisionNode.cpp" />
@@ -138,7 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraFlame.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="ClearFlagInfo.h" />
     <ClInclude Include="ClearScene.h" />
     <ClInclude Include="ClearState.h" />
     <ClInclude Include="Collision.h" />
@@ -148,7 +151,6 @@
     <ClInclude Include="GameBase.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="GameOverState.h" />
-    <ClInclude Include="Lerp.h" />
     <ClInclude Include="Marker.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CollisionNode.h" />

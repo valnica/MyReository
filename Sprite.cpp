@@ -39,7 +39,7 @@ Sprite::Sprite()
 	rect_ = RECT{ 0,0,0,0 };
 	color_ = Colors::White.v;
 	angle_ = 0.0f;
-	scale_ = 0.0f;
+	scale_ = Vector2::Zero;
 	depth_ = 0.0f;
 }
 
@@ -73,7 +73,7 @@ void Sprite::Initialize(wchar_t * texturePass, DirectX::SimpleMath::Vector2 pos,
 	origineFlag_ = origineFlag;
 	color_ = color;
 	angle_ = 3.14f / 180.0f * angle;
-	scale_ = scale;
+	scale_ = Vector2(scale, scale);
 	depth_ = depth;
 }
 
@@ -94,6 +94,7 @@ void Sprite::Draw()
 	//flagÇ™trueÇ»ÇÁÇŒâÊëúÇÃíÜêSÇãNì_Ç…ï`âÊ
 	if (origineFlag_)
 		origine = Vector2((rect_.right - rect_.left) / 2.0f, (rect_.bottom - rect_.top) / 2.0f);
+	
 	g_spriteBatch->Draw(sprite_.lock()->m_pTexture, pos_, &rect_, color_, angle_, origine, scale_, SpriteEffects_None, depth_);
 }
 
@@ -185,6 +186,34 @@ Box2D Sprite::GetBox()
 void Sprite::SetAlpha(float alpha)
 {
 	color_.A(alpha);
+}
+
+//////////////////////////////////////////////
+// Name : SetScale
+//
+// Over View : ëÂÇ´Ç≥ÇÃê›íË
+//
+// Argument : ëÂÇ´Ç≥
+//
+// Return :  ñ≥Çµ
+//////////////////////////////////////////////
+void Sprite::SetScale(float scale)
+{
+	scale_ = Vector2(scale, scale);
+}
+
+//////////////////////////////////////////////
+// Name : SetScale
+//
+// Over View : ëÂÇ´Ç≥ÇÃê›íË
+//
+// Argument : ëÂÇ´Ç≥
+//
+// Return :  ñ≥Çµ
+//////////////////////////////////////////////
+void Sprite::SetScale(DirectX::SimpleMath::Vector2 scale)
+{
+	scale_ = scale;
 }
 
 

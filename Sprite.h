@@ -53,7 +53,7 @@ private:
 	float angle_;
 	
 	//‘å‚«‚³
-	float scale_;
+	DirectX::SimpleMath::Vector2 scale_;
 	
 	//k“x
 	float depth_;
@@ -85,5 +85,8 @@ public:
 	
 	//“§–¾“x‚Ìİ’è
 	void SetAlpha(float alpha);
+
+	void SetScale(float scale);
+	void SetScale(DirectX::SimpleMath::Vector2 scale);
 };
 
