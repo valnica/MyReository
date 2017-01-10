@@ -3,12 +3,13 @@
 //
 // Author : R“c ¹–í
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #pragma once
+#include "CollisionManager.h"
+
 #include <vector>
 #include <SimpleMath.h>
-#include "CollisionManager.h"
 
 class LandShape;
 class Marker;

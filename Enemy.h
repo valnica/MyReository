@@ -3,15 +3,16 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #pragma once
 
-#include <vector>
-#include <SimpleMath.h>
 #include "Object3D.h"
 #include "List.h"
 #include "Character.h"
+
+#include <vector>
+#include <SimpleMath.h>
 
 //////////////////////////////////////////////
 // Class Name : Enemy

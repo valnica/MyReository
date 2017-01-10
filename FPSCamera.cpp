@@ -3,18 +3,20 @@
 //
 // Author : 山田 聖弥
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
-#include <SimpleMath.h>
 #include "FPSCamera.h"
 #include "Camera.h"
 #include "Player.h"
 #include "GameManager.h"
-#include "DirectXTK.h"
 #include "DebugCamera.h"
 #include "TPSCamera.h"
 
+#include "Used\DirectXTK.h"
+
 #include "Debug.h"
+
+#include <SimpleMath.h>
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -104,10 +106,6 @@ void FPSCamera::Update(Camera & camera)
 	//注視点を計算
 	ref = Vector3::TransformNormal(ref, rot);
 	ref = eye + ref;
-
-	//シームレスにするための処理
-	Vector3 eyeAmount = eye - camera.GetEye();
-	eyeAmount *= 0.3f;
 
 	//upベクトルを回すための計算
 	rot = rotX * rotY;

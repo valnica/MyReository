@@ -3,16 +3,17 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #pragma once
+
+#include "Singleton.h"
 
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
 #include <Effects.h>
 #include <SimpleMath.h>
 #include <wrl.h>
-#include "Singleton.h"
 
 //#define DEBUG
 

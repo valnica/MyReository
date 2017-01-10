@@ -3,9 +3,10 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "Object3D.h"
+
 #include <VertexTypes.h>
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)

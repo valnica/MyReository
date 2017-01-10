@@ -3,7 +3,7 @@
 //
 // Author : 山田 聖弥
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "TPSCamera.h"
 #include "FPSCamera.h"
@@ -74,7 +74,7 @@ std::shared_ptr<State<Camera>> TPSCamera::Input(Camera & camera)
 //////////////////////////////////////////////
 void TPSCamera::Update(Camera & camera)
 {
-	std::weak_ptr<Player> player = camera.GetTarget();
+	auto player = camera.GetTarget();
 
 	//カメラの設定に必要な変数の初期化
 	Vector3 eye = Vector3(0.0f, 0.0f, distance_);
@@ -95,16 +95,11 @@ void TPSCamera::Update(Camera & camera)
 	eye = Vector3::Transform(eye, rot);
 	eye += ref;
 
-	//シームレスにするための処理
-	Vector3 eyeAmount = eye - camera.GetEye();
-	eyeAmount *= 0.1f;
-
 	//upベクトルを回すための計算
 	rot = rotX * rotY;
 	up = Vector3::Transform(up, rot);
 
 	//カメラの設定
-	//camera.SetEye(camera.GetEye() + eyeAmount);
 	camera.SetEye(eye);
 	camera.SetRef(ref);
 	camera.SetUp(up);

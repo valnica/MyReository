@@ -3,7 +3,7 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "SceneManager.h"
 #include "Scene.h"
@@ -11,9 +11,10 @@
 #include "PlayScene.h"
 #include "ClearScene.h"
 #include "GameOverScene.h"
-#include "DirectXTK.h"
 #include "FadeIn.h"
 #include "FadeOut.h"
+
+#include "Used\DirectXTK.h"
 
 #include <SimpleMath.h>
 

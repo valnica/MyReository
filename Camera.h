@@ -3,13 +3,15 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #pragma once
 
-#include "DirectXTK.h"
-#include <SimpleMath.h>
 #include "State.h"
+
+#include "Used\DirectXTK.h"
+
+#include <SimpleMath.h>
 #include <memory>
 
 namespace Math = DirectX::SimpleMath;

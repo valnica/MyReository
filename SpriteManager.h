@@ -3,13 +3,15 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #pragma once
 
-#include <map>
-#include "Texture.h"
 #include "Singleton.h"
+
+#include "Used\Texture.h"
+
+#include <map>
 
 //////////////////////////////////////////////
 // Class Name : SpriteManager

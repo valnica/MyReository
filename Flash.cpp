@@ -3,10 +3,11 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "Flash.h"
 #include "Sprite.h"
+
 #include <SimpleMath.h>
 #include <DirectXColors.h>
 

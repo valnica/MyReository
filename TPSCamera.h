@@ -3,12 +3,13 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #pragma once
 
 #include "State.h"
 #include "Camera.h"
+
 #include <SimpleMath.h>
 
 //////////////////////////////////////////////

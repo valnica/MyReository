@@ -3,7 +3,7 @@
 //
 // Author : R“c ¹–í
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "GameManager.h"
 #include "Camera.h"

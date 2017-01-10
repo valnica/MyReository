@@ -3,15 +3,17 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "GameBase.h"
 #include "GameMain.h"
-#include "ImaseLib\FPSTimer.h"
-#include <SimpleMath.h>
 #include "Window.h"
 
 #include "Debug.h"
+
+#include "Used\ImaseLib\FPSTimer.h"
+
+#include <SimpleMath.h>
 
 using namespace Microsoft::WRL;
 using namespace DirectX;

@@ -24,19 +24,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ImaseLib\FPSTimer.cpp">
-      <Filter>ImaseLib</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct3D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTK.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameMain.cpp">
@@ -153,20 +141,20 @@
     <ClCompile Include="FadeOut.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Used\Texture.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Used\Direct3D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Used\DirectXTK.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Used\ImaseLib\FPSTimer.cpp">
+      <Filter>ImaseLib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImaseLib\FPSTimer.h">
-      <Filter>ImaseLib</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXTK.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameMain.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -308,6 +296,18 @@
     <ClInclude Include="FadeOut.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Used\Texture.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Used\Direct3D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Used\DirectXTK.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Used\ImaseLib\FPSTimer.h">
+      <Filter>ImaseLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="myfile.spritefont">
@@ -329,9 +329,6 @@
       <Filter>リソース ファイル</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Resources\Models\Marker.FBX">
-      <Filter>リソース ファイル</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Resources\Models\Box.FBX">
       <Filter>リソース ファイル</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Resources\Models\Floor.FBX">

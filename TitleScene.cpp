@@ -3,12 +3,10 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "TitleScene.h"
-#include "DirectXTK.h"
 #include "SceneManager.h"
-#include <SimpleMath.h>
 #include "Sprite.h"
 #include "Stage.h"
 #include "Camera.h"
@@ -16,6 +14,10 @@
 #include "Object3D.h"
 
 #include "Debug.h"
+
+#include "Used\DirectXTK.h"
+
+#include <SimpleMath.h>
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 

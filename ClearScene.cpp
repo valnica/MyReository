@@ -3,16 +3,17 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "ClearScene.h"
 #include "SceneManager.h"
-#include "DirectXTK.h"
 #include "Player.h"
 #include "ClearState.h"
 #include "Camera.h"
 #include "ResultStage.h"
 #include "Sprite.h"
+
+#include "Used\DirectXTK.h"
 
 #include "Debug.h"
 

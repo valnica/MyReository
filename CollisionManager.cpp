@@ -3,10 +3,9 @@
 //
 // Author : 山田 聖弥
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "CollisionManager.h"
-#include "DirectXTK.h"
 #include "Debug.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -18,6 +17,8 @@
 #include "Stage.h"
 #include "SceneManager.h"
 #include "TPSCamera.h"
+
+#include "Used\DirectXTK.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -151,6 +152,8 @@ void CollisionManager::Update()
 				//raycastでオブジェクトに当たっていなかったら見つかっている
 				if (!land)
 				{
+					//if(camera_)
+						//camera_->SetTarget()
 					SceneManager::GetInstance()->ChageScene(SceneManager::SCENEID::GAMEOVER);
 				}
 			}

@@ -3,19 +3,19 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #pragma once
 
 #include "LandShapeData.h"
+#include "Camera.h"
+#include "Object3D.h"
+#include "CollisionManager.h"
 
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
 #include <CommonStates.h>
 
-#include "Camera.h"
-#include "Object3D.h"
-#include "CollisionManager.h"
 
 //////////////////////////////////////////////
 // Class Name : LandShapeCommonDef

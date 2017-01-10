@@ -3,13 +3,14 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "Debug.h"
-#include "Direct3D.h"
-#include <CommonStates.h>
 #include "GameManager.h"
 #include "Camera.h"
+
+#include "Used\Direct3D.h"
+#include <CommonStates.h>
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 

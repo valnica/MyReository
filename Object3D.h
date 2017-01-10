@@ -3,14 +3,15 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 
 #pragma once
 
+#include "Camera.h"
+
 #include <Model.h>
 #include <Effects.h>
-#include "Camera.h"
 #include <map>
 #include <SimpleMath.h>
 

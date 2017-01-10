@@ -3,11 +3,12 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "Sprite.h"
 #include "SpriteManager.h"
-#include "DirectXTK.h"
+
+#include "Used\DirectXTK.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;

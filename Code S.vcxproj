@@ -114,13 +114,10 @@
     <ClCompile Include="Culling.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
-    <ClCompile Include="Direct3D.cpp" />
-    <ClCompile Include="DirectXTK.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FPSCamera.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="ImaseLib\FPSTimer.cpp" />
     <ClCompile Include="LandShape.cpp" />
     <ClCompile Include="LandShapeData.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -133,10 +130,13 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TPSCamera.cpp" />
     <ClCompile Include="TPSMode.cpp" />
+    <ClCompile Include="Used\Direct3D.cpp" />
+    <ClCompile Include="Used\DirectXTK.cpp" />
+    <ClCompile Include="Used\ImaseLib\FPSTimer.cpp" />
+    <ClCompile Include="Used\Texture.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,13 +161,10 @@
     <ClInclude Include="Culling.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DebugCamera.h" />
-    <ClInclude Include="Direct3D.h" />
-    <ClInclude Include="DirectXTK.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FPSCamera.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="ImaseLib\FPSTimer.h" />
     <ClInclude Include="LandShape.h" />
     <ClInclude Include="LandShapeData.h" />
     <ClInclude Include="List.h" />
@@ -185,10 +182,13 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="TaskManager.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TPSCamera.h" />
     <ClInclude Include="TPSMode.h" />
+    <ClInclude Include="Used\Direct3D.h" />
+    <ClInclude Include="Used\DirectXTK.h" />
+    <ClInclude Include="Used\ImaseLib\FPSTimer.h" />
+    <ClInclude Include="Used\Texture.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
@@ -199,7 +199,6 @@
     <None Include="ReleaseBase.props" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Resources\Models\Box.FBX" />
     <MeshContentTask Include="Resources\Models\Display.FBX" />
     <MeshContentTask Include="Resources\Models\Enemy.FBX" />
     <MeshContentTask Include="Resources\Models\Floor.FBX" />

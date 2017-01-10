@@ -3,7 +3,7 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "PlayScene.h"
 #include "Stage.h"
@@ -12,12 +12,13 @@
 #include "Player.h"
 #include "Marker.h"
 #include "Enemy.h"
-#include <SimpleMath.h>
 #include "CollisionManager.h"
 #include "TPSMode.h"
 #include "Character.h"
 
 #include "Debug.h"
+
+#include <SimpleMath.h>
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 

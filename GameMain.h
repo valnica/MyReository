@@ -1,14 +1,15 @@
 //////////////////////////////////////////////
-// Name : Camera
+// Name : GameMain
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #pragma once
 
-#include <memory>
 #include "GameBase.h"
+
+#include <memory>
 
 class GameManager;
 class Scene;

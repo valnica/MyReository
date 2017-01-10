@@ -3,9 +3,8 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
-#include <SimpleMath.h>
 #include "Stage.h"
 #include "LandShape.h"
 #include "Marker.h"
@@ -15,6 +14,8 @@
 #include "Event.h"
 
 #include "Debug.h"
+
+#include <SimpleMath.h>
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)	
 

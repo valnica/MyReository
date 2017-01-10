@@ -3,12 +3,13 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "FadeOut.h"
 #include "Sprite.h"
-#include "DirectXTK.h"
 #include "SceneManager.h"
+
+#include "Used\DirectXTK.h"
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 

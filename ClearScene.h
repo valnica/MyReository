@@ -3,12 +3,13 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #pragma once
 
-#include <memory>
 #include "Scene.h"
+
+#include <memory>
 
 class Player;
 class Camera;

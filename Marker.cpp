@@ -3,14 +3,15 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "Marker.h"
-#include <SimpleMath.h>
 #include "GameManager.h"
 #include "Culling.h"
 
 #include "Debug.h"
+
+#include <SimpleMath.h>
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 

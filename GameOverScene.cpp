@@ -3,11 +3,9 @@
 //
 // Author : éRìc êπñÌ
 //
-// Date : 2017/1/9
+// Date : 2017/1/10
 //////////////////////////////////////////////
 #include "GameOverScene.h"
-#include "DirectXTK.h"
-#include <SimpleMath.h>
 #include "SceneManager.h"
 #include "Player.h"
 #include "GameManager.h"
@@ -16,6 +14,8 @@
 #include "Sprite.h"
 
 #include "Debug.h"
+
+#include "Used\DirectXTK.h"
 
 #include <SimpleMath.h>
 
